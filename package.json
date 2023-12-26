@@ -1,0 +1,59 @@
+{
+  "name": "cryptorastas-dapp",
+  "version": "1.0.0",
+  "private": false,
+  "repository": "git@github.com:CryptoRastas/dapp.git",
+  "author": "welliton gervickas <wellitogervickas@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@heroicons/react": "latest",
+    "@hookform/resolvers": "^3.3.2",
+    "@wagmi/core": "^1.4.7",
+    "classnames": "latest",
+    "ethers": "latest",
+    "lodash": "latest",
+    "next": "14.0.4",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-hook-form": "^7.47.0",
+    "react-jazzicon": "latest",
+    "usehooks-ts": "latest",
+    "wagmi": "latest",
+    "zod": "^3.22.4",
+    "tailwindcss": "latest",
+    "typescript": "latest"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "@types/jest": "^29.5.7",
+    "@types/lodash": "^4.14.200",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@typescript-eslint/eslint-plugin": "^6.9.0",
+    "@vercel/edge-config": "^0.4.1",
+    "autoprefixer": "latest",
+    "cssnano": "latest",
+    "eslint": "latest",
+    "eslint-config-next": "14.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-tailwindcss": "^3.13.0",
+    "postcss": "latest",
+    "prettier": "latest",
+    "prettier-plugin-tailwindcss": "^0.5.6",
+    "sharp": "^0.32.6"
+  }
+}
