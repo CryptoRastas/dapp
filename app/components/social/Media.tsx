@@ -30,12 +30,12 @@ export const SocialMedia = ({
                     />
                   </div>
                 ) : (
-                  <Text className='text-indigo-400'>{socialMedia.label}</Text>
+                  <Text className='text-black'>{socialMedia.label}</Text>
                 )}
               </Link>
             </li>
             {index === medias.length - 1 ? null : (
-              <li className='border border-indigo-200 dark:border-gray-700'></li>
+              <li className='border border-black dark:border-gray-700'></li>
             )}
           </>
         ))

@@ -28,14 +28,28 @@ export const BridgeContainer = () => {
 
       <form noValidate className='flex flex-col space-y-4'>
         <fieldset className='flex flex-col space-y-2'>
-          <legend>Type your token id's</legend>
+          <legend>
+            <Text>Type your token id's</Text>
+          </legend>
           <input
             type='text'
             name='name'
             id='name'
             placeholder='separated by comma'
-            className='block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm focus:border-white focus:ring-white'
+            className='block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm outline-none focus:border-white focus:ring-white'
           />
+        </fieldset>
+        <fieldset>
+          <legend>
+            <Text>Choose your target network</Text>
+          </legend>
+          <select
+            name='network'
+            id='network'
+            className='block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm outline-none focus:border-white focus:ring-white'
+          >
+            <option value=''>Select</option>
+          </select>
         </fieldset>
         <Button type='submit'>Bridge</Button>
       </form>

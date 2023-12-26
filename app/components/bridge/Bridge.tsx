@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic'
 import { LoadingSkeleton } from '@/app/components/loading/Skeleton'
 import { Heading, Text } from '@/app/components/typography'
+import SocialMedia from '@/app/components/social/Media'
 
 const BridgeContainer = dynamic(async () => await import('./Container'), {
   loading: () => <LoadingSkeleton />,
@@ -16,6 +17,7 @@ export const Bridge = () => {
         Bridge
       </Heading>
       <BridgeContainer />
+      <Heading as='h3'>About</Heading>
       <Text as='p' size='default'>
         CryptoRastas is a global club/community platform that uses blockchain
         technology and digital art to engage and empower Reggae culture and the
@@ -32,6 +34,7 @@ export const Bridge = () => {
         in 2024 and we have already started to reorganize our house. Stay tuned
         for the next steps!
       </Text>
+      <SocialMedia />
     </section>
   )
 }

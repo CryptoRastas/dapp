@@ -16,7 +16,7 @@ export const NetworkThumbnail = ({
       {...props}
       className={classNames(
         className,
-        'flex h-5 w-5 items-center justify-center rounded-full bg-black'
+        'flex h-5 w-5 items-center justify-center rounded-full bg-white p-px'
       )}
     >
       {src ? (

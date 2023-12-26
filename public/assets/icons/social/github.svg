@@ -4,11 +4,11 @@
 </g>
 <defs>
 <linearGradient id="paint0_linear_1860_22659" x1="12.0001" y1="0.599609" x2="12.0001" y2="23.3996" gradientUnits="userSpaceOnUse">
-<stop stop-color="#6366F1"/>
-<stop offset="1" stop-color="#8082FF"/>
+<stop stop-color="black"/>
+<stop offset="1" stop-color="black"/>
 </linearGradient>
 <clipPath id="clip0_1860_22659">
-<rect width="24" height="24" fill="white"/>
+<rect width="24" height="24" fill="black"/>
 </clipPath>
 </defs>
 </svg>
