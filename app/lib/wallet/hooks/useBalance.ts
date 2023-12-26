@@ -13,7 +13,7 @@ function useBalance() {
   })
 
   return {
-    data,
+    balance: data,
     isLoading
   }
 }

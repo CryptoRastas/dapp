@@ -25,9 +25,7 @@ export const Header = ({ className, ...props }: HTMLProps<HTMLElement>) => {
         'flex h-[4.5rem] items-center justify-between space-x-4 px-4 container'
       )}
     >
-      <div className='flex flex-1 space-x-2'>
-        <Logo />
-      </div>
+      <Logo />
       <div
         className={classNames(
           'flex items-center justify-between space-x-4 lg:justify-end'

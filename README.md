@@ -1,4 +1,4 @@
-# Crypto Rastas Readme
+# Crypto Rastas Dapp
 
 ## Getting Started
 
