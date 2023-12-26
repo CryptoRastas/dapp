@@ -9,24 +9,49 @@ import {
 } from '@/app/lib/wallet/hooks'
 import { Text } from '@/app/components/typography'
 import { Button, Variant, Sizes } from '@/app/components/button/Button'
-import { Children } from 'react'
+import { Children, SyntheticEvent } from 'react'
 import classNames from 'classnames'
 import Link from 'next/link'
 import { useERC721ApproveAll } from '@/app/lib/wallet/hooks/useERC721ApproveAll'
+import { LoadingSkeleton } from '../loading'
 
 export const BridgeContainer = () => {
   const { balance } = useBalance()
   const { isConnected } = useWallet()
   const { config, chains } = useNetwork()
+
   const token = useChainContract('token')
   const bridge = useChainContract('bridge')
 
-  const {} = useERC721ApproveAll(token.address, bridge.address)
+  const { isApproving, isApprovedForAll, isLoading, approveAll } =
+    useERC721ApproveAll(token.address, bridge.address)
+
+  console.log(isApprovedForAll)
+
+  const handleSubmit = async (e: SyntheticEvent) => {
+    e.preventDefault()
+
+    try {
+      if (!isApprovedForAll) {
+        await approveAll()
+      } else {
+        /// @dev apply bridge
+      }
+    } catch {
+      console.log('error')
+    }
+  }
 
   return (
-    <form noValidate className='flex flex-col space-y-4'>
+    <form
+      noValidate
+      className='flex flex-col space-y-4'
+      onSubmit={handleSubmit}
+    >
       <fieldset>
-        <legend>Collection Address</legend>
+        <legend>
+          <Text>Collection Address</Text>
+        </legend>
         <Link
           target='_blank'
           href={`${config.blockExplorers?.default.url}/address/${token.address}`}
@@ -39,7 +64,7 @@ export const BridgeContainer = () => {
           <Text>Type your token id's</Text>
         </legend>
         <input
-          disabled={!isConnected}
+          disabled={!isConnected || isLoading}
           type='text'
           name='tokenIds'
           id='tokenIds'
@@ -60,7 +85,7 @@ export const BridgeContainer = () => {
         <select
           name='network'
           id='network'
-          disabled={!isConnected}
+          disabled={!isConnected || isLoading}
           defaultValue={isConnected ? config.id : ''}
           className={classNames(
             Sizes.default.classes,
@@ -99,7 +124,15 @@ export const BridgeContainer = () => {
           </li>
         </ul>
       </div>
-      <Button type='submit'>Bridge</Button>
+      {isApproving && (
+        <div className='flex flex-col items-center justify-center'>
+          <Text>Your are approving bridge to transfer your tokens</Text>
+          <LoadingSkeleton className='h-2 w-full flex-1' />
+        </div>
+      )}
+      <Button type='submit' disabled={!isConnected || isLoading}>
+        <>{!isApprovedForAll ? 'Approve' : 'Bridge'}</>
+      </Button>
     </form>
   )
 }

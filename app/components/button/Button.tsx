@@ -16,7 +16,7 @@ export const Sizes = {
 export const Variant = {
   default: {
     classes: 'bg-black text-yellow-500',
-    disabled: 'bg-black',
+    disabled: 'bg-black text-yellow-500/50',
     hover: 'hover:bg-black/80 outline-none'
   }
 } as const

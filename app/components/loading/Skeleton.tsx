@@ -18,7 +18,7 @@ export const LoadingSkeleton = ({
   return (
     <div
       role='status'
-      className={classNames(className, 'w-full animate-pulse')}
+      className={classNames(className || skeleton?.className, 'animate-pulse')}
       {...props}
     >
       {isServer ? (
@@ -26,7 +26,7 @@ export const LoadingSkeleton = ({
       ) : (
         <div
           className={classNames(
-            skeleton?.className || 'h-2.5 w-48 rounded-full bg-black'
+            skeleton?.className || 'h-2.5 w-full rounded-full bg-black'
           )}
         />
       )}

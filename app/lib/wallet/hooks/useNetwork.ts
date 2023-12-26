@@ -1,7 +1,5 @@
-import appConfig from '@/app.config'
-import { allowedChainsConfig, allowedChains } from '@/app/config/config'
-import { find } from 'lodash'
 import { Chain, useNetwork as useNetworkHook, useSwitchNetwork } from 'wagmi'
+import useChainConfig from './useChainConfig'
 
 export type ChainConfig = Chain & {
   unsupported?: boolean
@@ -13,12 +11,9 @@ export function useNetwork() {
   const { chains, error, isLoading, pendingChainId, switchNetwork } =
     useSwitchNetwork()
 
-  const chainIdRefined = find(allowedChains, { id: chain?.id })
-
-  const configByCurrentChainOrDefaultId =
-    allowedChainsConfig[
-      chainIdRefined?.id || +appConfig.networks.defaultChainId
-    ]
+  const { config } = useChainConfig({
+    chainId: chain?.id
+  })
 
   return {
     error,
@@ -27,7 +22,7 @@ export function useNetwork() {
     chains,
     chain,
     switchNetwork,
-    config: configByCurrentChainOrDefaultId
+    config
   }
 }
 

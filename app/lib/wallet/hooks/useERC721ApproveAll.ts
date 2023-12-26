@@ -9,9 +9,9 @@ import { useWallet } from './useWallet'
 
 export const useERC721ApproveAll = (
   contractAddress: string,
-  operator: string
+  operatorAddress: string
 ) => {
-  const { address } = useWallet()
+  const { address, isConnected } = useWallet()
 
   const {
     data: setApprovedForAllData,
@@ -25,28 +25,34 @@ export const useERC721ApproveAll = (
 
   const { data, isLoading: isReading } = useContractRead({
     functionName: 'isApprovedForAll',
+    enabled: isConnected,
     address: contractAddress as `0x${string}`,
     abi: erc721ABI,
-    args: [address as `0x${string}`, operator as `0x${string}`]
+    args: [address as `0x${string}`, operatorAddress as `0x${string}`],
+    watch: true,
+    cacheTime: 2_000
   })
 
-  const handleApproveAll = async (operatorAddress: string) => {
+  const handleApproveAll = async () => {
     try {
+      if (!isConnected) throw new Error('Wallet not connected')
       await writeAsync({
         args: [operatorAddress as `0x${string}`, true]
       })
     } catch (error) {
-      console.log(`Error setApprovedForAll contract ${operator}`, error)
+      console.log(`Error setApprovedForAll contract ${operatorAddress}`, error)
     }
   }
 
   const { isLoading: isPending } = useWaitForTransaction({
-    hash: setApprovedForAllData?.hash
+    hash: setApprovedForAllData?.hash,
+    enabled: !!setApprovedForAllData?.hash
   })
 
   return {
     approveAll: handleApproveAll,
     isApprovedForAll: data,
-    isLoading: isPending || isWriting || isReading
+    isLoading: isPending || isWriting || isReading,
+    isApproving: isWriting || isPending
   }
 }
