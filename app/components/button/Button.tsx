@@ -17,7 +17,7 @@ export const Variant = {
   default: {
     classes: 'bg-black text-yellow-500',
     disabled: 'bg-black',
-    hover: 'hover:bg-black/80'
+    hover: 'hover:bg-black/80 outline-none'
   }
 } as const
 
@@ -39,7 +39,7 @@ export const Button = ({
       {...props}
       className={classNames([
         'rounded-md',
-        { 'w-full': fullWidth },
+        { 'w-full rounded-md': fullWidth },
         props.className,
         props.disabled ? Variant[variant].disabled : Variant[variant].classes,
         Variant[variant].hover,

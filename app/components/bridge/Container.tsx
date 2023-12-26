@@ -2,58 +2,85 @@
 
 import assetsUtils from '@/app/lib/utils/assets'
 import { useBalance, useNetwork, useWallet } from '@/app/lib/wallet/hooks'
-import { Heading, Text } from '@/app/components/typography'
-import { Button } from '@/app/components/button'
+import { Text } from '@/app/components/typography'
+import { Button, Variant, Sizes } from '@/app/components/button/Button'
+import { Children } from 'react'
+import classNames from 'classnames'
 
 export const BridgeContainer = () => {
   const { balance } = useBalance()
   const { isConnected } = useWallet()
-  const { config } = useNetwork()
+  const { config, chains } = useNetwork()
 
   return (
-    <div className='flex-col space-y-4'>
-      <div>
-        <Heading as='h2' variant='h4'>
-          My Balance
-        </Heading>
-        <Text as='p'>
-          {assetsUtils.formatBalance(
-            isConnected ? balance?.formatted : 0,
-            4,
-            2
-          )}{' '}
-          {config.nativeCurrency.name}
-        </Text>
-      </div>
+    <form noValidate className='flex flex-col space-y-4'>
+      <fieldset className='flex flex-col space-y-2'>
+        <legend>
+          <Text>Type your token id's</Text>
+        </legend>
+        <input
+          disabled={!isConnected}
+          type='text'
+          name='name'
+          id='name'
+          placeholder='separated by comma'
+          className={classNames(
+            Sizes.default.classes,
+            'w-full rounded-md',
+            isConnected
+              ? [Variant.default.classes, Variant.default.hover]
+              : [Variant.default.disabled]
+          )}
+        />
+      </fieldset>
+      <fieldset>
+        <legend>
+          <Text>Choose your target network</Text>
+        </legend>
+        <select
+          name='network'
+          id='network'
+          disabled={!isConnected}
+          defaultValue={isConnected ? config.id : ''}
+          className={classNames(
+            Sizes.default.classes,
+            'w-full rounded-md',
+            isConnected
+              ? [Variant.default.classes, Variant.default.hover]
+              : [Variant.default.disabled]
+          )}
+        >
+          <option value=''>Select a network</option>
 
-      <form noValidate className='flex flex-col space-y-4'>
-        <fieldset className='flex flex-col space-y-2'>
-          <legend>
-            <Text>Type your token id's</Text>
-          </legend>
-          <input
-            type='text'
-            name='name'
-            id='name'
-            placeholder='separated by comma'
-            className='block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm outline-none focus:border-white focus:ring-white'
-          />
-        </fieldset>
-        <fieldset>
-          <legend>
-            <Text>Choose your target network</Text>
-          </legend>
-          <select
-            name='network'
-            id='network'
-            className='block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm outline-none focus:border-white focus:ring-white'
-          >
-            <option value=''>Select</option>
-          </select>
-        </fieldset>
-        <Button type='submit'>Bridge</Button>
-      </form>
-    </div>
+          {Children.toArray(
+            chains.map((chain) => (
+              <option value={chain.id}>{chain.name}</option>
+            ))
+          )}
+        </select>
+      </fieldset>
+      <div>
+        <ul>
+          <li>
+            <Text>
+              Balance:
+              {`${assetsUtils.formatBalance(
+                isConnected ? balance?.formatted : 0,
+                4,
+                0
+              )} ${config.nativeCurrency.symbol}`}
+            </Text>
+          </li>
+          <li>
+            <Text>
+              Fees: {assetsUtils.formatBalance(isConnected ? 0 : 0, 4, 0)}{' '}
+              {config.nativeCurrency.symbol}
+            </Text>
+          </li>
+        </ul>
+      </div>
+      <Button type='submit'>Bridge</Button>
+    </form>
   )
 }
 

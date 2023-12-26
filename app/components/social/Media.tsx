@@ -35,7 +35,10 @@ export const SocialMedia = ({
               </Link>
             </li>
             {index === medias.length - 1 ? null : (
-              <li className='border border-black dark:border-gray-700'></li>
+              <li
+                className='border border-black dark:border-gray-700'
+                aria-hidden='true'
+              />
             )}
           </>
         ))
