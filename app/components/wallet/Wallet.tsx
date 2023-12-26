@@ -40,8 +40,7 @@ export const Wallet = () => {
               'cursor-pointer rounded-md',
               Sizes.sm.classes,
               Variant.default.classes,
-              Variant.default.hover,
-              Variant.default.disabled
+              Variant.default.hover
             )}
           />
         </>
