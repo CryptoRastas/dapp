@@ -18,6 +18,11 @@ export const Variant = {
     classes: 'bg-black text-yellow-500',
     disabled: 'bg-black text-yellow-500/50',
     hover: 'hover:bg-black/80 outline-none'
+  },
+  outlined: {
+    classes: 'bg-transparent border border-black text-black',
+    disabled: 'bg-transparent border border-black/50 text-black/50',
+    hover: 'hover:bg-yellow-900/20 hover:text-black'
   }
 } as const
 

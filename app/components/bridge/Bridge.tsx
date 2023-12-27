@@ -12,7 +12,7 @@ const BridgeContainer = dynamic(async () => await import('./Container'), {
 
 export const Bridge = () => {
   return (
-    <section className='mx-auto flex w-[32rem] flex-col space-y-6'>
+    <section className='mx-auto flex w-full flex-col space-y-6 lg:w-[32rem]'>
       <Heading as='h1' variant='h2'>
         Bridge
       </Heading>

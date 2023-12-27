@@ -56,3 +56,5 @@ export const useERC721ApproveAll = (
     isApproving: isWriting || isPending
   }
 }
+
+export default useERC721ApproveAll

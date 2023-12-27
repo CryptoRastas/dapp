@@ -9,6 +9,8 @@ import {
 } from 'wagmi/chains'
 
 export interface Chain extends WagmiChain {
+  abstractId: number
+  isSourceChain: boolean
   contracts: {
     token: {
       address: string
@@ -22,6 +24,8 @@ export interface Chain extends WagmiChain {
 }
 
 export const polygonMumbai: Chain = merge(polygonMumbaiChain, {
+  abstractId: 10109,
+  isSourceChain: false,
   contracts: merge(polygonMumbaiChain.contracts, {
     token: {
       address: '0xc8ce0cA761935859c457C1b0cBE953A66757E777',
@@ -35,6 +39,8 @@ export const polygonMumbai: Chain = merge(polygonMumbaiChain, {
 })
 
 export const polygon: Chain = merge(polygonChain, {
+  abstractId: 109,
+  isSourceChain: false,
   contracts: merge(polygonChain.contracts, {
     token: {
       address: '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889',
@@ -48,6 +54,8 @@ export const polygon: Chain = merge(polygonChain, {
 })
 
 export const sepolia: Chain = merge(sepoliaChain, {
+  abstractId: 10161,
+  isSourceChain: true,
   contracts: merge(sepoliaChain.contracts, {
     token: {
       address: '0x0888CF7Ee20c0E1d43bd2073bb334c65cF7B6FF1',
@@ -61,6 +69,8 @@ export const sepolia: Chain = merge(sepoliaChain, {
 })
 
 export const mainnet: Chain = merge(mainnetChain, {
+  abstractId: 101,
+  isSourceChain: true,
   contracts: merge(mainnetChain.contracts, {
     token: {
       address: '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889',

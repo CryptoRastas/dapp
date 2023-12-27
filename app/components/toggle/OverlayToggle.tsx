@@ -39,8 +39,8 @@ export const OverlayToggle = ({
     >
       {({ onClick }) => (
         <div className='flex h-full flex-col space-y-6 overflow-y-auto overflow-x-hidden lg:space-y-0'>
-          <div className='flex-none lg:hidden' onClick={onClick}>
-            <XMarkIcon width={24} title='exit' />
+          <div className='flex-none text-white lg:hidden' onClick={onClick}>
+            <XMarkIcon fill='currentColor' width={24} title='exit' />
           </div>
           {cloneElement(Children.only(container), {
             className: 'flex-1'

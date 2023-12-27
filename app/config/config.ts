@@ -1,6 +1,5 @@
 import { reduce } from 'lodash'
-import { polygonMumbai, polygon, mainnet, sepolia } from './chains'
-import { Chain } from 'wagmi'
+import { polygonMumbai, polygon, mainnet, sepolia, Chain } from './chains'
 
 export const mainnets = [mainnet, polygon]
 export const testnets = [sepolia, polygonMumbai]
