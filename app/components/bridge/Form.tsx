@@ -75,6 +75,7 @@ export const BridgeForm = () => {
 
   return (
     <form
+      key={config.id}
       noValidate
       className='flex flex-col space-y-4'
       onSubmit={handleSubmit(onSubmit)}

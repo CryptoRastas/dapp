@@ -3,6 +3,7 @@ import ABI from './abi.json'
 
 import { useContractRead, useContractWrite, useWaitForTransaction } from 'wagmi'
 import { ethers } from 'ethers'
+/// https://www.npmjs.com/package/@layerzerolabs/scan-client
 
 export type BridgePayload = {
   bridgeAddress: string
