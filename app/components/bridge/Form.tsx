@@ -44,10 +44,18 @@ export const BridgeForm = () => {
     chainId: +destinationChainIdField
   })
 
-  const { isApproving, isApprovedForAll, isLoading, approveAll } =
-    useERC721ApproveAll(token.address, bridge.address)
+  const {
+    isApproving,
+    isApprovedForAll,
+    isLoading: isApproveAllLoading,
+    approveAll
+  } = useERC721ApproveAll(token.address, bridge.address)
 
-  const { sendBatchFrom, fees } = useBridge({
+  const {
+    sendBatchFrom,
+    fees,
+    isLoading: isBridgeLoading
+  } = useBridge({
     bridgeAddress: bridge.address,
     tokenIds: tokenIdsField.split(',').map((id) => id.trim()),
     destinationChainId: destinationConfig.abstractId
@@ -64,8 +72,6 @@ export const BridgeForm = () => {
       console.error('Something wrong while bridging your tokens', error)
     }
   }
-
-  console.log(fees)
 
   return (
     <form
@@ -101,7 +107,7 @@ export const BridgeForm = () => {
         </legend>
         <input
           {...register('tokenIds', { required: true })}
-          disabled={!isConnected || isLoading}
+          disabled={!isConnected || isApproveAllLoading}
           type='text'
           placeholder='separated by comma'
           className={classNames(
@@ -119,7 +125,7 @@ export const BridgeForm = () => {
         </legend>
         <select
           {...register('destinationChainId', { required: true })}
-          disabled={!isConnected || isLoading}
+          disabled={!isConnected || isApproveAllLoading}
           defaultValue={isConnected ? config.id : ''}
           className={classNames(
             Sizes.default.classes,
@@ -166,12 +172,21 @@ export const BridgeForm = () => {
         </ul>
       </div>
       {isApproving && (
-        <div className='flex flex-col items-center justify-center'>
+        <div className='flex flex-col items-center justify-center space-y-2'>
           <Text>Your are approving bridge to transfer your tokens</Text>
           <LoadingSkeleton className='h-2 w-full flex-1' />
         </div>
       )}
-      <Button type='submit' disabled={!isConnected || isLoading}>
+      {isBridgeLoading && (
+        <div className='flex flex-col items-center justify-center space-y-2'>
+          <Text>Your are bridging your tokens</Text>
+          <LoadingSkeleton className='h-2 w-full flex-1' />
+        </div>
+      )}
+      <Button
+        type='submit'
+        disabled={!isConnected || isApproveAllLoading || isBridgeLoading}
+      >
         <>{!isApprovedForAll ? 'Approve' : 'Bridge'}</>
       </Button>
     </form>

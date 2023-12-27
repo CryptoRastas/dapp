@@ -17,7 +17,11 @@ export const useBridge = ({
 }: BridgePayload) => {
   const { address, isConnected } = useWallet()
 
-  const { data: sendBatchFromData, writeAsync } = useContractWrite({
+  const {
+    data: sendBatchFromData,
+    writeAsync,
+    isLoading: isWriting
+  } = useContractWrite({
     functionName: 'sendBatchFrom',
     address: bridgeAddress as `0x${string}`,
     abi: ABI
@@ -78,7 +82,8 @@ export const useBridge = ({
 
   return {
     fees: estimateData?.[0] || 0n,
-    sendBatchFrom: handleSendBatchFrom
+    sendBatchFrom: handleSendBatchFrom,
+    isLoading: isPending || isWriting
   }
 }
 
