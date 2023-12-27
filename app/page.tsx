@@ -10,8 +10,6 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export function generateStaticParams() {}
-
 const Homepage = () => {
   return (
     <>
