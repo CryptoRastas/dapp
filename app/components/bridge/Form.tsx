@@ -104,7 +104,7 @@ export const BridgeForm = () => {
       </fieldset>
       <fieldset className='flex flex-col space-y-2'>
         <legend>
-          <Text>Type your token id's</Text>
+          <Text>Type your token id&apos;s</Text>
         </legend>
         <input
           {...register('tokenIds', { required: true })}

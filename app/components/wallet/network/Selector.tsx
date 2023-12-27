@@ -3,7 +3,6 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/solid'
 import { NetworkThumbnail } from './Thumbnail'
 import classNames from 'classnames'
 import { ChainConfig } from '@/app/lib/wallet/hooks/useNetwork'
-import { Text } from '@/app/components/typography'
 
 type NetworkSelectorProps = HTMLProps<HTMLDivElement> & {
   isOpen?: boolean
