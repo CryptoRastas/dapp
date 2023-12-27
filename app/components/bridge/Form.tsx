@@ -19,6 +19,7 @@ import useERC721ApproveAll from '@/app/lib/wallet/hooks/useERC721ApproveAll'
 import { useFormContext } from 'react-hook-form'
 import useBridge from '@/app/lib/hooks/bridge/useBridge'
 import useChainConfig from '@/app/lib/wallet/hooks/useChainConfig'
+import { ethers } from 'ethers'
 
 export type BridgeFormFields = {
   tokenIds: string
@@ -46,7 +47,7 @@ export const BridgeForm = () => {
   const { isApproving, isApprovedForAll, isLoading, approveAll } =
     useERC721ApproveAll(token.address, bridge.address)
 
-  const { sendBatchFrom } = useBridge({
+  const { sendBatchFrom, fees } = useBridge({
     bridgeAddress: bridge.address,
     tokenIds: tokenIdsField.split(',').map((id) => id.trim()),
     destinationChainId: destinationConfig.abstractId
@@ -63,6 +64,8 @@ export const BridgeForm = () => {
       console.error('Something wrong while bridging your tokens', error)
     }
   }
+
+  console.log(fees)
 
   return (
     <form
@@ -149,7 +152,14 @@ export const BridgeForm = () => {
           </li>
           <li>
             <Text>
-              Fees: {assetsUtils.formatBalance(isConnected ? 0 : 0, 4, 0)}{' '}
+              Fees:{' '}
+              {assetsUtils.formatBalance(
+                isConnected
+                  ? ethers.formatUnits(fees.toString()).toString()
+                  : 0,
+                12,
+                4
+              )}{' '}
               {config.nativeCurrency.symbol}
             </Text>
           </li>

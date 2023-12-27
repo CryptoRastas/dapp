@@ -67,7 +67,7 @@ export const useBridge = ({
         zroPaymentAddress,
         adapterParams
       ],
-      value: estimateData?.[0]
+      value: estimateData?.[0] || 0n
     })
   }
 
@@ -77,6 +77,7 @@ export const useBridge = ({
   })
 
   return {
+    fees: estimateData?.[0] || 0n,
     sendBatchFrom: handleSendBatchFrom
   }
 }
