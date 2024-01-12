@@ -28,11 +28,11 @@ export const polygonMumbai: Chain = merge(polygonMumbaiChain, {
   isSourceChain: false,
   contracts: merge(polygonMumbaiChain.contracts, {
     token: {
-      address: '0x357F0dc00AdE231db59aE38aCd8A0E73ed0125Ff ',
+      address: '0x357F0dc00AdE231db59aE38aCd8A0E73ed0125Ff',
       blockNumber: 0
     },
     bridge: {
-      address: '0x357F0dc00AdE231db59aE38aCd8A0E73ed0125Ff ',
+      address: '0x357F0dc00AdE231db59aE38aCd8A0E73ed0125Ff',
       blockNumber: 0
     }
   })
