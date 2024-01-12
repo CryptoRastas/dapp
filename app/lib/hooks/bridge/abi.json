@@ -397,6 +397,11 @@
         "type": "bytes"
       },
       {
+        "internalType": "address",
+        "name": "_ERC721Address",
+        "type": "address"
+      },
+      {
         "internalType": "uint256[]",
         "name": "_tokenIds",
         "type": "uint256[]"
@@ -439,6 +444,11 @@
         "internalType": "bytes",
         "name": "_toAddress",
         "type": "bytes"
+      },
+      {
+        "internalType": "address",
+        "name": "_ERC721Address",
+        "type": "address"
       },
       {
         "internalType": "uint256",
@@ -800,6 +810,11 @@
         "type": "bytes"
       },
       {
+        "internalType": "address",
+        "name": "_ERC721Address",
+        "type": "address"
+      },
+      {
         "internalType": "uint256[]",
         "name": "_tokenIds",
         "type": "uint256[]"
@@ -841,6 +856,11 @@
         "internalType": "bytes",
         "name": "_toAddress",
         "type": "bytes"
+      },
+      {
+        "internalType": "address",
+        "name": "_ERC721Address",
+        "type": "address"
       },
       {
         "internalType": "uint256",

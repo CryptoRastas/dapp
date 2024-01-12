@@ -3,6 +3,7 @@ import ABI from './abi.json'
 
 import { useContractRead, useContractWrite, useWaitForTransaction } from 'wagmi'
 import { ethers } from 'ethers'
+import { useNetwork } from '@/app/lib/wallet/hooks'
 /// https://www.npmjs.com/package/@layerzerolabs/scan-client
 
 export type BridgePayload = {
@@ -17,6 +18,8 @@ export const useBridge = ({
   destinationChainId
 }: BridgePayload) => {
   const { address, isConnected } = useWallet()
+  const { config } = useNetwork()
+  const collectionAddress = config.contracts.token.address
 
   const {
     data: sendBatchFromData,
@@ -54,7 +57,14 @@ export const useBridge = ({
     enabled: isConnected,
     address: bridgeAddress as `0x${string}`,
     abi: ABI,
-    args: [destinationChainId, address, tokenIds, useZRO, adapterParams],
+    args: [
+      destinationChainId,
+      address,
+      collectionAddress,
+      tokenIds,
+      useZRO,
+      adapterParams
+    ],
     watch: true,
     cacheTime: 2_000
   })
@@ -67,6 +77,7 @@ export const useBridge = ({
         address,
         destinationChainId,
         address,
+        collectionAddress,
         tokenIds,
         address,
         zroPaymentAddress,
