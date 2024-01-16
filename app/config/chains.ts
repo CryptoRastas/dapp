@@ -10,7 +10,9 @@ import {
 
 export interface Chain extends WagmiChain {
   abstractId: number
+
   isSourceChain: boolean
+
   contracts: {
     token: {
       address: string

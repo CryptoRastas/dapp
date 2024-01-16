@@ -8,9 +8,8 @@ export function useChainContract(
 ) {
   const { config } = useNetwork()
 
-  return allowedChainsConfig?.[chainId || config.id]?.contracts?.[
-    contractName
-  ] as Chain['contracts'][typeof contractName]
+  allowedChainsConfig?.[chainId || config.id]?.contracts?.[contractName]
+  return allowedChainsConfig?.[chainId || config.id]?.contracts?.[contractName]
 }
 
 export default useChainContract

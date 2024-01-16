@@ -24,7 +24,7 @@ export const WalletButton = ({ children, ...props }: ButtonProps) => {
     connect({ connector })
   }
   return (
-    <Button {...props} onClick={handleConnect}>
+    <Button {...props} onClick={handleConnect} type='button'>
       {mustSwitchNetwork ? (
         <>
           {isLoading ? 'Connecting' : 'Switch Chain to '}

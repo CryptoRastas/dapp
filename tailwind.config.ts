@@ -28,13 +28,6 @@ const config: Config = {
   corePlugins: {
     container: false
   },
-  plugins: [container],
-  theme: {
-    extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))'
-      }
-    }
-  }
+  plugins: [container]
 }
 export default config

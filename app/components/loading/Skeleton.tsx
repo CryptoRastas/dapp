@@ -1,6 +1,5 @@
 import classNames from 'classnames'
 import { type HTMLProps } from 'react'
-import { useSsr } from 'usehooks-ts'
 
 export type LoadingSkeletonProps = HTMLProps<HTMLDivElement> & {
   skeleton?: {
@@ -13,23 +12,15 @@ export const LoadingSkeleton = ({
   skeleton,
   ...props
 }: LoadingSkeletonProps) => {
-  const { isServer } = useSsr()
-
   return (
     <div
       role='status'
-      className={classNames(className || skeleton?.className, 'animate-pulse')}
+      className={classNames(className, 'animate-pulse rounded-2xl bg-black')}
       {...props}
     >
-      {isServer ? (
+      <div className={classNames(skeleton?.className || 'h-2.5 w-48')}>
         <span className='sr-only'>Loading...</span>
-      ) : (
-        <div
-          className={classNames(
-            skeleton?.className || 'h-2.5 w-full rounded-full bg-black'
-          )}
-        />
-      )}
+      </div>
     </div>
   )
 }

@@ -95,7 +95,7 @@ export const BridgeForm = () => {
           {config.isSourceChain && (
             <Link
               target='_blank'
-              href={`${config.blockExplorers?.default.url}/address/${token.address}`}
+              href={`${config.blockExplorers?.default.url}/address/${token}`}
             >
               <Text>Mint</Text>
             </Link>

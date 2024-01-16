@@ -2,12 +2,10 @@
 
 import { useNetwork, useWallet } from '@/app/lib/wallet/hooks'
 import { AccountConnect, Account } from './account'
-import classNames from 'classnames'
-import { Variant, Sizes } from '../button/Button'
 import { Network } from './network'
 
 export const Wallet = () => {
-  const { chain, chains } = useNetwork()
+  const { chain } = useNetwork()
 
   const {
     connectors: [connector],
@@ -18,33 +16,16 @@ export const Wallet = () => {
     disconnect
   } = useWallet()
 
-  return (
-    <div
-      className={classNames(
-        'flex items-center justify-center space-x-2 rounded-lg'
-      )}
-    >
-      {!isConnected || !address ? (
-        <AccountConnect
-          connector={connector}
-          isConnecting={isConnecting}
-          connect={connect}
-        />
-      ) : (
-        <>
-          <Network chain={chain} chains={chains} />
-          <Account
-            address={address}
-            disconnect={disconnect}
-            className={classNames(
-              'cursor-pointer rounded-md',
-              Sizes.sm.classes,
-              Variant.default.classes,
-              Variant.default.hover
-            )}
-          />
-        </>
-      )}
+  const handleConnect = () => {
+    connect({ connector })
+  }
+
+  return !isConnected || !address ? (
+    <AccountConnect onConnect={handleConnect} isConnecting={isConnecting} />
+  ) : (
+    <div className='flex items-center space-x-2'>
+      <Network chain={chain} />
+      <Account address={address} disconnect={disconnect} />
     </div>
   )
 }

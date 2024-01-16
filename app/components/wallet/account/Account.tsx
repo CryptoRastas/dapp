@@ -1,26 +1,16 @@
-import { type HTMLProps } from 'react'
-import classNames from 'classnames'
 import addressUtils from '@/app/lib/utils/address'
-import { AccountAvatar } from './Avatar'
 import { Text } from '@/app/components/typography'
 
-type AccountProps = HTMLProps<HTMLDivElement> & {
+type AccountProps = {
   disconnect: () => void
   address: string
 }
 
-export const Account = ({ address, disconnect, ...props }: AccountProps) => {
+export const Account = ({ address, disconnect }: AccountProps) => {
   return (
-    <div onClick={() => disconnect()} {...props}>
-      <div
-        className={classNames('flex w-full items-center space-x-2 rounded-md')}
-      >
-        <AccountAvatar title={address} address={address} />
-        <Text size='base' className='hidden md:inline-block'>
-          {addressUtils.toEllipsis(address, 4, 4)}
-        </Text>
-      </div>
-    </div>
+    <button onClick={() => disconnect()} type='button'>
+      <Text>{addressUtils.toEllipsis(address, 4, 4)}</Text>
+    </button>
   )
 }
 export default Account

@@ -3,17 +3,15 @@ import classNames from 'classnames'
 
 export const Sizes = {
   default: 'text-xs',
-  base: 'text-base',
-  lg: 'text-lg',
-  xl: 'text-xl'
+  base: 'text-base'
 } as const
 
 export const Variant = {
   p: {
-    classes: ['font-normal', Sizes.base].concat(' ')
+    classes: ['font-normal']
   },
   span: {
-    classes: ['font-light', Sizes.default].concat(' ')
+    classes: ['font-light']
   }
 } as const
 
@@ -24,9 +22,9 @@ export type TextProps = Omit<HTMLProps<HTMLElement>, 'size'> & {
 }
 
 export const Text = ({
-  as = 'p',
-  variant = 'p',
-  size = 'default',
+  as = 'span',
+  variant = 'span',
+  size = 'base',
   children,
   className,
   ...props
