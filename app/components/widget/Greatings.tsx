@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 export const Greatings = () => {
   const [asset1, asset2, asset3, asset4] = [
@@ -9,7 +10,11 @@ export const Greatings = () => {
   ]
 
   return (
-    <div className='relative h-72 w-80'>
+    <Link
+      href='https://opensea.io/collection/cryptorastas-collection'
+      className='relative h-72 w-80'
+      target='_blank'
+    >
       <Image
         alt={`CryptoRastas Collection Token 4761`}
         src={asset1}
@@ -38,7 +43,7 @@ export const Greatings = () => {
         height={100}
         className='absolute bottom-4 left-32 z-[4] rotate-[15deg] rounded-2xl border-4 border-yellow-400 shadow-lg blur-[0.2rem] transition-all duration-700 hover:scale-105'
       />
-    </div>
+    </Link>
   )
 }
 
