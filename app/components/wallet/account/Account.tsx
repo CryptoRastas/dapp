@@ -9,7 +9,7 @@ type AccountProps = {
 export const Account = ({ address, disconnect }: AccountProps) => {
   return (
     <Button onClick={() => disconnect()} type='button'>
-      {addressUtils.toEllipsis(address, 4, 4)}
+      {addressUtils.toEllipsis(address, 6, 0)}
     </Button>
   )
 }

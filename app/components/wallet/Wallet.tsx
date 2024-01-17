@@ -32,7 +32,7 @@ export const Wallet = () => {
             'rounded-3xl bg-amber-200'
           ])}
         >
-          <div className='px-4 pr-2'>
+          <div className='pl-4 max-lg:pr-2 lg:pr-1'>
             <Network
               chain={chain}
               chains={chains}

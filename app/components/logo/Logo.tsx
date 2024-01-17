@@ -14,6 +14,11 @@ export const Logo = ({ className, ...props }: HTMLProps<HTMLDivElement>) => {
         alt={appConfig.name}
         fill
         priority
+        sizes={`
+          (min-width: 1024px) 128px,
+          108px
+          
+        `}
       />
     </div>
   )

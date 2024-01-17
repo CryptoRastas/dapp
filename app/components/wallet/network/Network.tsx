@@ -25,6 +25,11 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
 
   const filteredChains = chains.filter(handleFilterOnlyUnconnectedChains)
 
+  const handleSwitchNetwork = (chainId: number) => {
+    toggleIsOpen()
+    onSwitchNetwork?.(chainId)
+  }
+
   return (
     <>
       <style jsx>
@@ -34,11 +39,12 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
           }
         `}
       </style>
-      <div
-        className='network-selector flex items-center space-x-2'
-        onClick={toggleIsOpen}
-      >
-        <button type='button' className='flex items-center space-x-1'>
+      <div className='network-selector flex items-center lg:space-x-2'>
+        <button
+          type='button'
+          className='flex items-center space-x-1'
+          onClick={toggleIsOpen}
+        >
           {!chain || chain?.unsupported ? (
             <>
               <ExclamationTriangleIcon className='h-4 w-4 text-red-500' />
@@ -52,26 +58,49 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
                 src={`/assets/chains/${chain?.id}.svg`}
                 className='grayscale'
               />
-              {isOpen && <Text className='text-center'>{chain?.name}</Text>}
+              {isOpen && (
+                <Text className='hidden text-center lg:inline-block'>
+                  {chain?.name}
+                </Text>
+              )}
             </>
           )}
         </button>
-        <div>
+        <div
+          className={classNames(
+            isOpen
+              ? [
+                  'max-lg:absolute max-lg:h-full max-lg:w-full max-lg:bg-black/80 max-lg:backdrop-blur',
+                  'max-lg:bottom-0 max-lg:left-0 max-lg:right-0 max-lg:top-0 max-lg:p-6'
+                ]
+              : ''
+          )}
+        >
           <ul
             className={classNames([
               'flex items-center space-x-1',
-              'overflow-hidden transition-all duration-1000',
-              'w-[var(--list-width)]',
-              isOpen ? 'ease-in-out' : 'ease-in'
+              'overflow-hidden transition-all duration-300',
+              'lg:w-[var(--list-width)]',
+              isOpen ? 'w-auto' : 'max-lg:w-0',
+              isOpen ? 'opacity-100 ease-in-out' : 'opacity-0 ease-in'
             ])}
           >
             {Children.toArray(
               filteredChains.map((availableChain) => (
-                <li className='flex justify-center'>
+                <li
+                  className={classNames([
+                    'flex lg:justify-center',
+                    'max-lg:w-full'
+                  ])}
+                >
                   <button
                     type='button'
                     title={availableChain.name}
-                    onClick={() => onSwitchNetwork?.(availableChain.id)}
+                    className={classNames([
+                      'max-lg:flex max-lg:space-x-2',
+                      'max-lg:text-white'
+                    ])}
+                    onClick={() => handleSwitchNetwork(availableChain.id)}
                   >
                     <NetworkThumbnail
                       className='grayscale'
@@ -79,6 +108,9 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
                       height={height}
                       src={`/assets/chains/${availableChain.id}.svg`}
                     />
+                    <Text className='inline-block text-center lg:hidden'>
+                      {availableChain?.name}
+                    </Text>
                   </button>
                 </li>
               ))
