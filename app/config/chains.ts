@@ -26,6 +26,7 @@ export interface Chain extends WagmiChain {
 }
 
 export const polygonMumbai: Chain = merge(polygonMumbaiChain, {
+  name: 'Mumbai',
   abstractId: 10109,
   isSourceChain: false,
   contracts: merge(polygonMumbaiChain.contracts, {

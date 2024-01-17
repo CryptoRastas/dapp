@@ -3,9 +3,10 @@
 import { useNetwork, useWallet } from '@/app/lib/wallet/hooks'
 import { AccountConnect, Account } from './account'
 import { Network } from './network'
+import classNames from 'classnames'
 
 export const Wallet = () => {
-  const { chain } = useNetwork()
+  const { chain, chains, switchNetwork } = useNetwork()
 
   const {
     connectors: [connector],
@@ -20,12 +21,27 @@ export const Wallet = () => {
     connect({ connector })
   }
 
-  return !isConnected || !address ? (
-    <AccountConnect onConnect={handleConnect} isConnecting={isConnecting} />
-  ) : (
-    <div className='flex items-center space-x-2'>
-      <Network chain={chain} />
-      <Account address={address} disconnect={disconnect} />
+  return (
+    <div>
+      {!isConnected || !address ? (
+        <AccountConnect onConnect={handleConnect} isConnecting={isConnecting} />
+      ) : (
+        <div
+          className={classNames([
+            'flex items-center',
+            'rounded-3xl bg-amber-200'
+          ])}
+        >
+          <div className='px-4 pr-2'>
+            <Network
+              chain={chain}
+              chains={chains}
+              onSwitchNetwork={switchNetwork}
+            />
+          </div>
+          <Account address={address} disconnect={disconnect} />
+        </div>
+      )}
     </div>
   )
 }

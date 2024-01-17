@@ -1,5 +1,5 @@
 import addressUtils from '@/app/lib/utils/address'
-import { Text } from '@/app/components/typography'
+import { Button } from '@/app/components/button'
 
 type AccountProps = {
   disconnect: () => void
@@ -8,9 +8,9 @@ type AccountProps = {
 
 export const Account = ({ address, disconnect }: AccountProps) => {
   return (
-    <button onClick={() => disconnect()} type='button'>
-      <Text>{addressUtils.toEllipsis(address, 4, 4)}</Text>
-    </button>
+    <Button onClick={() => disconnect()} type='button'>
+      {addressUtils.toEllipsis(address, 4, 4)}
+    </Button>
   )
 }
 export default Account

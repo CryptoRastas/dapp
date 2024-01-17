@@ -15,7 +15,11 @@ export const LoadingSkeleton = ({
   return (
     <div
       role='status'
-      className={classNames(className, 'animate-pulse rounded-2xl bg-black')}
+      className={classNames(
+        className,
+        'animate-pulse bg-black',
+        className?.includes('rounded-') ? '' : 'rounded-2xl'
+      )}
       {...props}
     >
       <div className={classNames(skeleton?.className || 'h-2.5 w-48')}>

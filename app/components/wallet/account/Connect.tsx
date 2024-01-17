@@ -1,4 +1,4 @@
-import { Text } from '@/app/components/typography'
+import { Button } from '@/app/components/button'
 
 type AccountConnectProps = {
   isConnecting?: boolean
@@ -10,9 +10,9 @@ export const AccountConnect = ({
   isConnecting
 }: AccountConnectProps) => {
   return (
-    <button onClick={onConnect} type='button'>
-      <Text>{isConnecting ? 'Connecting' : 'Connect'}</Text>
-    </button>
+    <Button onClick={onConnect} type='button'>
+      {isConnecting ? 'Connecting' : 'Connect'}
+    </Button>
   )
 }
 

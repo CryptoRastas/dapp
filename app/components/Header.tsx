@@ -9,7 +9,7 @@ import LoadingSkeleton from './loading/Skeleton'
 
 const Wallet = dynamic(() => import('@/app/components/wallet/Wallet'), {
   ssr: false,
-  loading: () => <LoadingSkeleton className='h-8 w-full' />
+  loading: () => <LoadingSkeleton className='h-9 w-24 rounded-3xl' />
 })
 
 export type HeaderProps = HTMLProps<HTMLElement> & {
@@ -22,13 +22,13 @@ export const Header = ({ className, ...props }: HTMLProps<HTMLElement>) => {
       {...props}
       className={classNames(
         className,
-        'grid grid-cols-12 items-center container'
+        'grid grid-cols-12 items-center py-4 container'
       )}
     >
       <div className='col-span-6 md:col-span-8 lg:col-span-10'>
         <Logo />
       </div>
-      <div className='col-span-6 md:col-span-4 lg:col-span-2'>
+      <div className='col-span-6 flex justify-end md:col-span-4 lg:col-span-2'>
         <Wallet />
       </div>
     </header>
