@@ -59,7 +59,10 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
                 className='grayscale'
               />
               {isOpen && (
-                <Text className='hidden text-center lg:inline-block'>
+                <Text
+                  className='hidden text-center text-xs lg:inline-block'
+                  size='default'
+                >
                   {chain?.name}
                 </Text>
               )}
@@ -70,8 +73,8 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
           className={classNames(
             isOpen
               ? [
-                  'max-lg:absolute max-lg:h-full max-lg:w-full max-lg:bg-black/80 max-lg:backdrop-blur',
-                  'max-lg:bottom-0 max-lg:left-0 max-lg:right-0 max-lg:top-0 max-lg:p-6'
+                  'max-lg:fixed max-lg:h-full max-lg:w-full max-lg:bg-black/80 max-lg:backdrop-blur',
+                  'max-lg:bottom-0 max-lg:left-0 max-lg:right-0 max-lg:top-0 max-lg:z-[10] max-lg:p-6'
                 ]
               : ''
           )}
@@ -108,7 +111,10 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
                       height={height}
                       src={`/assets/chains/${availableChain.id}.svg`}
                     />
-                    <Text className='inline-block text-center lg:hidden'>
+                    <Text
+                      className='inline-block text-center text-lg  lg:hidden'
+                      size='default'
+                    >
                       {availableChain?.name}
                     </Text>
                   </button>
