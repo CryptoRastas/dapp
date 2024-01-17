@@ -8,8 +8,13 @@ const font = Inter({ subsets: ['latin'], preload: true })
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <html lang={'en'}>
-      <body className={classNames(font.className, 'bg-yellow-500 text-black')}>
+    <html lang={'en'} className='h-screen'>
+      <body
+        className={classNames(
+          font.className,
+          'flex h-full flex-col bg-yellow-500 text-black'
+        )}
+      >
         <Providers>{children}</Providers>
       </body>
     </html>
