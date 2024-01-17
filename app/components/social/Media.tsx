@@ -17,7 +17,7 @@ export const SocialMedia = ({
   return (
     <ul {...props} className={classNames(className, 'flex space-x-6')}>
       {Children.toArray(
-        medias.map((socialMedia, index) => (
+        medias.map((socialMedia) => (
           <>
             <li>
               <Link href={socialMedia.url} target='_blank'>
@@ -34,12 +34,6 @@ export const SocialMedia = ({
                 )}
               </Link>
             </li>
-            {index === medias.length - 1 ? null : (
-              <li
-                className='border border-black dark:border-gray-700'
-                aria-hidden='true'
-              />
-            )}
           </>
         ))
       )}

@@ -11,32 +11,32 @@ export const Greatings = () => {
   return (
     <div className='relative h-72 w-80'>
       <Image
-        alt={`collection token`}
+        alt={`CryptoRastas Collection Token 4761`}
         src={asset1}
         width={85}
         height={100}
-        className='absolute  left-24 top-12 z-[1] rounded-2xl border-4 border-yellow-400 shadow-lg blur'
+        className='absolute left-24 top-12 z-[1] rounded-2xl border-4 border-yellow-400 shadow-lg blur transition-all duration-700 hover:scale-105'
       />
       <Image
-        alt={`collection token`}
+        alt={`CryptoRastas Collection Token 5002`}
         src={asset2}
         width={115}
         height={130}
-        className='absolute left-8 top-24 z-[3] rotate-[-5deg] rounded-2xl border-4 border-yellow-400 shadow-lg'
+        className='absolute left-8 top-24 z-[3] rotate-[-5deg] rounded-2xl border-4 border-yellow-400 shadow-lg transition-all duration-700 hover:scale-105'
       />
       <Image
-        alt={`collection token`}
+        alt={`CryptoRastas Collection Token 6981`}
         src={asset3}
         width={150}
         height={165}
-        className='absolute bottom-16 right-6 z-[2] rotate-[5deg] rounded-2xl border-4 border-yellow-400 shadow-lg'
+        className='absolute bottom-16 right-6 z-[2] rotate-[5deg] rounded-2xl border-4 border-yellow-400 shadow-lg transition-all duration-700 hover:scale-105'
       />
       <Image
-        alt={`collection token`}
+        alt={`CryptoRastas Collection Token 9491`}
         src={asset4}
         width={85}
         height={100}
-        className='absolute bottom-4 left-32 z-[4] rotate-[15deg] rounded-2xl border-4 border-yellow-400 shadow-lg blur-[0.2rem]'
+        className='absolute bottom-4 left-32 z-[4] rotate-[15deg] rounded-2xl border-4 border-yellow-400 shadow-lg blur-[0.2rem] transition-all duration-700 hover:scale-105'
       />
     </div>
   )

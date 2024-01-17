@@ -4,6 +4,7 @@ import { Header } from '@/app/components/Header'
 import { Heading, Text } from '@/app/components/typography'
 import Link from 'next/link'
 import { Widget } from './components/widget'
+import Footer from './components/Footer'
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -18,7 +19,7 @@ const Homepage = () => {
       <Header />
       <main className='flex-1 py-24 container'>
         <div className='grid grid-cols-2 gap-8'>
-          <section className='col-span-2 flex flex-col space-y-4 lg:col-span-1'>
+          <section className='col-span-2 flex flex-col space-y-4 max-lg:order-2 lg:col-span-1'>
             <Heading className='tracking-[-.5rem]'>Bridge</Heading>
             <Heading as='h2' className='tracking-[-.3rem]'>
               About
@@ -58,12 +59,14 @@ const Homepage = () => {
               </Text>
             </article>
           </section>
-          <div className='col-span-2 lg:col-span-1'>
+          <div className='col-span-2 max-lg:order-1 lg:col-span-1'>
             <Widget />
           </div>
         </div>
       </main>
-      <footer className='pb-24 container'>#footer</footer>
+      <div className='pb-24 container'>
+        <Footer />
+      </div>
     </>
   )
 }
