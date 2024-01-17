@@ -2,6 +2,8 @@ import appConfig from '@/app.config'
 import { Metadata } from 'next'
 import { Header } from '@/app/components/Header'
 import { Heading, Text } from '@/app/components/typography'
+import Link from 'next/link'
+import { Widget } from './components/widget'
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -15,13 +17,13 @@ const Homepage = () => {
     <>
       <Header />
       <main className='flex-1 py-24 container'>
-        <div className='grid grid-cols-2'>
+        <div className='grid grid-cols-2 gap-8'>
           <section className='col-span-2 flex flex-col space-y-4 lg:col-span-1'>
             <Heading className='tracking-[-.5rem]'>Bridge</Heading>
             <Heading as='h2' className='tracking-[-.3rem]'>
               About
             </Heading>
-            <article className='flex flex-col space-y-4'>
+            <article className='flex flex-col space-y-4 text-justify'>
               <Text>
                 CryptoRastas is a global club/community platform that uses
                 blockchain technology and digital art to engage and empower
@@ -47,9 +49,18 @@ const Homepage = () => {
                 and we have already started to reorganize our house. Stay tuned
                 for the next steps!
               </Text>
+              <Text
+                variant='default'
+                size='default'
+                className='text-base font-bold'
+              >
+                <Link href='#'>more details...</Link>
+              </Text>
             </article>
           </section>
-          <div className='col-span-2 lg:col-span-1'>widget</div>
+          <div className='col-span-2 lg:col-span-1'>
+            <Widget />
+          </div>
         </div>
       </main>
       <footer className='pb-24 container'>#footer</footer>

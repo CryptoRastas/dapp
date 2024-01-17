@@ -45,7 +45,7 @@ export const Text = ({
           className: classNames(
             className,
             Sizes[size].classes,
-            Variant[as || variant].classes
+            Variant[variant || as].classes
           )
         },
         children
