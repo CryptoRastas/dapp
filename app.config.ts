@@ -5,6 +5,7 @@ const appConfig = {
   meta: {
     description: 'One love inna decentralized style!'
   },
+  siteURL: 'https://cryptorastas.com',
   routes,
   social: {
     media: {

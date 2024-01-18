@@ -55,7 +55,9 @@ const Homepage = () => {
                 size='default'
                 className='text-base font-bold'
               >
-                <Link href='#'>more details...</Link>
+                <Link href={appConfig.siteURL} target='_blank'>
+                  more details...
+                </Link>
               </Text>
             </article>
           </section>
