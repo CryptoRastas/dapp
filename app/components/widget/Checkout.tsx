@@ -6,7 +6,6 @@ import { Heading, Text } from '@/app/components/typography'
 import { Step } from '@/app/components/step/Step'
 import { Children } from 'react'
 import Image from 'next/image'
-import { Button } from '@/app/components/button'
 
 export const Checkout = () => {
   const chainContract = useChainContract('token')
@@ -20,21 +19,23 @@ export const Checkout = () => {
   return (
     <Step>
       <section className='flex flex-col justify-start space-y-8'>
-        <Heading as='h3'>Select your tokens</Heading>
-        <Text size='sm'>
-          Before start, select your token IDs that’s going to be used to bridge
-          to destination chain.
-        </Text>
+        <div className='flex flex-col space-y-2'>
+          <Heading as='h3'>Select your tokens</Heading>
+          <Text size='sm'>
+            Before start, select your token IDs that’s going to be used to
+            bridge to destination chain.
+          </Text>
+        </div>
         <ul className='flex flex-wrap'>
           {Children.toArray(
             list.map((NFT) => (
-              <li className='relative h-40 w-32'>
+              <li className='relative h-32 w-32'>
                 <Image
                   src={NFT.tokenURI}
                   alt={NFT.tokenId}
                   fill
                   sizes={` 
-                  (min-width: 640px) 150px,
+                  (min-width: 640px) 128px,
                   100%
                  `}
                 />
@@ -42,11 +43,6 @@ export const Checkout = () => {
             ))
           )}
         </ul>
-        <div className='flex'>
-          <div>
-            <Button>Continue</Button>
-          </div>
-        </div>
       </section>
     </Step>
   )
