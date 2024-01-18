@@ -35,11 +35,11 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
       <style jsx>
         {`
           .network-selector {
-            --list-width: ${!isOpen ? 0 : filteredChains.length * width}px;
+            --list-width: ${!isOpen ? 0 : filteredChains.length * width + 4}px;
           }
         `}
       </style>
-      <div className='network-selector flex items-center lg:space-x-2'>
+      <div className='flex items-center lg:space-x-2'>
         <button
           type='button'
           className='flex items-center space-x-1'
@@ -48,7 +48,7 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
           {!chain || chain?.unsupported ? (
             <>
               <ExclamationTriangleIcon className='h-4 w-4 text-red-500' />
-              <span className='text-red-500'>Unsupported</span>
+              {isOpen && <span className='text-red-500'>Unsupported</span>}
             </>
           ) : (
             <>
@@ -71,19 +71,18 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
         </button>
         <div
           className={classNames(
-            isOpen
-              ? [
-                  'max-lg:fixed max-lg:h-full max-lg:w-full max-lg:bg-black/80 max-lg:backdrop-blur',
-                  'max-lg:bottom-0 max-lg:left-0 max-lg:right-0 max-lg:top-0 max-lg:z-[10] max-lg:p-6'
-                ]
-              : ''
+            'network-selector w-[var(--list-width)] overflow-hidden',
+            [
+              'max-lg:fixed max-lg:h-full max-lg:w-full max-lg:bg-black/80 max-lg:backdrop-blur',
+              'max-lg:bottom-0 max-lg:left-0 max-lg:right-0 max-lg:top-0 max-lg:z-[10] max-lg:p-6'
+            ],
+            isOpen ? 'visible opacity-100' : 'invisible opacity-0'
           )}
         >
           <ul
             className={classNames([
               'flex items-center space-x-1',
-              'overflow-hidden transition-all duration-300',
-              'lg:w-[var(--list-width)]',
+              'max-lg:flex-col max-lg:space-y-6',
               isOpen ? 'w-auto' : 'max-lg:w-0',
               isOpen ? 'opacity-100 ease-in-out' : 'opacity-0 ease-in'
             ])}

@@ -22,7 +22,7 @@ export const Wallet = () => {
   }
 
   return (
-    <div>
+    <>
       {!isConnected || !address ? (
         <AccountConnect onConnect={handleConnect} isConnecting={isConnecting} />
       ) : (
@@ -32,7 +32,7 @@ export const Wallet = () => {
             'rounded-3xl bg-amber-200'
           ])}
         >
-          <div className='pl-4 max-lg:pr-2 lg:pr-1'>
+          <div className='pl-4 max-lg:pr-2 lg:pr-2'>
             <Network
               chain={chain}
               chains={chains}
@@ -42,7 +42,7 @@ export const Wallet = () => {
           <Account address={address} disconnect={disconnect} />
         </div>
       )}
-    </div>
+    </>
   )
 }
 

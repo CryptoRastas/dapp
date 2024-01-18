@@ -8,7 +8,7 @@ export const Widget = () => {
 
   return (
     <div className='flex h-full items-center justify-center'>
-      {!isConnected ? <Greatings /> : 'widget'}
+      {!isConnected ? <Greatings /> : ''}
     </div>
   )
 }

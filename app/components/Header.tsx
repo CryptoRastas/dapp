@@ -25,10 +25,9 @@ export const Header = ({ className, ...props }: HTMLProps<HTMLElement>) => {
         'flex items-center justify-between space-x-4 py-4 container'
       )}
     >
-      <div className='col-span-6 md:col-span-8 lg:col-span-10'>
-        <Logo />
-      </div>
-      <div className='col-span-6 flex justify-end md:col-span-4 lg:col-span-2'>
+      <Logo />
+
+      <div>
         <Wallet />
       </div>
     </header>
