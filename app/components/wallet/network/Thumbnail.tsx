@@ -11,8 +11,8 @@ type NetworkThumbnailProps = HTMLProps<HTMLDivElement> & {
 export const NetworkThumbnail = ({
   src,
   className,
-  width = 20,
-  height = 20,
+  width = 16,
+  height = 16,
   ...props
 }: NetworkThumbnailProps) => {
   return (
@@ -30,7 +30,7 @@ export const NetworkThumbnail = ({
         className={classNames(
           className,
           'network-thumbnail',
-          'flex h-[var(--height)] w-[var(--width)] items-center justify-center rounded-full bg-white p-px'
+          'flex h-[var(--height)] w-[var(--width)] items-center justify-center'
         )}
       >
         {src ? (

@@ -17,7 +17,7 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
   const [isOpen, toggleIsOpen] = useToggle()
 
   /// Thumbsize
-  const [width, height] = [20, 20]
+  const [width, height] = [16, 16]
 
   const handleFilterOnlyUnconnectedChains = (chainToCheck: Chain) => {
     return chainToCheck.id !== chain?.id
