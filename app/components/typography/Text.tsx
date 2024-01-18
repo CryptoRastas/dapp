@@ -3,6 +3,7 @@ import classNames from 'classnames'
 
 export const Sizes = {
   default: { classes: '' },
+  sm: { classes: 'text-sm' },
   base: { classes: 'text-base' },
   lg: { classes: 'text-lg' },
   xl: { classes: 'text-xl' },
@@ -15,10 +16,10 @@ export const Variant = {
     classes: ''
   },
   p: {
-    classes: ['font-medium'].concat(' ')
+    classes: 'font-medium'
   },
   span: {
-    classes: ['font-light'].concat(' ')
+    classes: 'font-light'
   }
 } as const
 

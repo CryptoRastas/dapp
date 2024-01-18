@@ -3,16 +3,11 @@ import { InjectedConnector } from 'wagmi/connectors/injected'
 
 import { allowedChains } from '@/app/config/config'
 import { publicProvider } from 'wagmi/providers/public'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
+import provider, { chainsSDK, Provider } from './provider'
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   allowedChains,
-  [
-    alchemyProvider({
-      apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY!
-    }),
-    publicProvider()
-  ]
+  [provider, publicProvider()]
 )
 
 const config = createConfig({
@@ -30,6 +25,7 @@ const config = createConfig({
   webSocketPublicClient
 })
 
-export { chains }
+export { chains, chainsSDK }
+export type { Provider }
 
 export default config

@@ -4,24 +4,13 @@ import { Header } from '@/app/components/Header'
 import { Heading, Text } from '@/app/components/typography'
 import Link from 'next/link'
 import Footer from './components/Footer'
-import dynamic from 'next/dynamic'
-import { LoadingSkeleton } from '@/app/components/loading'
 import classNames from 'classnames'
+import dynamic from 'next/dynamic'
+import LoadingSkeleton from './loading'
 
-const Widget = dynamic(async () => import('@/app/components/widget/Widget'), {
+const WidgetDynamic = dynamic(() => import('@/app/components/widget/Widget'), {
   ssr: false,
-  loading: () => (
-    <div className='flex w-3/5 flex-col space-y-4'>
-      <LoadingSkeleton className='h-4 w-1/2' />
-      <LoadingSkeleton className='h-12 w-full' />
-      <div className='flex space-x-4'>
-        <LoadingSkeleton className='h-20 w-1/3' />
-        <LoadingSkeleton className='h-20 w-1/3' />
-        <LoadingSkeleton className='h-20 w-1/3' />
-      </div>
-      <LoadingSkeleton className='h-4 w-1/3' />
-    </div>
-  )
+  loading: () => <LoadingSkeleton className='h-1/3 w-2/5 opacity-20' />
 })
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -36,9 +25,9 @@ const Homepage = () => {
     <>
       <Header />
       <main className='flex-1 py-24 container'>
-        <div className='grid grid-cols-2 gap-8'>
+        <Heading className='tracking-[-.5rem]'>Bridge</Heading>
+        <div className='grid grid-cols-2 items-start gap-8'>
           <section className='col-span-2 flex flex-col space-y-4 max-lg:order-2 lg:col-span-1'>
-            <Heading className='tracking-[-.5rem]'>Bridge</Heading>
             <Heading as='h2' className='tracking-[-.3rem]'>
               About
             </Heading>
@@ -82,10 +71,10 @@ const Homepage = () => {
           <div
             className={classNames(
               'col-span-2 max-lg:order-1 lg:col-span-1',
-              'flex items-center justify-center'
+              'flex h-full items-center justify-center'
             )}
           >
-            <Widget />
+            <WidgetDynamic />
           </div>
         </div>
       </main>

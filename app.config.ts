@@ -7,6 +7,10 @@ const appConfig = {
   },
   siteURL: 'https://cryptorastas.com',
   routes,
+  collection: {
+    defaultThumbnail:
+      'https://ipfs.io/ipfs/Qmd4qtubXuZY8F8iwwBxdTsySZ4Z58eMnuHP1ecuifHcPZ'
+  },
   social: {
     media: {
       github: {
