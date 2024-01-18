@@ -3,8 +3,26 @@ import { Metadata } from 'next'
 import { Header } from '@/app/components/Header'
 import { Heading, Text } from '@/app/components/typography'
 import Link from 'next/link'
-import { Widget } from './components/widget'
 import Footer from './components/Footer'
+import dynamic from 'next/dynamic'
+import { LoadingSkeleton } from '@/app/components/loading'
+import classNames from 'classnames'
+
+const Widget = dynamic(async () => import('@/app/components/widget/Widget'), {
+  ssr: false,
+  loading: () => (
+    <div className='flex w-3/5 flex-col space-y-4'>
+      <LoadingSkeleton className='h-4 w-1/2' />
+      <LoadingSkeleton className='h-12 w-full' />
+      <div className='flex space-x-4'>
+        <LoadingSkeleton className='h-20 w-1/3' />
+        <LoadingSkeleton className='h-20 w-1/3' />
+        <LoadingSkeleton className='h-20 w-1/3' />
+      </div>
+      <LoadingSkeleton className='h-4 w-1/3' />
+    </div>
+  )
+})
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -61,7 +79,12 @@ const Homepage = () => {
               </Text>
             </article>
           </section>
-          <div className='col-span-2 max-lg:order-1 lg:col-span-1'>
+          <div
+            className={classNames(
+              'col-span-2 max-lg:order-1 lg:col-span-1',
+              'flex items-center justify-center'
+            )}
+          >
             <Widget />
           </div>
         </div>
