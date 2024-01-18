@@ -6,6 +6,7 @@ import { Heading, Text } from '@/app/components/typography'
 import { Step } from '@/app/components/step/Step'
 import { Children } from 'react'
 import Image from 'next/image'
+import classNames from 'classnames'
 
 export const Checkout = () => {
   const chainContract = useChainContract('token')
@@ -17,7 +18,7 @@ export const Checkout = () => {
   })
 
   return (
-    <Step>
+    <Step className='w-full'>
       <section className='flex flex-col justify-start space-y-8'>
         <div className='flex flex-col space-y-2'>
           <Heading as='h3'>Select your tokens</Heading>
@@ -26,17 +27,22 @@ export const Checkout = () => {
             bridge to destination chain.
           </Text>
         </div>
-        <ul className='flex flex-wrap'>
+        <ul className='grid grid-flow-row grid-cols-4 gap-4'>
           {Children.toArray(
             list.map((NFT) => (
-              <li className='relative h-32 w-32'>
+              <li
+                className={classNames(
+                  'lg:h-30 lg:w-30 relative h-28 w-28 overflow-hidden',
+                  'rounded-3xl border-4 border-yellow-400 shadow-lg',
+                  'col-span-2 sm:col-span-1'
+                )}
+              >
                 <Image
                   src={NFT.tokenURI}
                   alt={NFT.tokenId}
                   fill
                   sizes={` 
-                  (min-width: 640px) 128px,
-                  100%
+                    100%
                  `}
                 />
               </li>
