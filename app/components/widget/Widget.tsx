@@ -1,13 +1,21 @@
 'use client'
 
-import { useWallet } from '@/app/lib/wallet/hooks'
+import { useChainContract, useWallet } from '@/app/lib/wallet/hooks'
 import Greatings from './Greatings'
 import Checkout from './Checkout'
+import useNFTPortfolio from '@/app/lib/wallet/hooks/useNFTPortfolio'
 
 export const Widget = () => {
-  const { isConnected } = useWallet()
+  const { isConnected, address } = useWallet()
 
-  return !isConnected ? <Greatings /> : <Checkout />
+  const chainContract = useChainContract('token')
+
+  const list = useNFTPortfolio({
+    contractAddress: chainContract?.address,
+    owner: String(address)
+  })
+
+  return !list.length || !isConnected ? <Greatings /> : <Checkout list={list} />
 }
 
 export default Widget

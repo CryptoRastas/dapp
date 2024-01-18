@@ -24,7 +24,7 @@ const Homepage = () => {
   return (
     <>
       <Header />
-      <main className='flex flex-1 flex-col space-y-8 py-24 container'>
+      <main className='flex flex-1 flex-col space-y-8 py-16 container lg:py-32'>
         <Heading className='tracking-[-.5rem]'>Bridge</Heading>
         <div className='grid grid-cols-2 items-start gap-8'>
           <section className='col-span-2 flex flex-col space-y-4 max-lg:order-2 lg:col-span-1'>
@@ -78,7 +78,7 @@ const Homepage = () => {
           </div>
         </div>
       </main>
-      <div className='pb-24 container'>
+      <div className='pb-32 container'>
         <Footer />
       </div>
     </>
