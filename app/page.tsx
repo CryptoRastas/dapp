@@ -3,25 +3,14 @@ import { Metadata } from 'next'
 import { Header } from '@/app/components/Header'
 import { Heading, Text } from '@/app/components/typography'
 import Link from 'next/link'
-import Footer from './components/Footer'
+import Footer from '@/app/components/Footer'
 import classNames from 'classnames'
 import dynamic from 'next/dynamic'
-import LoadingSkeleton from './loading'
+import { WidgetLoading } from '@/app/components/widget/loadings'
 
 const WidgetDynamic = dynamic(() => import('@/app/components/widget/Widget'), {
   ssr: false,
-  loading: () => (
-    <div className='flex w-full flex-col items-start justify-center space-y-8'>
-      <LoadingSkeleton className='h-8 w-1/3' />
-      <LoadingSkeleton className='h-16 w-3/4' />
-      <div className='flex justify-between space-x-8'>
-        <LoadingSkeleton className='h-32 w-32' />
-        <LoadingSkeleton className='h-32 w-32' />
-        <LoadingSkeleton className='h-32 w-32' />
-      </div>
-      <LoadingSkeleton className='h-6 w-1/4' />
-    </div>
-  )
+  loading: () => <WidgetLoading />
 })
 
 export async function generateMetadata(): Promise<Metadata> {
