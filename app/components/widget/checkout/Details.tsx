@@ -23,8 +23,11 @@ export const Details = ({
 }: DetailsProps) => {
   const { watch } = useFormContext()
 
-  const tokenIdsFieldValue = watch(tokenIdsFieldId, '')
-  const destinationChainFieldValue = watch(destinationChainFieldId, '')
+  const tokenIdsFieldValue: string = watch(tokenIdsFieldId, '')
+
+  const destinationChainFieldValue: number | undefined = watch(
+    destinationChainFieldId
+  )
 
   const tokenIdsList = filter(
     map(split(tokenIdsFieldValue, ','), String),
@@ -52,7 +55,7 @@ export const Details = ({
             <li className='col-span-2 sm:col-span-1'>
               <div
                 className={classNames(
-                  'relative h-28 w-28 overflow-hidden rounded-3xl'
+                  'relative h-10 w-10 overflow-hidden rounded-lg'
                 )}
               >
                 <Image
@@ -64,6 +67,7 @@ export const Details = ({
                  `}
                 />
               </div>
+              <Text>#{NFT.tokenId}</Text>
             </li>
           ))
         )}
