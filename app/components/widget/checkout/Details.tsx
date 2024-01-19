@@ -47,33 +47,37 @@ export const Details = ({
   const selectedChain = find(chainList, { id: destinationChainFieldValue })
 
   return (
-    <div>
-      <Heading as='h4'>Transferring tokens</Heading>
-      <ul className='grid grid-flow-row grid-cols-4 gap-4'>
-        {Children.toArray(
-          selectedTokenIds.map((NFT) => (
-            <li className='col-span-2 sm:col-span-1'>
-              <div
-                className={classNames(
-                  'relative h-10 w-10 overflow-hidden rounded-lg'
-                )}
-              >
-                <Image
-                  src={NFT.tokenURI}
-                  alt={NFT.tokenId}
-                  fill
-                  sizes={` 
+    <div className='flex flex-col space-y-8'>
+      <div className='flex flex-col space-y-2'>
+        <Heading as='h4'>Transferring tokens</Heading>
+        <ul className='flex flex-wrap gap-4'>
+          {Children.toArray(
+            selectedTokenIds.map((NFT) => (
+              <li className='flex items-center space-x-2'>
+                <div
+                  className={classNames(
+                    'relative h-10 w-10 overflow-hidden rounded-lg'
+                  )}
+                >
+                  <Image
+                    src={NFT.tokenURI}
+                    alt={NFT.tokenId}
+                    fill
+                    sizes={` 
                     100%
                  `}
-                />
-              </div>
-              <Text>#{NFT.tokenId}</Text>
-            </li>
-          ))
-        )}
-      </ul>
+                  />
+                </div>
+                <Text variant='default' className='font-bold'>
+                  #{NFT.tokenId}
+                </Text>
+              </li>
+            ))
+          )}
+        </ul>
+      </div>
       {selectedChain && (
-        <div>
+        <div className='flex flex-col space-y-2'>
           <Heading as='h4'>To destination chain</Heading>
           <div className='flex items-center space-x-2'>
             <NetworkThumbnail
@@ -85,7 +89,7 @@ export const Details = ({
           </div>
         </div>
       )}
-      <div>
+      <div className='flex flex-col space-y-2'>
         <Heading as='h4'>Paying as required fees</Heading>
         <Text>0 ETH</Text>
       </div>
