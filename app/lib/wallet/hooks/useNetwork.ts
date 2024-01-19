@@ -12,7 +12,7 @@ export function useNetwork() {
   const { chains, error, isLoading, pendingChainId, switchNetwork } =
     useSwitchNetwork()
 
-  const { config } = useChainConfig({
+  const { config, remainingChains } = useChainConfig({
     chainId: chain?.id
   })
 
@@ -23,7 +23,8 @@ export function useNetwork() {
     chains: chains as ChainConfig[],
     chain: chain as ChainConfig,
     switchNetwork,
-    config
+    config,
+    remainingChains
   }
 }
 

@@ -2,7 +2,7 @@
 
 import { useChainContract, useWallet } from '@/app/lib/wallet/hooks'
 import Greatings from './Greatings'
-import Checkout from './Checkout'
+import Checkout from './checkout/Checkout'
 import useNFTPortfolio from '@/app/lib/wallet/hooks/useNFTPortfolio'
 
 export const Widget = () => {
@@ -12,7 +12,8 @@ export const Widget = () => {
 
   const list = useNFTPortfolio({
     contractAddress: chainContract?.address,
-    owner: String(address)
+    owner: String(address),
+    skip: !address || !chainContract?.address
   })
 
   return !list.length || !isConnected ? <Greatings /> : <Checkout list={list} />

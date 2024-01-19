@@ -11,6 +11,7 @@ export function useWallet() {
     status,
     isDisconnected
   } = useAccount()
+
   const { connect, connectors, error } = useConnect()
   const { disconnect } = useDisconnect()
 

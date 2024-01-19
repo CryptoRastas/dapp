@@ -4,7 +4,6 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/solid'
 import { NetworkThumbnail } from './Thumbnail'
 import { Text } from '@/app/components/typography'
 import { useToggle } from 'usehooks-ts'
-import { Chain } from '@/app/config/chains'
 import classNames from 'classnames'
 
 type NetworkProps = HTMLProps<HTMLDivElement> & {
@@ -19,12 +18,6 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
   /// Thumbsize
   const [width, height] = [16, 16]
 
-  const handleFilterOnlyUnconnectedChains = (chainToCheck: Chain) => {
-    return chainToCheck.id !== chain?.id
-  }
-
-  const filteredChains = chains.filter(handleFilterOnlyUnconnectedChains)
-
   const handleSwitchNetwork = (chainId: number) => {
     toggleIsOpen()
     onSwitchNetwork?.(chainId)
@@ -35,7 +28,7 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
       <style jsx>
         {`
           .network-selector {
-            --list-width: ${!isOpen ? 0 : filteredChains.length * width + 4}px;
+            --list-width: ${!isOpen ? 0 : chains.length * width + 4}px;
           }
         `}
       </style>
@@ -88,7 +81,7 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
             ])}
           >
             {Children.toArray(
-              filteredChains.map((availableChain) => (
+              chains.map((availableChain) => (
                 <li
                   className={classNames([
                     'flex lg:justify-center',

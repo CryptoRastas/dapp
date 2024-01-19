@@ -1,21 +1,40 @@
 import appConfig from '@/app.config'
+import { Chain } from '@/app/config/chains'
 import { allowedChainsConfig, allowedChains } from '@/app/config/config'
-import { find } from 'lodash'
+import { find, filter } from 'lodash'
+import { useMemo } from 'react'
 
 export type UseChainConfigProps = {
   chainId?: number
 }
 
-export function useChainConfig({ chainId }: UseChainConfigProps) {
-  const chainIdRefined = find(allowedChains, { id: chainId })
+const checkChainId = (chainToCheck: Chain, chainId?: number) => {
+  return chainToCheck.id !== chainId
+}
 
-  const configByCurrentChainOrDefaultId =
-    allowedChainsConfig[
-      chainIdRefined?.id || +appConfig.networks.defaultChainId
-    ]
+export function useChainConfig({ chainId }: UseChainConfigProps) {
+  const chainIdRefined = useMemo(
+    () => find(allowedChains, { id: chainId }),
+    [chainId]
+  )
+
+  const defaultConfig = useMemo(
+    () =>
+      allowedChainsConfig[
+        chainIdRefined?.id || +appConfig.networks.defaultChainId
+      ],
+    [chainIdRefined]
+  )
+
+  /// returns only chains != chainId
+  const remainingChains = useMemo(
+    () => filter(allowedChains, (chain) => checkChainId(chain, chainId)),
+    [chainId]
+  )
 
   return {
-    config: configByCurrentChainOrDefaultId
+    config: defaultConfig,
+    remainingChains
   }
 }
 

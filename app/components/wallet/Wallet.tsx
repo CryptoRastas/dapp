@@ -6,7 +6,7 @@ import { Network } from './network'
 import classNames from 'classnames'
 
 export const Wallet = () => {
-  const { chain, chains, switchNetwork } = useNetwork()
+  const { chain, switchNetwork, remainingChains } = useNetwork()
 
   const {
     connectors: [connector],
@@ -35,7 +35,7 @@ export const Wallet = () => {
           <div className='pl-4 max-lg:pr-2 lg:pr-2'>
             <Network
               chain={chain}
-              chains={chains}
+              chains={remainingChains}
               onSwitchNetwork={switchNetwork}
             />
           </div>

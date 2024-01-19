@@ -2,7 +2,15 @@
 const nextConfig = {
   trailingSlash: true,
   images: {
-    domains: ['*', 'ipfs.io']
+    /// should allow only ['*', 'ipfs.io']
+    remotePatterns: [
+      {
+        hostname: 'ipfs.io'
+      },
+      {
+        hostname: 'localhost'
+      }
+    ]
   }
 }
 
