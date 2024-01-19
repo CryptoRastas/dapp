@@ -28,13 +28,18 @@ export const NetworkThumbnail = ({
       <div
         {...props}
         className={classNames(
-          className,
           'network-thumbnail',
           'flex h-[var(--height)] w-[var(--width)] items-center justify-center'
         )}
       >
         {src ? (
-          <Image src={src} alt='network' width={width} height={height} />
+          <Image
+            src={src}
+            alt='network'
+            width={width}
+            height={height}
+            className={className}
+          />
         ) : (
           <div className='font-bold text-black/75'>?</div>
         )}

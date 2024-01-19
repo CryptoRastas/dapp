@@ -4,6 +4,7 @@ import Image from 'next/image'
 import classNames from 'classnames'
 import { useEffectOnce } from 'usehooks-ts'
 import { useFormContext } from 'react-hook-form'
+import { concat, filter, join } from 'lodash'
 
 export type PortfolioProps = {
   list: NFTPortfolioResponse[]
@@ -14,11 +15,11 @@ export const Portfolio = ({ list, fieldId }: PortfolioProps) => {
   const { setValue, register, watch, clearErrors } = useFormContext()
   const [selectedTokenIds, setSelectedTokenIds] = useState<string[]>([])
 
+  const fieldValue = watch(fieldId, '')
+
   const checkIsSelected = (tokenId: string) => {
     return selectedTokenIds.includes(tokenId)
   }
-
-  const fieldValue = watch(fieldId, '')
 
   const handleSelectOption = useCallback(
     (tokenId: string) => {
@@ -27,17 +28,18 @@ export const Portfolio = ({ list, fieldId }: PortfolioProps) => {
       let _selectedTokenIds: string[] = [...selectedTokenIds]
 
       if (selectedTokenIds.includes(tokenId)) {
-        _selectedTokenIds = selectedTokenIds.filter(
+        _selectedTokenIds = filter(
+          selectedTokenIds,
           (_tokenId) => _tokenId !== tokenId
         )
 
         setSelectedTokenIds(_selectedTokenIds)
       } else {
-        _selectedTokenIds = [...selectedTokenIds, tokenId]
+        _selectedTokenIds = concat(selectedTokenIds, [tokenId])
         setSelectedTokenIds(_selectedTokenIds)
       }
 
-      setValue(fieldId, _selectedTokenIds.join(','), {
+      setValue(fieldId, join(_selectedTokenIds, ','), {
         shouldValidate: true,
         shouldDirty: true
       })
@@ -58,10 +60,12 @@ export const Portfolio = ({ list, fieldId }: PortfolioProps) => {
             <li className='col-span-2 sm:col-span-1'>
               <div
                 className={classNames(
-                  'lg:h-30 lg:w-30 relative h-28 w-28 overflow-hidden',
-                  'group cursor-pointer rounded-3xl border-4 hover:shadow',
+                  'lg:h-30 lg:w-30 relative h-28 w-28 overflow-hidden bg-yellow-400',
+                  'group cursor-pointer rounded-3xl',
                   {
-                    'border-yellow-400 shadow-lg': checkIsSelected(NFT.tokenId),
+                    'border-4 border-yellow-400 shadow-lg': checkIsSelected(
+                      NFT.tokenId
+                    ),
                     'border-transparent': !checkIsSelected(NFT.tokenId)
                   }
                 )}
@@ -73,7 +77,10 @@ export const Portfolio = ({ list, fieldId }: PortfolioProps) => {
                   sizes={` 
                     100%
                  `}
-                  className='group-hover:scale-105'
+                  className={classNames('transition-all duration-300', {
+                    'scale-110': checkIsSelected(NFT.tokenId),
+                    'group-hover:scale-110': !checkIsSelected(NFT.tokenId)
+                  })}
                   onClick={() => handleSelectOption(NFT.tokenId)}
                 />
               </div>

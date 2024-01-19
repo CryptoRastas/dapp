@@ -16,7 +16,7 @@ export const Step = ({ children, className, ...props }: StepProps) => {
         <div>{children}</div>
         <div className='flex'>
           <div>
-            <Button>Continue</Button>
+            <Button type='button'>Continue</Button>
           </div>
         </div>
       </div>
