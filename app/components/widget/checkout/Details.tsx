@@ -50,10 +50,10 @@ export const Details = ({
     <div className='flex flex-col space-y-8'>
       <div className='flex flex-col space-y-2'>
         <Heading as='h4'>Transferring tokens</Heading>
-        <ul className='flex flex-wrap gap-4'>
+        <ul className='grid grid-flow-row grid-cols-4 gap-4'>
           {Children.toArray(
             selectedTokenIds.map((NFT) => (
-              <li className='flex items-center space-x-2'>
+              <li className='col-span-2 flex items-center space-x-2 lg:col-span-1 '>
                 <div
                   className={classNames(
                     'relative h-10 w-10 overflow-hidden rounded-lg'

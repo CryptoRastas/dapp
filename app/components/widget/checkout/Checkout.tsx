@@ -1,11 +1,12 @@
-import { NFTPortfolioResponse } from '@/app/lib/wallet/hooks/useNFTPortfolio'
+import { FormProvider, useForm } from 'react-hook-form'
+import { Form } from './Form'
 import { Heading, Text } from '@/app/components/typography'
 import { Step } from '@/app/components/step/Step'
-import { Portfolio } from '@/app/components/widget/checkout/Portfolio'
-import { FormProvider, useForm } from 'react-hook-form'
-import DestinationChain from './DestinationChain'
 import { useChainContract, useNetwork } from '@/app/lib/wallet/hooks'
-import Details from './Details'
+import { Details } from '@/app/components/widget/checkout/Details'
+import { Portfolio } from '@/app/components/widget/checkout/Portfolio'
+import { DestinationChain } from '@/app/components/widget/checkout/DestinationChain'
+import { NFTPortfolioResponse } from '@/app/lib/wallet/hooks/useSDK'
 
 export type CheckoutProps = {
   list: NFTPortfolioResponse[]
@@ -31,7 +32,7 @@ export const Checkout = ({ list }: CheckoutProps) => {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(handleSubmit)} noValidate>
+      <Form onSubmit={handleSubmit}>
         <Step className='w-full'>
           <section className='flex flex-col justify-start space-y-8'>
             <div className='flex flex-col space-y-2'>
@@ -72,8 +73,7 @@ export const Checkout = ({ list }: CheckoutProps) => {
             />
           </section>
         </Step>
-        <button type='submit'>send</button>
-      </form>
+      </Form>
     </FormProvider>
   )
 }
