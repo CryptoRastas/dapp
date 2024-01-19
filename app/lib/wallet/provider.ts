@@ -10,7 +10,11 @@ export const providerConfig = {
   apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY!
 }
 
-export const chainsSDK = {
+export type ChainSDK = {
+  [chainId: number]: Alchemy
+}
+
+export const chainsSDK: ChainSDK = {
   1: new Alchemy({
     ...providerConfig,
     network: Network.ETH_MAINNET
@@ -27,8 +31,6 @@ export const chainsSDK = {
     ...providerConfig,
     network: Network.MATIC_MUMBAI
   })
-} as {
-  [chainId: number]: Alchemy
 }
 
 Object.values(allowedChains).forEach((chain) => {

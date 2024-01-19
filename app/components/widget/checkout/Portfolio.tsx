@@ -4,22 +4,27 @@ import Image from 'next/image'
 import classNames from 'classnames'
 import { useEffectOnce } from 'usehooks-ts'
 import { useFormContext } from 'react-hook-form'
-import { concat, filter, join } from 'lodash'
+import { concat, filter, includes, join } from 'lodash'
+import { Text } from '@/app/components/typography'
+import Link from 'next/link'
 
 export type PortfolioProps = {
   list: NFTPortfolioResponse[]
   fieldId: string
+  marketplaceURL: string
+  collectionAddress: string
 }
 
-export const Portfolio = ({ list, fieldId }: PortfolioProps) => {
+export const Portfolio = ({
+  list,
+  fieldId,
+  marketplaceURL,
+  collectionAddress
+}: PortfolioProps) => {
   const { setValue, register, watch, clearErrors } = useFormContext()
   const [selectedTokenIds, setSelectedTokenIds] = useState<string[]>([])
 
   const fieldValue = watch(fieldId, '')
-
-  const checkIsSelected = (tokenId: string) => {
-    return selectedTokenIds.includes(tokenId)
-  }
 
   const handleSelectOption = useCallback(
     (tokenId: string) => {
@@ -60,13 +65,13 @@ export const Portfolio = ({ list, fieldId }: PortfolioProps) => {
             <li className='col-span-2 sm:col-span-1'>
               <div
                 className={classNames(
-                  'lg:h-30 lg:w-30 relative h-28 w-28 overflow-hidden bg-yellow-400',
+                  'lg:h-30 lg:w-30 relative h-28 w-28 overflow-hidden bg-yellow-200',
                   'group cursor-pointer rounded-3xl',
                   {
-                    'border-4 border-yellow-400 shadow-lg': checkIsSelected(
+                    'border-4 border-yellow-200 shadow-lg': includes(
+                      selectedTokenIds,
                       NFT.tokenId
-                    ),
-                    'border-transparent': !checkIsSelected(NFT.tokenId)
+                    )
                   }
                 )}
               >
@@ -77,12 +82,29 @@ export const Portfolio = ({ list, fieldId }: PortfolioProps) => {
                   sizes={` 
                     100%
                  `}
-                  className={classNames('transition-all duration-300', {
-                    'scale-110': checkIsSelected(NFT.tokenId),
-                    'group-hover:scale-110': !checkIsSelected(NFT.tokenId)
-                  })}
+                  className={classNames(
+                    'relative z-[1] transition-all duration-300',
+                    {
+                      'scale-110': includes(selectedTokenIds, NFT.tokenId),
+                      'group-hover:scale-110': !includes(
+                        selectedTokenIds,
+                        NFT.tokenId
+                      )
+                    }
+                  )}
                   onClick={() => handleSelectOption(NFT.tokenId)}
                 />
+                <div className='absolute bottom-2 left-2 z-[2]'>
+                  <Link
+                    title={`${NFT.tokenId}`}
+                    href={`${marketplaceURL}/${collectionAddress}/${NFT.tokenId}`}
+                    target='_blank'
+                  >
+                    <Text size='sm' className='text-white'>
+                      #{NFT.tokenId}
+                    </Text>
+                  </Link>
+                </div>
               </div>
             </li>
           ))

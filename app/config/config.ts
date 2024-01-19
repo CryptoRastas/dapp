@@ -1,4 +1,4 @@
-import { reduce } from 'lodash'
+import { reduce, merge } from 'lodash'
 import { polygonMumbai, polygon, mainnet, sepolia, Chain } from './chains'
 
 export const mainnets = [mainnet, polygon]
@@ -10,10 +10,9 @@ export const allowedChains = (
 
 export const allowedChainsConfig = reduce(
   allowedChains,
-  (acc, chain: Chain) => {
-    acc[chain.id] = chain
-
-    return acc
-  },
+  (acc, chain: Chain) =>
+    merge(acc, {
+      [chain.id]: chain
+    }),
   {} as { [key: number]: Chain }
 )

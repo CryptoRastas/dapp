@@ -10,9 +10,7 @@ import {
 
 export interface Chain extends WagmiChain {
   abstractId: number
-
   isSourceChain: boolean
-
   contracts: {
     token: {
       address: string
@@ -23,6 +21,7 @@ export interface Chain extends WagmiChain {
       blockNumber?: number
     }
   }
+  openSeaURL: string
 }
 
 export const polygonMumbai: Chain = merge(polygonMumbaiChain, {
@@ -38,7 +37,8 @@ export const polygonMumbai: Chain = merge(polygonMumbaiChain, {
       address: '0x357F0dc00AdE231db59aE38aCd8A0E73ed0125Ff',
       blockNumber: 0
     }
-  })
+  }),
+  openSeaURL: 'https://testnets.opensea.io/assets/mumbai'
 })
 
 export const polygon: Chain = merge(polygonChain, {
@@ -53,7 +53,8 @@ export const polygon: Chain = merge(polygonChain, {
       address: '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889',
       blockNumber: 0
     }
-  })
+  }),
+  openSeaURL: 'https://opensea.io/assets/matic'
 })
 
 export const sepolia: Chain = merge(sepoliaChain, {
@@ -68,7 +69,8 @@ export const sepolia: Chain = merge(sepoliaChain, {
       address: '0x08d6474eb92E8c4Df03E4223e0ec8d50f743c75f',
       blockNumber: 0
     }
-  })
+  }),
+  openSeaURL: 'https://testnets.opensea.io/assets/sepolia'
 })
 
 export const mainnet: Chain = merge(mainnetChain, {
@@ -83,5 +85,6 @@ export const mainnet: Chain = merge(mainnetChain, {
       address: '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889',
       blockNumber: 0
     }
-  })
+  }),
+  openSeaURL: 'https://opensea.io/assets/ethereum'
 })

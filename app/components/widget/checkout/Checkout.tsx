@@ -4,7 +4,8 @@ import { Step } from '@/app/components/step/Step'
 import { Portfolio } from '@/app/components/widget/checkout/Portfolio'
 import { FormProvider, useForm } from 'react-hook-form'
 import DestinationChain from './DestinationChain'
-import { useNetwork } from '@/app/lib/wallet/hooks'
+import { useChainContract, useNetwork } from '@/app/lib/wallet/hooks'
+import Details from './Details'
 
 export type CheckoutProps = {
   list: NFTPortfolioResponse[]
@@ -14,7 +15,9 @@ export const TOKEN_IDS_FIELD_ID = 'tokenIds'
 export const DESTINATION_CHAIN_ID_FIELD_ID = 'destinationChainId'
 
 export const Checkout = ({ list }: CheckoutProps) => {
-  const { remainingChains } = useNetwork()
+  const { config, remainingChains } = useNetwork()
+  const contract = useChainContract('token')
+
   const methods = useForm({
     mode: 'all',
     reValidateMode: 'onBlur',
@@ -38,7 +41,12 @@ export const Checkout = ({ list }: CheckoutProps) => {
                 bridge to destination chain.
               </Text>
             </div>
-            <Portfolio fieldId={TOKEN_IDS_FIELD_ID} list={list} />
+            <Portfolio
+              fieldId={TOKEN_IDS_FIELD_ID}
+              list={list}
+              marketplaceURL={config.openSeaURL}
+              collectionAddress={contract.address}
+            />
           </section>
           <section className='flex flex-col justify-start space-y-8'>
             <div className='flex flex-col space-y-2'>
@@ -55,10 +63,13 @@ export const Checkout = ({ list }: CheckoutProps) => {
           <section className='flex flex-col justify-start space-y-8'>
             <div className='flex flex-col space-y-2'>
               <Heading as='h3'>Check your bridge details</Heading>
-              <Text size='sm'>
-                Almost there, select a chain to bridge your selected tokens
-              </Text>
             </div>
+            <Details
+              tokenIdsFieldId={TOKEN_IDS_FIELD_ID}
+              destinationChainFieldId={DESTINATION_CHAIN_ID_FIELD_ID}
+              chainList={remainingChains}
+              tokenList={list}
+            />
           </section>
         </Step>
         <button type='submit'>send</button>

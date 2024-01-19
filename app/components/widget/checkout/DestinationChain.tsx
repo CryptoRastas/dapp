@@ -5,6 +5,7 @@ import { Chain } from '@/app/config/chains'
 import { Text } from '@/app/components/typography'
 import { NetworkThumbnail } from '@/app/components/wallet/network/Thumbnail'
 import classNames from 'classnames'
+import { isEqual } from 'lodash'
 
 export type DestinationChainProps = {
   list: Chain[]
@@ -15,10 +16,6 @@ export const DestinationChain = ({ list, fieldId }: DestinationChainProps) => {
   const { setValue, register, watch, clearErrors } = useFormContext()
 
   const fieldValue = watch(fieldId, '')
-
-  const checkIsSelected = (chainId: number) => {
-    return fieldValue === chainId
-  }
 
   const handleSelectOption = useCallback(
     (chainId: number) => {
@@ -46,14 +43,12 @@ export const DestinationChain = ({ list, fieldId }: DestinationChainProps) => {
               <div
                 className={classNames(
                   'lg:h-30 lg:w-30 relative h-28 w-28 overflow-hidden',
-                  'group cursor-pointer rounded-3xl border-4',
+                  'group cursor-pointer rounded-3xl ',
                   'flex flex-col items-center justify-center space-y-2',
                   {
-                    ' border-yellow-400 bg-white/10 shadow-lg': checkIsSelected(
-                      chain.id
-                    ),
-                    'border-white/10 bg-yellow-400 hover:border-white/20':
-                      !checkIsSelected(chain.id)
+                    ' border-4 border-yellow-200 bg-white/10 shadow-lg':
+                      isEqual(fieldValue, chain.id),
+                    ' bg-yellow-400': !isEqual(fieldValue, chain.id)
                   }
                 )}
                 onClick={() => handleSelectOption(chain.id)}
@@ -63,8 +58,8 @@ export const DestinationChain = ({ list, fieldId }: DestinationChainProps) => {
                   height={20}
                   src={`/assets/chains/${chain?.id}.svg`}
                   className={classNames('transition-all duration-300', {
-                    'scale-110': checkIsSelected(chain.id),
-                    'group-hover:scale-110': !checkIsSelected(chain.id)
+                    'scale-110': isEqual(fieldValue, chain.id),
+                    'group-hover:scale-125': !isEqual(fieldValue, chain.id)
                   })}
                 />
                 <Text className='text-black'>{chain.name}</Text>
