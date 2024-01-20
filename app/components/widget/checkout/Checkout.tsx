@@ -33,6 +33,7 @@ export type CheckoutProps = {
   chain: ChainConfig
   destinationChains: Chain[]
   marketplaceURL: string
+  balance: bigint
 }
 
 export const TOKEN_IDS_FIELD_ID = 'tokenIds'
@@ -52,7 +53,8 @@ export const Checkout = ({
   enabled,
   destinationChains,
   chain,
-  marketplaceURL
+  marketplaceURL,
+  balance
 }: CheckoutProps) => {
   const [internalError, setInternalError] = useState<string>()
 
@@ -101,6 +103,8 @@ export const Checkout = ({
     enabled: !chain?.unsupported && enabled,
     senderAddress: senderAddress
   })
+
+  const notEnoughBalance = balance < fees
 
   const { isApproving, isApprovedForAll, approveAll } = useERC721ApproveAll(
     collectionAddress,
@@ -321,9 +325,9 @@ export const Checkout = ({
                       <WalletButton
                         fullWidth={false}
                         type='submit'
-                        disabled={isApproving || isBridging}
+                        disabled={isApproving || isBridging || notEnoughBalance}
                       >
-                        Bridge
+                        {notEnoughBalance ? 'Insufficient balance' : 'Bridge'}
                       </WalletButton>
                     </div>
                   </div>
