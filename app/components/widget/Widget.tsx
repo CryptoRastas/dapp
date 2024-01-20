@@ -18,7 +18,7 @@ export const Widget = () => {
     skip: !address || !collectionContract?.address
   })
 
-  return !list.length || isConnecting || !isConnected ? (
+  return isConnecting || !isConnected ? (
     <Greatings />
   ) : (
     <Checkout

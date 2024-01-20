@@ -8,6 +8,7 @@ import { concat, filter, includes } from 'lodash'
 import { Text } from '@/app/components/typography'
 import Link from 'next/link'
 import appConfig from '@/app.config'
+import { Alert } from '@/app/components/Alert'
 
 export type PortfolioProps = {
   list: NFTPortfolioResponse[]
@@ -58,51 +59,64 @@ export const Portfolio = ({
 
   return (
     <ul className='grid grid-flow-row grid-cols-4 gap-4'>
-      {Children.toArray(
-        list.map((NFT) => (
-          <li className='col-span-2 sm:col-span-1'>
-            <div
-              className={classNames(
-                'lg:h-30 lg:w-30 relative h-28 w-28 overflow-hidden bg-yellow-200',
-                'group cursor-pointer rounded-3xl',
-                {
-                  'border-4 border-yellow-200 shadow-lg': includes(
-                    fieldValue,
-                    NFT.tokenId
-                  )
-                }
-              )}
-            >
-              <Image
-                src={NFT.tokenURI}
-                alt={NFT.tokenId}
-                fill
-                sizes={` 
-                    100%
-                 `}
+      {list.length > 0 ? (
+        Children.toArray(
+          list.map((NFT) => (
+            <li className='col-span-2 sm:col-span-1'>
+              <div
                 className={classNames(
-                  'relative z-[1] transition-all duration-300',
+                  'lg:h-30 lg:w-30 relative h-28 w-28 overflow-hidden bg-yellow-200',
+                  'group cursor-pointer rounded-3xl',
                   {
-                    'scale-110': includes(fieldValue, NFT.tokenId),
-                    'group-hover:scale-110': !includes(fieldValue, NFT.tokenId)
+                    'border-4 border-yellow-200 shadow-lg': includes(
+                      fieldValue,
+                      NFT.tokenId
+                    )
                   }
                 )}
-                onClick={() => handleSelectOption(NFT.tokenId)}
-              />
-              <div className='absolute bottom-2 left-2 z-[2]'>
-                <Link
-                  title={`${NFT.tokenId}`}
-                  href={`${marketplaceURL}/${collectionAddress}/${NFT.tokenId}`}
-                  target='_blank'
-                >
-                  <Text size='sm' className='text-white'>
-                    #{NFT.tokenId}
-                  </Text>
-                </Link>
+              >
+                <Image
+                  src={NFT.tokenURI}
+                  alt={NFT.tokenId}
+                  fill
+                  sizes={` 
+                    100%
+                 `}
+                  className={classNames(
+                    'relative z-[1] transition-all duration-300',
+                    {
+                      'scale-110': includes(fieldValue, NFT.tokenId),
+                      'group-hover:scale-110': !includes(
+                        fieldValue,
+                        NFT.tokenId
+                      )
+                    }
+                  )}
+                  onClick={() => handleSelectOption(NFT.tokenId)}
+                />
+                <div className='absolute bottom-2 left-2 z-[2]'>
+                  <Link
+                    title={`${NFT.tokenId}`}
+                    href={`${marketplaceURL}/${collectionAddress}/${NFT.tokenId}`}
+                    target='_blank'
+                  >
+                    <Text size='sm' className='text-white'>
+                      #{NFT.tokenId}
+                    </Text>
+                  </Link>
+                </div>
               </div>
-            </div>
-          </li>
-        ))
+            </li>
+          ))
+        )
+      ) : (
+        <li className='col-span-4'>
+          <Alert variant='warning'>
+            <Text size='sm' className='text-center'>
+              No {appConfig.name} found
+            </Text>
+          </Alert>
+        </li>
       )}
     </ul>
   )
