@@ -10,19 +10,19 @@ import Link from 'next/link'
 import appConfig from '@/app.config'
 import { Alert } from '@/app/components/Alert'
 
-export type PortfolioProps = {
+export type PortfolioFieldProps = {
   list: NFTPortfolioResponse[]
   fieldId: string
   marketplaceURL: string
   collectionAddress: string
 }
 
-export const Portfolio = ({
+export const PortfolioField = ({
   list,
   fieldId,
   marketplaceURL,
   collectionAddress
-}: PortfolioProps) => {
+}: PortfolioFieldProps) => {
   const { setValue, register, clearErrors, watch } = useFormContext()
 
   const fieldValue = watch(fieldId, [])
@@ -122,4 +122,4 @@ export const Portfolio = ({
   )
 }
 
-export default Portfolio
+export default PortfolioField

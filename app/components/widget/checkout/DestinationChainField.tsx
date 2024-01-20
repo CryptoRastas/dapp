@@ -7,12 +7,15 @@ import { NetworkThumbnail } from '@/app/components/wallet/network/Thumbnail'
 import classNames from 'classnames'
 import { isEqual } from 'lodash'
 
-export type DestinationChainProps = {
+export type DestinationChainFieldProps = {
   list: Chain[]
   fieldId: string
 }
 
-export const DestinationChain = ({ list, fieldId }: DestinationChainProps) => {
+export const DestinationChainField = ({
+  list,
+  fieldId
+}: DestinationChainFieldProps) => {
   const { setValue, register, watch, clearErrors } = useFormContext()
 
   const fieldValue = watch(fieldId, '')
@@ -74,4 +77,4 @@ export const DestinationChain = ({ list, fieldId }: DestinationChainProps) => {
   )
 }
 
-export default DestinationChain
+export default DestinationChainField

@@ -1,7 +1,7 @@
 import ABI from './abi.json'
 import { useContractRead, useContractWrite, useWaitForTransaction } from 'wagmi'
 import { ethers } from 'ethers'
-/// https://www.npmjs.com/package/@layerzerolabs/scan-client
+import { useLZClient } from '../useLZClient'
 
 export type BridgeConfig = {
   version: bigint
@@ -109,10 +109,13 @@ export const useBridge = ({
     enabled: !!sendBatchFromData?.hash
   })
 
+  const messages = useLZClient(sendBatchFromData?.hash)
+
   return {
     fees: estimateData?.[0] || 0n,
     bridge: handleSendBatchFrom,
-    isLoading: isPending || isWriting
+    isLoading: isPending || isWriting,
+    status: messages?.status
   }
 }
 

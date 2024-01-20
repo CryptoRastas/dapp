@@ -11,6 +11,9 @@ dependencies:
   '@hookform/resolvers':
     specifier: ^3.3.2
     version: 3.3.3(react-hook-form@7.49.2)
+  '@layerzerolabs/scan-client':
+    specifier: ^0.0.7
+    version: 0.0.7(axios@0.26.1)
   '@tanstack/react-query':
     specifier: ^5.17.19
     version: 5.17.19(react@18.2.0)
@@ -1132,6 +1135,14 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
+
+  /@layerzerolabs/scan-client@0.0.7(axios@0.26.1):
+    resolution: {integrity: sha512-FXvnVcAjb8xPCM8Gh97ksk2V7FnpdaIU1+O4FuqmP0y+7o+0GAy0Zmqqo5G6rG5dG6J/bGpm/FpyYF9eEuns5w==}
+    peerDependencies:
+      axios: '*'
+    dependencies:
+      axios: 0.26.1
+    dev: false
 
   /@lit-labs/ssr-dom-shim@1.1.2:
     resolution: {integrity: sha512-jnOD+/+dSrfTWYfSXBXlo5l5f0q1UuJo3tkbMDCYA2lKUYq79jaxqtGEvnRoh049nt1vdo1+45RinipU6FGY2g==}
