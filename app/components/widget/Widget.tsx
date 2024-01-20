@@ -7,7 +7,7 @@ import useNFTPortfolio from '@/app/lib/wallet/hooks/useNFTPortfolio'
 
 export const Widget = () => {
   const { isConnected, isConnecting, address } = useWallet()
-  const { config, remainingChains } = useNetwork()
+  const { config, chain, remainingChains } = useNetwork()
 
   const collectionContract = useChainContract('token')
   const bridgeContract = useChainContract('bridge')
@@ -26,7 +26,7 @@ export const Widget = () => {
       collectionAddress={collectionContract.address}
       bridgeAddress={bridgeContract.address}
       senderAddress={address}
-      enabled={isConnected && !!address}
+      enabled={isConnected && !!address && !chain?.unsupported}
       chain={config}
       destinationChains={remainingChains}
       marketplaceURL={config.marketplaceURL}

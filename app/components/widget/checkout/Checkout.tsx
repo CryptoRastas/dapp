@@ -12,7 +12,11 @@ import useChainConfig from '@/app/lib/wallet/hooks/useChainConfig'
 import { Chain } from '@/app/config/chains'
 import { ChainConfig } from '@/app/lib/wallet/hooks/useNetwork'
 import useERC721ApproveAll from '@/app/lib/wallet/hooks/useERC721ApproveAll'
-import { useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { WalletButton } from '@/app/components/wallet/button'
+import { Alert } from '@/app/components/Alert'
+import { ArrowLongLeftIcon } from '@heroicons/react/24/solid'
+import { useStep } from '@/app/lib/hooks/useStep'
 
 export type CheckoutFormData = {
   tokenIds: string[]
@@ -49,6 +53,8 @@ export const Checkout = ({
   chain,
   marketplaceURL
 }: CheckoutProps) => {
+  const [internalError, setInternalError] = useState<string>()
+
   const methods = useForm<CheckoutFormData>({
     mode: 'all',
     reValidateMode: 'onBlur',
@@ -79,7 +85,11 @@ export const Checkout = ({
     chainId: destinationChainFieldValue
   })
 
-  const { fees, bridge, isLoading } = useBridge({
+  const {
+    fees,
+    bridge,
+    isLoading: isBridging
+  } = useBridge({
     bridgeAddress,
     collectionAddress,
     tokenIds: tokenIdsFieldValue,
@@ -88,88 +98,130 @@ export const Checkout = ({
     senderAddress: senderAddress
   })
 
+  const { isApproving, isApprovedForAll, approveAll } = useERC721ApproveAll(
+    collectionAddress,
+    bridgeAddress
+  )
+
   const {
-    // isApproving,
-    isApprovedForAll
-    // isLoading: isApproveAllLoading,
-    // approveAll
-  } = useERC721ApproveAll(collectionAddress, bridgeAddress)
+    currentStep,
+    nextStep,
+    prevStep,
+    reset: resetSteps
+  } = useStep({ step: 3 })
 
   const handleStepByStep = async (
     fieldId: keyof typeof DEFAULT_FIELD_VALUES,
     next: () => void
   ) => {
+    /// trigger effect to handle validation
     await methods.trigger([fieldId], {
       shouldFocus: true
     })
-    const error = methods.getFieldState(fieldId).error
-
-    if (error) return
+    /// check if there's any error by field id
+    if (methods.getFieldState(fieldId).error) return
 
     next()
+
+    setInternalError(undefined)
   }
+
+  const resetCheckoutState = useCallback(() => {
+    methods.reset(DEFAULT_FIELD_VALUES)
+    resetSteps()
+  }, [methods, resetSteps])
 
   const onSubmit = async () => {
-    console.log('data...')
+    setInternalError(undefined)
+
+    /// approve tokens
+    try {
+      await approveAll()
+    } catch (error) {
+      setInternalError(
+        'An error occurred while approving your tokens, contact our support.'
+      )
+      console.log(error)
+
+      return
+    }
+
+    /// bridge tokens
     try {
       await bridge()
-    } catch {
-      /** */
+    } catch (error) {
+      setInternalError(
+        'An error occurred while bridging your tokens, contact our support.'
+      )
+      console.log(error)
     }
+
+    resetCheckoutState()
   }
 
-  console.log(fees, bridge.name, isLoading, methods.formState.errors)
-
   useEffect(() => {
+    /// reset checkout state if user changes chain
     if (chain.id) {
-      methods.reset(DEFAULT_FIELD_VALUES)
+      resetCheckoutState()
     }
-  }, [chain.id, methods])
+  }, [resetCheckoutState, chain.id])
 
   return (
     <FormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit(onSubmit)}
         noValidate
-        className='h-full  w-full'
+        className='h-full w-full'
       >
-        <Step step={3}>
-          {({ currentStep, nextStep, prevStep }) =>
-            ({
+        <Step steps={3} currentStep={currentStep}>
+          {
+            {
               1: (
-                <>
-                  <section className='flex flex-col justify-start space-y-8'>
-                    <div className='flex flex-col space-y-2'>
-                      <Heading as='h3'>Select your tokens</Heading>
-                      <Text size='sm'>
-                        Before start, select your token IDs that’s going to be
-                        used to bridge to destination chain.
-                      </Text>
-                    </div>
-                    <Portfolio
-                      fieldId={TOKEN_IDS_FIELD_ID}
-                      list={list}
-                      marketplaceURL={marketplaceURL}
-                      collectionAddress={collectionAddress}
-                    />
+                <section
+                  key={1}
+                  className='flex flex-col justify-start space-y-8'
+                >
+                  <div className='flex flex-col space-y-2'>
+                    <Heading as='h3'>Select your tokens</Heading>
+                    <Text size='sm'>
+                      Before start, select your token IDs that’s going to be
+                      used to bridge to destination chain.
+                    </Text>
+                  </div>
+                  <Portfolio
+                    fieldId={TOKEN_IDS_FIELD_ID}
+                    list={list}
+                    marketplaceURL={marketplaceURL}
+                    collectionAddress={collectionAddress}
+                  />
+
+                  <div className='flex flex-col space-y-8'>
                     {methods.formState.errors[TOKEN_IDS_FIELD_ID] && (
-                      <Text size='sm' className='text-red-400'>
-                        {methods.formState.errors[TOKEN_IDS_FIELD_ID].message}
-                      </Text>
+                      <Alert variant='danger'>
+                        <Text size='sm'>
+                          {methods.formState.errors[TOKEN_IDS_FIELD_ID].message}
+                        </Text>
+                      </Alert>
                     )}
-                    <button
-                      type='button'
-                      onClick={() =>
-                        handleStepByStep(TOKEN_IDS_FIELD_ID, nextStep)
-                      }
-                    >
-                      Continue
-                    </button>
-                  </section>
-                </>
+                    <div>
+                      <WalletButton
+                        fullWidth={false}
+                        type='button'
+                        onClick={() =>
+                          handleStepByStep(TOKEN_IDS_FIELD_ID, nextStep)
+                        }
+                      >
+                        Continue
+                      </WalletButton>
+                    </div>
+                  </div>
+                </section>
               ),
               2: (
-                <section className='flex flex-col justify-start space-y-8'>
+                <section
+                  key={2}
+                  className='flex flex-col justify-start space-y-8'
+                >
                   <div className='flex flex-col space-y-2'>
                     <Heading as='h3'>Select destination chain</Heading>
                     <Text size='sm'>
@@ -181,29 +233,45 @@ export const Checkout = ({
                     fieldId={DESTINATION_CHAIN_ID_FIELD_ID}
                     list={destinationChains}
                   />
-                  {methods.formState.errors[DESTINATION_CHAIN_ID_FIELD_ID] && (
-                    <Text size='sm' className='text-red-400'>
-                      {
-                        methods.formState.errors[DESTINATION_CHAIN_ID_FIELD_ID]
-                          .message
-                      }
-                    </Text>
-                  )}
-                  <button type='button' onClick={prevStep}>
-                    Back
-                  </button>
-                  <button
-                    type='button'
-                    onClick={() =>
-                      handleStepByStep(DESTINATION_CHAIN_ID_FIELD_ID, nextStep)
-                    }
-                  >
-                    Continue
-                  </button>
+                  <div className='flex flex-col space-y-8'>
+                    {methods.formState.errors[
+                      DESTINATION_CHAIN_ID_FIELD_ID
+                    ] && (
+                      <Alert variant='danger'>
+                        <Text size='sm'>
+                          {
+                            methods.formState.errors[
+                              DESTINATION_CHAIN_ID_FIELD_ID
+                            ].message
+                          }
+                        </Text>
+                      </Alert>
+                    )}
+                    <div className='flex items-center space-x-2'>
+                      <button type='button' onClick={prevStep} title='back'>
+                        <ArrowLongLeftIcon width={20} height={20} />
+                      </button>
+                      <WalletButton
+                        fullWidth={false}
+                        type='button'
+                        onClick={() =>
+                          handleStepByStep(
+                            DESTINATION_CHAIN_ID_FIELD_ID,
+                            nextStep
+                          )
+                        }
+                      >
+                        Continue
+                      </WalletButton>
+                    </div>
+                  </div>
                 </section>
               ),
               3: (
-                <section className='flex flex-col justify-start space-y-8'>
+                <section
+                  key={3}
+                  className='flex flex-col justify-start space-y-8'
+                >
                   <div className='flex flex-col space-y-2'>
                     <Heading as='h3'>Check your bridge details</Heading>
                   </div>
@@ -215,20 +283,41 @@ export const Checkout = ({
                     fees={fees}
                     feeToken={chain.nativeCurrency}
                   />
-                  {!isApprovedForAll && (
-                    <Text size='sm' className='text-red-400'>
-                      You need to approve your tokens first
-                    </Text>
-                  )}
-                  <button type='button' onClick={prevStep}>
-                    Back
-                  </button>
-                  <button type='submit'>
-                    {isApprovedForAll ? 'Bridge' : 'Approve all tokens'}
-                  </button>
+                  <div className='flex flex-col space-y-8'>
+                    {!isApprovedForAll && !isApproving && (
+                      <Alert variant='warning'>
+                        <Text size='sm'>
+                          You need to approve your tokens before bridging
+                        </Text>
+                      </Alert>
+                    )}
+                    {internalError && (
+                      <Alert variant='danger'>
+                        <Text size='sm'>{internalError}</Text>
+                      </Alert>
+                    )}
+
+                    <div className='flex items-center space-x-2'>
+                      <button
+                        type='button'
+                        onClick={prevStep}
+                        title='back'
+                        disabled={isApproving || isBridging}
+                      >
+                        <ArrowLongLeftIcon width={20} height={20} />
+                      </button>
+                      <WalletButton
+                        fullWidth={false}
+                        type='submit'
+                        disabled={isApproving || isBridging}
+                      >
+                        Bridge
+                      </WalletButton>
+                    </div>
+                  </div>
                 </section>
               )
-            })[currentStep]
+            }[currentStep]
           }
         </Step>
       </form>

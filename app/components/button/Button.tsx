@@ -38,7 +38,8 @@ export const Button = ({
     <button
       {...props}
       className={classNames([
-        { 'w-full rounded-3xl': fullWidth },
+        'rounded-3xl',
+        { 'w-full': fullWidth },
         props.className,
         Variant[variant].disabled,
         Variant[variant].classes,

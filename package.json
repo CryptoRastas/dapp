@@ -19,6 +19,7 @@
   "dependencies": {
     "@heroicons/react": "latest",
     "@hookform/resolvers": "^3.3.2",
+    "@tanstack/react-query": "^5.17.19",
     "@wagmi/core": "^1.4.7",
     "alchemy-sdk": "^3.1.1",
     "classnames": "latest",

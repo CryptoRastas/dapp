@@ -1,6 +1,5 @@
 import classNames from 'classnames'
-import { Children, HTMLProps, ReactNode } from 'react'
-import { useStep } from 'usehooks-ts'
+import { Children, HTMLProps } from 'react'
 
 export type ChildrenProps = {
   nextStep(): void
@@ -8,20 +7,19 @@ export type ChildrenProps = {
   currentStep: number
 }
 
-export type StepProps = Omit<HTMLProps<HTMLDivElement>, 'children'> & {
-  step?: number
-  children: (props: ChildrenProps) => ReactNode
+export type StepProps = HTMLProps<HTMLDivElement> & {
+  steps?: number
+  currentStep?: number
 }
 
 export const Step = ({
   children,
   className,
-  step = 1,
+  currentStep = 1,
+  steps = 1,
   ...props
 }: StepProps) => {
-  const stepsBar = Array.from({ length: 3 }, (_, i) => i + 1)
-
-  const [currentStep, { goToNextStep, goToPrevStep }] = useStep(step)
+  const stepsBar = Array.from({ length: steps }, (_, i) => i + 1)
 
   return (
     <div {...props} className={classNames(className, 'flex space-x-8')}>
@@ -34,11 +32,7 @@ export const Step = ({
           ))
         )}
       </div>
-      {children({
-        nextStep: goToNextStep,
-        prevStep: goToPrevStep,
-        currentStep
-      })}
+      {children}
     </div>
   )
 }

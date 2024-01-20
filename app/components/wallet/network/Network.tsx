@@ -66,7 +66,7 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
           className={classNames(
             'network-selector w-[var(--list-width)] overflow-hidden',
             [
-              'max-lg:fixed max-lg:h-full max-lg:w-full max-lg:bg-black/80 max-lg:backdrop-blur',
+              'max-lg:fixed max-lg:h-full max-lg:w-full max-lg:bg-yellow-400/80 max-lg:backdrop-blur',
               'max-lg:bottom-0 max-lg:left-0 max-lg:right-0 max-lg:top-0 max-lg:z-[10] max-lg:p-6'
             ],
             isOpen ? 'visible opacity-100' : 'invisible opacity-0'
@@ -93,7 +93,7 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
                     title={availableChain.name}
                     className={classNames([
                       'max-lg:flex max-lg:space-x-2',
-                      'max-lg:text-white'
+                      'max-lg:items-center max-lg:text-black'
                     ])}
                     onClick={() => handleSwitchNetwork(availableChain.id)}
                   >

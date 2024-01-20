@@ -84,19 +84,24 @@ export const useBridge = ({
   })
 
   const handleSendBatchFrom = async () => {
-    await writeAsync({
-      args: [
-        senderAddress,
-        destinationChainId,
-        senderAddress,
-        collectionAddress,
-        tokenIds,
-        senderAddress,
-        zroPaymentAddress,
-        adapterParams
-      ],
-      value: estimateData?.[0] || 0n
-    })
+    try {
+      await writeAsync({
+        args: [
+          senderAddress,
+          destinationChainId,
+          senderAddress,
+          collectionAddress,
+          tokenIds,
+          senderAddress,
+          zroPaymentAddress,
+          adapterParams
+        ],
+        value: estimateData?.[0] || 0n
+      })
+    } catch (error) {
+      console.log(error)
+      throw new Error(`sendBatchFrom contract address ${bridgeAddress} failed`)
+    }
   }
 
   const { isLoading: isPending } = useWaitForTransaction({
