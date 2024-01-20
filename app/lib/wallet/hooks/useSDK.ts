@@ -39,7 +39,7 @@ export function useSDK() {
   const { config } = useNetwork()
   const sdk = useMemo(() => chainsSDK[config.id], [config])
 
-  return { sdk, getNftsForOwner }
+  return { sdk }
 }
 
 export default useSDK

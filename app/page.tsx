@@ -8,7 +8,7 @@ import classNames from 'classnames'
 import dynamic from 'next/dynamic'
 import { WidgetLoading } from '@/app/components/widget/loadings'
 
-const WidgetDynamic = dynamic(() => import('@/app/components/widget/Widget'), {
+const Widget = dynamic(() => import('@/app/components/widget/Widget'), {
   ssr: false,
   loading: () => <WidgetLoading />
 })
@@ -25,12 +25,14 @@ const Homepage = () => {
     <>
       <Header />
       <main className='flex flex-1 flex-col space-y-8 py-16 container lg:py-32'>
-        <Heading className='tracking-[-.5rem]'>Bridge</Heading>
+        <div className='flex flex-col space-y-8'>
+          <Heading className='tracking-[-.5rem]'>Bridge</Heading>
+          <Heading as='h2' className='tracking-[-.3rem]'>
+            About
+          </Heading>
+        </div>
         <div className='grid grid-cols-2 items-start gap-8'>
           <section className='col-span-2 flex flex-col space-y-4 max-lg:order-2 lg:col-span-1'>
-            <Heading as='h2' className='tracking-[-.3rem]'>
-              About
-            </Heading>
             <article className='flex flex-col space-y-4 text-justify'>
               <Text>
                 CryptoRastas is a global club/community platform that uses
@@ -74,7 +76,7 @@ const Homepage = () => {
               'flex h-full items-center justify-center'
             )}
           >
-            <WidgetDynamic />
+            <Widget />
           </div>
         </div>
       </main>

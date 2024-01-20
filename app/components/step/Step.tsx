@@ -1,25 +1,44 @@
 import classNames from 'classnames'
-import { HTMLProps } from 'react'
-import { Button } from '@/app/components/button'
+import { Children, HTMLProps, ReactNode } from 'react'
+import { useStep } from 'usehooks-ts'
 
-export type StepProps = HTMLProps<HTMLDivElement>
+export type ChildrenProps = {
+  nextStep(): void
+  prevStep(): void
+  currentStep: number
+}
 
-export const Step = ({ children, className, ...props }: StepProps) => {
+export type StepProps = Omit<HTMLProps<HTMLDivElement>, 'children'> & {
+  step?: number
+  children: (props: ChildrenProps) => ReactNode
+}
+
+export const Step = ({
+  children,
+  className,
+  step = 1,
+  ...props
+}: StepProps) => {
+  const stepsBar = Array.from({ length: 3 }, (_, i) => i + 1)
+
+  const [currentStep, { goToNextStep, goToPrevStep }] = useStep(step)
+
   return (
     <div {...props} className={classNames(className, 'flex space-x-8')}>
       <div className='flex flex-col'>
-        <span>1</span>
-        <span>2</span>
-        <span>3</span>
+        {Children.toArray(
+          stepsBar.map((step) => (
+            <div className={step === currentStep ? 'font-bold' : ''}>
+              {step}
+            </div>
+          ))
+        )}
       </div>
-      <div className='flex flex-col space-y-8'>
-        <div>{children}</div>
-        <div className='flex'>
-          <div>
-            <Button type='button'>Continue</Button>
-          </div>
-        </div>
-      </div>
+      {children({
+        nextStep: goToNextStep,
+        prevStep: goToPrevStep,
+        currentStep
+      })}
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { NFTPortfolioResponse } from '@/app/lib/wallet/hooks/useNFTPortfolio'
-import { Children, useCallback, useState } from 'react'
+import { Children, useCallback } from 'react'
 import Image from 'next/image'
 import classNames from 'classnames'
 import { useEffectOnce } from 'usehooks-ts'
@@ -21,25 +21,23 @@ export const Portfolio = ({
   marketplaceURL,
   collectionAddress
 }: PortfolioProps) => {
-  const { setValue, register, clearErrors } = useFormContext()
-  const [selectedTokenIds, setSelectedTokenIds] = useState<string[]>([])
+  const { setValue, register, clearErrors, watch } = useFormContext()
+
+  const fieldValue = watch(fieldId, [])
 
   const handleSelectOption = useCallback(
     (tokenId: string) => {
       clearErrors(tokenId)
 
-      let _selectedTokenIds: string[] = [...selectedTokenIds]
+      let _selectedTokenIds: string[] = [...fieldValue]
 
-      if (selectedTokenIds.includes(tokenId)) {
+      if (fieldValue.includes(tokenId)) {
         _selectedTokenIds = filter(
-          selectedTokenIds,
+          fieldValue,
           (_tokenId) => _tokenId !== tokenId
         )
-
-        setSelectedTokenIds(_selectedTokenIds)
       } else {
-        _selectedTokenIds = concat(selectedTokenIds, [tokenId])
-        setSelectedTokenIds(_selectedTokenIds)
+        _selectedTokenIds = concat(fieldValue, [tokenId])
       }
 
       setValue(fieldId, _selectedTokenIds, {
@@ -47,7 +45,7 @@ export const Portfolio = ({
         shouldDirty: true
       })
     },
-    [fieldId, clearErrors, selectedTokenIds, setValue]
+    [fieldId, clearErrors, fieldValue, setValue]
   )
 
   useEffectOnce(() => {
@@ -66,7 +64,7 @@ export const Portfolio = ({
                 'group cursor-pointer rounded-3xl',
                 {
                   'border-4 border-yellow-200 shadow-lg': includes(
-                    selectedTokenIds,
+                    fieldValue,
                     NFT.tokenId
                   )
                 }
@@ -82,11 +80,8 @@ export const Portfolio = ({
                 className={classNames(
                   'relative z-[1] transition-all duration-300',
                   {
-                    'scale-110': includes(selectedTokenIds, NFT.tokenId),
-                    'group-hover:scale-110': !includes(
-                      selectedTokenIds,
-                      NFT.tokenId
-                    )
+                    'scale-110': includes(fieldValue, NFT.tokenId),
+                    'group-hover:scale-110': !includes(fieldValue, NFT.tokenId)
                   }
                 )}
                 onClick={() => handleSelectOption(NFT.tokenId)}
