@@ -21,7 +21,7 @@ export interface Chain extends WagmiChain {
       blockNumber?: number
     }
   }
-  openSeaURL: string
+  marketplaceURL: string
 }
 
 export const polygonMumbai: Chain = merge(polygonMumbaiChain, {
@@ -38,7 +38,7 @@ export const polygonMumbai: Chain = merge(polygonMumbaiChain, {
       blockNumber: 0
     }
   }),
-  openSeaURL: 'https://testnets.opensea.io/assets/mumbai'
+  marketplaceURL: 'https://testnets.opensea.io/assets/mumbai'
 })
 
 export const polygon: Chain = merge(polygonChain, {
@@ -54,7 +54,7 @@ export const polygon: Chain = merge(polygonChain, {
       blockNumber: 0
     }
   }),
-  openSeaURL: 'https://opensea.io/assets/matic'
+  marketplaceURL: 'https://opensea.io/assets/matic'
 })
 
 export const sepolia: Chain = merge(sepoliaChain, {
@@ -70,7 +70,7 @@ export const sepolia: Chain = merge(sepoliaChain, {
       blockNumber: 0
     }
   }),
-  openSeaURL: 'https://testnets.opensea.io/assets/sepolia'
+  marketplaceURL: 'https://testnets.opensea.io/assets/sepolia'
 })
 
 export const mainnet: Chain = merge(mainnetChain, {
@@ -86,5 +86,5 @@ export const mainnet: Chain = merge(mainnetChain, {
       blockNumber: 0
     }
   }),
-  openSeaURL: 'https://opensea.io/assets/ethereum'
+  marketplaceURL: 'https://opensea.io/assets/ethereum'
 })

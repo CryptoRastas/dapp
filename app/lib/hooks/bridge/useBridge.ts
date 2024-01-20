@@ -1,25 +1,45 @@
-import useWallet from '@/app/lib/wallet/hooks/useWallet'
 import ABI from './abi.json'
-
 import { useContractRead, useContractWrite, useWaitForTransaction } from 'wagmi'
 import { ethers } from 'ethers'
-import { useNetwork } from '@/app/lib/wallet/hooks'
 /// https://www.npmjs.com/package/@layerzerolabs/scan-client
 
+export type BridgeConfig = {
+  version: bigint
+  useZro: boolean
+  zroPaymentAddress: string
+  packetTypeSendAndCall: bigint
+}
+
 export type BridgePayload = {
+  senderAddress?: string
   bridgeAddress: string
   tokenIds: string[]
   destinationChainId: number
+  collectionAddress: string
+  enabled?: boolean
+  config?: BridgeConfig
 }
 
+const VERSION = 1n
+const USE_ZRO = false
+const ZRO_PAYMENT_ADDRESS = ethers.ZeroAddress
+const PACKET_TYPE_SEND_AND_CALL = 1n
+
 export const useBridge = ({
+  enabled,
+  senderAddress,
   bridgeAddress,
+  collectionAddress,
   tokenIds,
-  destinationChainId
+  destinationChainId,
+  config = {
+    version: VERSION,
+    useZro: USE_ZRO,
+    zroPaymentAddress: ZRO_PAYMENT_ADDRESS,
+    packetTypeSendAndCall: PACKET_TYPE_SEND_AND_CALL
+  }
 }: BridgePayload) => {
-  const { address, isConnected } = useWallet()
-  const { config } = useNetwork()
-  const collectionAddress = config.contracts.token.address
+  const { version, useZro, zroPaymentAddress, packetTypeSendAndCall } = config
 
   const {
     data: sendBatchFromData,
@@ -31,11 +51,9 @@ export const useBridge = ({
     abi: ABI
   })
 
-  const packetTypeSendAndCall = 1n
-
   const { data: requiredMinDstGas } = useContractRead({
     functionName: 'minDstGasLookup',
-    enabled: isConnected && !!destinationChainId,
+    enabled: enabled && !!destinationChainId,
     address: bridgeAddress as `0x${string}`,
     abi: ABI,
     args: [destinationChainId, packetTypeSendAndCall],
@@ -43,43 +61,37 @@ export const useBridge = ({
     cacheTime: 2_000
   })
 
-  const version = 1n
-
   const adapterParams = ethers.solidityPacked(
     ['uint16', 'uint256'],
     [version, requiredMinDstGas || 0n]
   )
 
-  const useZRO = false
-
   const { data: estimateData } = useContractRead<any, any, bigint[]>({
     functionName: 'estimateSendBatchFee',
-    enabled: isConnected,
+    enabled: enabled && !!destinationChainId && tokenIds.length > 0,
     address: bridgeAddress as `0x${string}`,
     abi: ABI,
     args: [
       destinationChainId,
-      address,
+      senderAddress,
       collectionAddress,
       tokenIds,
-      useZRO,
+      useZro,
       adapterParams
     ],
     watch: true,
     cacheTime: 2_000
   })
 
-  const zroPaymentAddress = ethers.ZeroAddress
-
   const handleSendBatchFrom = async () => {
     await writeAsync({
       args: [
-        address,
+        senderAddress,
         destinationChainId,
-        address,
+        senderAddress,
         collectionAddress,
         tokenIds,
-        address,
+        senderAddress,
         zroPaymentAddress,
         adapterParams
       ],
@@ -94,7 +106,7 @@ export const useBridge = ({
 
   return {
     fees: estimateData?.[0] || 0n,
-    sendBatchFrom: handleSendBatchFrom,
+    bridge: handleSendBatchFrom,
     isLoading: isPending || isWriting
   }
 }

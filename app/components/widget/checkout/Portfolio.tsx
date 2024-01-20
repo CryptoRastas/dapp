@@ -4,7 +4,7 @@ import Image from 'next/image'
 import classNames from 'classnames'
 import { useEffectOnce } from 'usehooks-ts'
 import { useFormContext } from 'react-hook-form'
-import { concat, filter, includes, join } from 'lodash'
+import { concat, filter, includes } from 'lodash'
 import { Text } from '@/app/components/typography'
 import Link from 'next/link'
 
@@ -21,10 +21,8 @@ export const Portfolio = ({
   marketplaceURL,
   collectionAddress
 }: PortfolioProps) => {
-  const { setValue, register, watch, clearErrors } = useFormContext()
+  const { setValue, register, clearErrors } = useFormContext()
   const [selectedTokenIds, setSelectedTokenIds] = useState<string[]>([])
-
-  const fieldValue = watch(fieldId, '')
 
   const handleSelectOption = useCallback(
     (tokenId: string) => {
@@ -44,7 +42,7 @@ export const Portfolio = ({
         setSelectedTokenIds(_selectedTokenIds)
       }
 
-      setValue(fieldId, join(_selectedTokenIds, ','), {
+      setValue(fieldId, _selectedTokenIds, {
         shouldValidate: true,
         shouldDirty: true
       })
@@ -58,65 +56,57 @@ export const Portfolio = ({
   })
 
   return (
-    <>
-      <ul className='grid grid-flow-row grid-cols-4 gap-4'>
-        {Children.toArray(
-          list.map((NFT) => (
-            <li className='col-span-2 sm:col-span-1'>
-              <div
+    <ul className='grid grid-flow-row grid-cols-4 gap-4'>
+      {Children.toArray(
+        list.map((NFT) => (
+          <li className='col-span-2 sm:col-span-1'>
+            <div
+              className={classNames(
+                'lg:h-30 lg:w-30 relative h-28 w-28 overflow-hidden bg-yellow-200',
+                'group cursor-pointer rounded-3xl',
+                {
+                  'border-4 border-yellow-200 shadow-lg': includes(
+                    selectedTokenIds,
+                    NFT.tokenId
+                  )
+                }
+              )}
+            >
+              <Image
+                src={NFT.tokenURI}
+                alt={NFT.tokenId}
+                fill
+                sizes={` 
+                    100%
+                 `}
                 className={classNames(
-                  'lg:h-30 lg:w-30 relative h-28 w-28 overflow-hidden bg-yellow-200',
-                  'group cursor-pointer rounded-3xl',
+                  'relative z-[1] transition-all duration-300',
                   {
-                    'border-4 border-yellow-200 shadow-lg': includes(
+                    'scale-110': includes(selectedTokenIds, NFT.tokenId),
+                    'group-hover:scale-110': !includes(
                       selectedTokenIds,
                       NFT.tokenId
                     )
                   }
                 )}
-              >
-                <Image
-                  src={NFT.tokenURI}
-                  alt={NFT.tokenId}
-                  fill
-                  sizes={` 
-                    100%
-                 `}
-                  className={classNames(
-                    'relative z-[1] transition-all duration-300',
-                    {
-                      'scale-110': includes(selectedTokenIds, NFT.tokenId),
-                      'group-hover:scale-110': !includes(
-                        selectedTokenIds,
-                        NFT.tokenId
-                      )
-                    }
-                  )}
-                  onClick={() => handleSelectOption(NFT.tokenId)}
-                />
-                <div className='absolute bottom-2 left-2 z-[2]'>
-                  <Link
-                    title={`${NFT.tokenId}`}
-                    href={`${marketplaceURL}/${collectionAddress}/${NFT.tokenId}`}
-                    target='_blank'
-                  >
-                    <Text size='sm' className='text-white'>
-                      #{NFT.tokenId}
-                    </Text>
-                  </Link>
-                </div>
+                onClick={() => handleSelectOption(NFT.tokenId)}
+              />
+              <div className='absolute bottom-2 left-2 z-[2]'>
+                <Link
+                  title={`${NFT.tokenId}`}
+                  href={`${marketplaceURL}/${collectionAddress}/${NFT.tokenId}`}
+                  target='_blank'
+                >
+                  <Text size='sm' className='text-white'>
+                    #{NFT.tokenId}
+                  </Text>
+                </Link>
               </div>
-            </li>
-          ))
-        )}
-      </ul>
-      <input
-        type='hidden'
-        name={fieldId}
-        id={fieldId}
-        defaultValue={fieldValue}
-      />
-    </>
+            </div>
+          </li>
+        ))
+      )}
+    </ul>
   )
 }
 
