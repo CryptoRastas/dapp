@@ -17,6 +17,7 @@ import { WalletButton } from '@/app/components/wallet/button'
 import { Alert } from '@/app/components/Alert'
 import { ArrowLongLeftIcon } from '@heroicons/react/24/solid'
 import { useStep } from '@/app/lib/hooks/useStep'
+import appConfig from '@/app.config'
 
 export type CheckoutFormData = {
   tokenIds: string[]
@@ -80,6 +81,9 @@ export const Checkout = ({
   )
 
   const tokenIdsFieldValue = methods.watch(TOKEN_IDS_FIELD_ID, [])
+
+  const tokensReachedLimit =
+    tokenIdsFieldValue.length >= appConfig.bridge.transferNFTLimit
 
   const { config: destinationChainConfig } = useChainConfig({
     chainId: destinationChainFieldValue
@@ -196,6 +200,14 @@ export const Checkout = ({
                   />
 
                   <div className='flex flex-col space-y-8'>
+                    {tokensReachedLimit && (
+                      <Alert variant='warning'>
+                        <Text size='sm'>
+                          You reached the maximum of{' '}
+                          {appConfig.bridge.transferNFTLimit} tokens to bridge
+                        </Text>
+                      </Alert>
+                    )}
                     {methods.formState.errors[TOKEN_IDS_FIELD_ID] && (
                       <Alert variant='danger'>
                         <Text size='sm'>

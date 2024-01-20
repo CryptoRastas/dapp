@@ -35,6 +35,9 @@ const appConfig = {
   },
   networks: {
     defaultChainId: process.env.NEXT_PUBLIC_NETWORK_DEFAULT_ID!
+  },
+  bridge: {
+    transferNFTLimit: 5
   }
 }
 

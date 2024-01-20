@@ -7,6 +7,7 @@ import { useFormContext } from 'react-hook-form'
 import { concat, filter, includes } from 'lodash'
 import { Text } from '@/app/components/typography'
 import Link from 'next/link'
+import appConfig from '@/app.config'
 
 export type PortfolioProps = {
   list: NFTPortfolioResponse[]
@@ -27,6 +28,8 @@ export const Portfolio = ({
 
   const handleSelectOption = useCallback(
     (tokenId: string) => {
+      if (fieldValue.length >= appConfig.bridge.transferNFTLimit) return
+
       clearErrors(tokenId)
 
       let _selectedTokenIds: string[] = [...fieldValue]
