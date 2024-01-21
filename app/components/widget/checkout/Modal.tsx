@@ -32,7 +32,7 @@ export const Modal = ({
       onClose={onClose}
       isClosable={status === MessageStatus.DELIVERED}
     >
-      <div className='flex flex-col space-y-8 text-center'>
+      <div className='flex flex-col items-center justify-center space-y-8 text-center'>
         <Heading as='h2'>
           Bridging your
           <br /> {appConfig.name} tokens
