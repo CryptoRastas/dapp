@@ -7,6 +7,8 @@ import Spinner from '@/app/components/Spinner'
 import Link from 'next/link'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
 
+import Image from 'next/image'
+
 export type ModalProps = {
   senderAddress?: string
   destinationChainConfig: ChainConfig
@@ -35,20 +37,29 @@ export const Modal = ({
           Bridging your
           <br /> {appConfig.name} tokens
         </Heading>
+        {status === MessageStatus.DELIVERED && (
+          <Image
+            src='/assets/gifs/bridge-done.gif'
+            alt='Bridge Done'
+            width={120}
+            height={120}
+          />
+        )}
         <div className='flex items-center justify-center space-x-4'>
-          <Spinner />
+          {status !== MessageStatus.DELIVERED && <Spinner />}
           <Text>
             {isBridging ? (
               'Sending tokens'
             ) : (
               <>
                 {status === MessageStatus.DELIVERED ? (
-                  <span className='flex space-x-1'>
-                    <span>Your tokens has been bridged successfully to</span>
+                  <span>
+                    Your tokens has been bridged <br />
+                    successfully to {` `}
                     <Link
                       href={`${destinationChainConfig.blockExplorers?.default.url}/${senderAddress}`}
                       target='_blank'
-                      className='flex space-x-px'
+                      className='inline-flex items-center space-x-px'
                     >
                       <ArrowTopRightOnSquareIcon width={16} height={16} />
                       <span>{destinationChainConfig.name}</span>
