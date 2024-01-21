@@ -6,11 +6,13 @@ import {
 } from 'wagmi'
 
 import { useWallet } from './useWallet'
+import { useNetwork } from './useNetwork'
 
 export const useERC721ApproveAll = (
   contractAddress: string,
   operatorAddress: string
 ) => {
+  const { chain } = useNetwork()
   const { address, isConnected } = useWallet()
 
   const {
@@ -25,7 +27,7 @@ export const useERC721ApproveAll = (
 
   const { data, isLoading: isReading } = useContractRead({
     functionName: 'isApprovedForAll',
-    enabled: isConnected,
+    enabled: isConnected && !chain?.unsupported,
     address: contractAddress as `0x${string}`,
     abi: erc721ABI,
     args: [address as `0x${string}`, operatorAddress as `0x${string}`],
@@ -35,12 +37,14 @@ export const useERC721ApproveAll = (
 
   const handleApproveAll = async () => {
     try {
-      if (!isConnected) throw new Error('Wallet not connected')
       await writeAsync({
         args: [operatorAddress as `0x${string}`, true]
       })
     } catch (error) {
-      console.log(`Error setApprovedForAll contract ${operatorAddress}`, error)
+      console.log(error)
+      throw new Error(
+        `setApprovedForAll contract address ${operatorAddress} failed`
+      )
     }
   }
 

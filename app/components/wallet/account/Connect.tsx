@@ -1,26 +1,16 @@
-import { Connector } from 'wagmi'
-import { Button, ButtonProps } from '@/app/components/button/Button'
+import { Button } from '@/app/components/button'
 
-type AccountConnectProps = ButtonProps & {
+type AccountConnectProps = {
   isConnecting?: boolean
-  connect: (
-    args?: Partial<{ connector: Connector<any, any> }> | undefined
-  ) => void
-  connector: Connector<any, any>
+  onConnect: () => void
 }
 
 export const AccountConnect = ({
-  connector,
-  connect,
-  isConnecting,
-  ...props
+  onConnect,
+  isConnecting
 }: AccountConnectProps) => {
-  const handleConnect = () => {
-    connect({ connector })
-  }
-
   return (
-    <Button onClick={handleConnect} {...props} size='md'>
+    <Button onClick={onConnect} type='button'>
       {isConnecting ? 'Connecting' : 'Connect'}
     </Button>
   )

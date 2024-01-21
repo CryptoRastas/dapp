@@ -1,6 +1,7 @@
 import { Chain } from '@/app/config/chains'
 import { allowedChainsConfig } from '@/app/config/config'
 import { useNetwork } from '@/app/lib/wallet/hooks'
+import { useMemo } from 'react'
 
 export function useChainContract(
   contractName: keyof Chain['contracts'],
@@ -8,9 +9,10 @@ export function useChainContract(
 ) {
   const { config } = useNetwork()
 
-  return allowedChainsConfig?.[chainId || config.id]?.contracts?.[
-    contractName
-  ] as Chain['contracts'][typeof contractName]
+  return useMemo(
+    () => allowedChainsConfig[chainId || config.id].contracts[contractName],
+    [config, contractName, chainId]
+  )
 }
 
 export default useChainContract

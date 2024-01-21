@@ -1,3 +1,5 @@
+'use client'
+
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
 
 export function useWallet() {
@@ -9,6 +11,7 @@ export function useWallet() {
     status,
     isDisconnected
   } = useAccount()
+
   const { connect, connectors, error } = useConnect()
   const { disconnect } = useDisconnect()
 

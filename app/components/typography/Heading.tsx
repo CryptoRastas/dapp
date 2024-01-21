@@ -3,19 +3,19 @@ import classNames from 'classnames'
 
 export const Variant = {
   h1: {
-    classes: 'text-3xl lg:text-2xl font-extrabold lg:font-black'
+    classes: 'text-6xl lg:text-8xl font-extrabold'
   },
   h2: {
-    classes: 'text-2xl lg:text-xl font-bold lg:font-extrabold'
+    classes: 'text-3xl lg:text-4xl font-bold'
   },
   h3: {
-    classes: 'text-base lg:text-lg font-medium lg:font-bold'
+    classes: 'text-xl lg:text-2xl font-bold'
   },
   h4: {
-    classes: 'text-base font-medium'
+    classes: 'text-base font-bold'
   },
   h5: {
-    classes: 'text-base font-normal'
+    classes: 'text-base font-medium'
   },
   h6: {
     classes: 'text-sm font-normal'

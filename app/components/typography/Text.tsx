@@ -2,18 +2,24 @@ import { type HTMLProps, createElement } from 'react'
 import classNames from 'classnames'
 
 export const Sizes = {
-  default: 'text-xs',
-  base: 'text-base',
-  lg: 'text-lg',
-  xl: 'text-xl'
+  default: { classes: '' },
+  sm: { classes: 'text-sm' },
+  base: { classes: 'text-base' },
+  lg: { classes: 'text-lg' },
+  xl: { classes: 'text-xl' },
+  '3xl': { classes: 'text-3xl' }
 } as const
 
 export const Variant = {
+  // inherit from parent
+  default: {
+    classes: ''
+  },
   p: {
-    classes: ['font-normal', Sizes.base].concat(' ')
+    classes: 'font-medium'
   },
   span: {
-    classes: ['font-light', Sizes.default].concat(' ')
+    classes: 'font-light'
   }
 } as const
 
@@ -26,7 +32,7 @@ export type TextProps = Omit<HTMLProps<HTMLElement>, 'size'> & {
 export const Text = ({
   as = 'p',
   variant = 'p',
-  size = 'default',
+  size = 'base',
   children,
   className,
   ...props
@@ -39,7 +45,8 @@ export const Text = ({
           ...props,
           className: classNames(
             className,
-            size ? Sizes[size] : Variant[as || variant].classes
+            Sizes[size].classes,
+            Variant[variant || as].classes
           )
         },
         children

@@ -2,12 +2,11 @@
 
 import { useNetwork, useWallet } from '@/app/lib/wallet/hooks'
 import { AccountConnect, Account } from './account'
-import classNames from 'classnames'
-import { Variant, Sizes } from '../button/Button'
 import { Network } from './network'
+import classNames from 'classnames'
 
 export const Wallet = () => {
-  const { chain, chains } = useNetwork()
+  const { chain, switchNetwork, remainingChains } = useNetwork()
 
   const {
     connectors: [connector],
@@ -18,34 +17,32 @@ export const Wallet = () => {
     disconnect
   } = useWallet()
 
+  const handleConnect = () => {
+    connect({ connector })
+  }
+
   return (
-    <div
-      className={classNames(
-        'flex items-center justify-center space-x-2 rounded-lg'
-      )}
-    >
+    <>
       {!isConnected || !address ? (
-        <AccountConnect
-          connector={connector}
-          isConnecting={isConnecting}
-          connect={connect}
-        />
+        <AccountConnect onConnect={handleConnect} isConnecting={isConnecting} />
       ) : (
-        <>
-          <Network chain={chain} chains={chains} />
-          <Account
-            address={address}
-            disconnect={disconnect}
-            className={classNames(
-              'cursor-pointer rounded-md',
-              Sizes.sm.classes,
-              Variant.default.classes,
-              Variant.default.hover
-            )}
-          />
-        </>
+        <div
+          className={classNames([
+            'flex items-center',
+            'rounded-3xl bg-amber-200'
+          ])}
+        >
+          <div className='pl-4 max-lg:pr-2 lg:pr-2'>
+            <Network
+              chain={chain}
+              chains={remainingChains}
+              onSwitchNetwork={switchNetwork}
+            />
+          </div>
+          <Account address={address} disconnect={disconnect} />
+        </div>
       )}
-    </div>
+    </>
   )
 }
 

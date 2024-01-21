@@ -9,7 +9,7 @@ import LoadingSkeleton from './loading/Skeleton'
 
 const Wallet = dynamic(() => import('@/app/components/wallet/Wallet'), {
   ssr: false,
-  loading: () => <LoadingSkeleton className='h-4 w-full' />
+  loading: () => <LoadingSkeleton className='h-9 w-full rounded-3xl' />
 })
 
 export type HeaderProps = HTMLProps<HTMLElement> & {
@@ -22,15 +22,12 @@ export const Header = ({ className, ...props }: HTMLProps<HTMLElement>) => {
       {...props}
       className={classNames(
         className,
-        'flex h-[4.5rem] items-center justify-between space-x-4 px-4 container'
+        'flex items-center justify-between space-x-4 py-4 container'
       )}
     >
       <Logo />
-      <div
-        className={classNames(
-          'flex items-center justify-between space-x-4 lg:justify-end'
-        )}
-      >
+
+      <div>
         <Wallet />
       </div>
     </header>

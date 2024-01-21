@@ -1,5 +1,3 @@
-'use client'
-
 import './globals.css'
 import { type ReactNode } from 'react'
 import { Inter } from 'next/font/google'
@@ -10,11 +8,11 @@ const font = Inter({ subsets: ['latin'], preload: true })
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <html lang={'en'}>
+    <html lang={'en'} className='h-screen'>
       <body
         className={classNames(
           font.className,
-          'flex h-screen flex-col bg-yellow-500 text-black'
+          'flex h-full flex-col bg-yellow-500 text-black'
         )}
       >
         <Providers>{children}</Providers>

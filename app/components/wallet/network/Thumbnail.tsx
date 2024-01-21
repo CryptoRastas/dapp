@@ -4,27 +4,47 @@ import Image from 'next/image'
 
 type NetworkThumbnailProps = HTMLProps<HTMLDivElement> & {
   src?: string
+  width?: number
+  height?: number
 }
 
 export const NetworkThumbnail = ({
   src,
   className,
+  width = 16,
+  height = 16,
   ...props
 }: NetworkThumbnailProps) => {
   return (
-    <div
-      {...props}
-      className={classNames(
-        className,
-        'flex h-5 w-5 items-center justify-center rounded-full bg-white p-px'
-      )}
-    >
-      {src ? (
-        <Image src={src} alt='network' width={20} height={20} />
-      ) : (
-        <div className='font-bold text-black/75'>?</div>
-      )}
-    </div>
+    <>
+      <style jsx>
+        {`
+          .network-thumbnail {
+            --width: ${width}px;
+            --height: ${height}px;
+          }
+        `}
+      </style>
+      <div
+        {...props}
+        className={classNames(
+          'network-thumbnail',
+          'flex h-[var(--height)] w-[var(--width)] items-center justify-center'
+        )}
+      >
+        {src ? (
+          <Image
+            src={src}
+            alt='network'
+            width={width}
+            height={height}
+            className={className}
+          />
+        ) : (
+          <div className='font-bold text-black/75'>?</div>
+        )}
+      </div>
+    </>
   )
 }
 
