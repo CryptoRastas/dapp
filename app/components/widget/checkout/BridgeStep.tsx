@@ -13,6 +13,7 @@ export type BridgeStepProps = {
   nativeCurrency: Chain['nativeCurrency']
   destinationChains: Chain[]
   fees: bigint
+  isApproving?: boolean
   needApproval?: boolean
   error?: string
   onPrevStep: () => void
@@ -22,6 +23,7 @@ export type BridgeStepProps = {
 
 export const BridgeStep = ({
   list,
+  isApproving,
   destinationChains,
   nativeCurrency,
   tokenIdsFieldId,
@@ -65,16 +67,22 @@ export const BridgeStep = ({
             type='button'
             onClick={onPrevStep}
             title='back'
-            disabled={isLoading}
+            disabled={isLoading || isApproving}
           >
             <ArrowLongLeftIcon width={20} height={20} />
           </button>
           <WalletButton
             fullWidth={false}
             type='submit'
-            disabled={isLoading || notEnoughBalance}
+            disabled={isLoading || notEnoughBalance || isApproving}
           >
-            {notEnoughBalance ? 'Insufficient balance' : 'Bridge'}
+            {notEnoughBalance
+              ? 'Insufficient balance'
+              : isApproving
+                ? 'Approving'
+                : needApproval
+                  ? 'Approve'
+                  : 'Bridge'}
           </WalletButton>
         </div>
       </div>

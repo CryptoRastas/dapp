@@ -149,24 +149,24 @@ export const Checkout = ({
   }
 
   const onSubmit = async () => {
-    setIsOpen(true)
     setInternalError(undefined)
 
     if (!isApprovedForAll) {
       /// approve tokens if theres required approval
       try {
-        await approveAll()
+        return await approveAll()
       } catch (error) {
         setInternalError(
           'An error occurred while approving your tokens, contact our support.'
         )
 
         console.log(error)
-        setIsOpen(false)
 
         return
       }
     }
+
+    setIsOpen(true)
 
     /// bridge tokens
     try {
@@ -236,11 +236,12 @@ export const Checkout = ({
                   nativeCurrency={chain.nativeCurrency}
                   destinationChains={destinationChains}
                   fees={fees}
-                  needApproval={!isApproving && !isApprovedForAll}
+                  needApproval={!isApprovedForAll}
                   error={internalError}
                   onPrevStep={prevStep}
                   isLoading={isApproving || isBridging}
                   notEnoughBalance={notEnoughBalance}
+                  isApproving={isApproving}
                 />
               )
             }[currentStep]
@@ -255,39 +256,6 @@ export const Checkout = ({
         destinationChainConfig={destinationChainConfig}
         isBridging={isBridging}
       />
-      {/* <div className='flex flex-col space-y-8 text-center'>
-          <Heading as='h2'>
-            Bridging your
-            <br /> {appConfig.name} tokens
-          </Heading>
-          <div className='flex items-center justify-center space-x-4'>
-            <Spinner />
-            <Text>
-              {isBridging ? (
-                'Sending tokens'
-              ) : (
-                <>
-                  {status === MessageStatus.DELIVERED ? (
-                    <span className='flex space-x-1'>
-                      <span>Your tokens has been bridged successfully to</span>
-                      <Link
-                        href={`${destinationChainConfig.blockExplorers?.default.url}/${senderAddress}`}
-                        target='_blank'
-                        className='flex space-x-px'
-                      >
-                        <ArrowTopRightOnSquareIcon width={16} height={16} />
-                        <span>{destinationChainConfig.name}</span>
-                      </Link>
-                    </span>
-                  ) : (
-                    'Almost there'
-                  )}
-                </>
-              )}
-            </Text>
-          </div>
-        </div>
-      </Modal> */}
     </FormProvider>
   )
 }
