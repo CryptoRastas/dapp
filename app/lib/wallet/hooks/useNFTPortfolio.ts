@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import useSDK, {
   NFTPortfolioParams,
@@ -17,7 +17,7 @@ export function useNFTPortfolio({
 
   const { sdk } = useSDK()
 
-  useEffect(() => {
+  const refetch = useCallback(() => {
     getNftsForOwner(sdk, {
       contractAddress,
       owner,
@@ -25,7 +25,11 @@ export function useNFTPortfolio({
     }).then(setList)
   }, [sdk, contractAddress, owner, skip])
 
-  return list
+  useEffect(() => {
+    refetch()
+  }, [refetch])
+
+  return { list, refetch }
 }
 
 export default useNFTPortfolio

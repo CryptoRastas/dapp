@@ -76,6 +76,7 @@ export const PortfolioField = ({
                 )}
               >
                 <Image
+                  key={NFT.tokenId}
                   src={NFT.tokenURI}
                   alt={NFT.tokenId}
                   fill

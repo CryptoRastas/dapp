@@ -40,10 +40,11 @@ export const useLZClient = (txHash?: string) => {
       setMessage(message)
     },
     // Delay in milliseconds or null to stop it
-    isPlaying ? 3000 : null
+    isPlaying ? 60000 : null
   )
 
   useEffect(() => {
+    if (!message) return
     if (
       message &&
       includes(

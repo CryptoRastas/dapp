@@ -22,6 +22,7 @@ export interface Chain extends WagmiChain {
     }
   }
   marketplaceURL: string
+  scanClient: string
 }
 
 export const polygonMumbai: Chain = merge(polygonMumbaiChain, {
@@ -38,7 +39,8 @@ export const polygonMumbai: Chain = merge(polygonMumbaiChain, {
       blockNumber: 0
     }
   }),
-  marketplaceURL: 'https://testnets.opensea.io/assets/mumbai'
+  marketplaceURL: 'https://testnets.opensea.io/assets/mumbai',
+  scanClient: 'https://testnet.layerzeroscan.com/address'
 })
 
 export const polygon: Chain = merge(polygonChain, {
@@ -54,7 +56,8 @@ export const polygon: Chain = merge(polygonChain, {
       blockNumber: 0
     }
   }),
-  marketplaceURL: 'https://opensea.io/assets/matic'
+  marketplaceURL: 'https://opensea.io/assets/matic',
+  scanClient: 'https://layerzeroscan.com/address'
 })
 
 export const sepolia: Chain = merge(sepoliaChain, {
@@ -70,7 +73,8 @@ export const sepolia: Chain = merge(sepoliaChain, {
       blockNumber: 0
     }
   }),
-  marketplaceURL: 'https://testnets.opensea.io/assets/sepolia'
+  marketplaceURL: 'https://testnets.opensea.io/assets/sepolia',
+  scanClient: 'https://testnet.layerzeroscan.com/address'
 })
 
 export const mainnet: Chain = merge(mainnetChain, {
@@ -86,5 +90,6 @@ export const mainnet: Chain = merge(mainnetChain, {
       blockNumber: 0
     }
   }),
-  marketplaceURL: 'https://opensea.io/assets/ethereum'
+  marketplaceURL: 'https://opensea.io/assets/ethereum',
+  scanClient: 'https://layerzeroscan.com/address'
 })

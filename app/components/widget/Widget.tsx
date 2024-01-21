@@ -18,7 +18,7 @@ export const Widget = () => {
   const bridgeContract = useChainContract('bridge')
   const { balance } = useBalance()
 
-  const list = useNFTPortfolio({
+  const { list, refetch } = useNFTPortfolio({
     contractAddress: collectionContract?.address,
     owner: String(address),
     skip: !address || !collectionContract?.address
@@ -37,6 +37,7 @@ export const Widget = () => {
       destinationChains={remainingChains}
       marketplaceURL={config.marketplaceURL}
       balance={balance?.value || 0n}
+      onRefetchList={refetch}
     />
   )
 }

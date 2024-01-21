@@ -11,9 +11,11 @@ import useERC721ApproveAll from '@/app/lib/wallet/hooks/useERC721ApproveAll'
 import { useCallback, useEffect, useState } from 'react'
 import { useStep } from '@/app/lib/hooks/useStep'
 import appConfig from '@/app.config'
-import CollectionStep from './CollectionStep'
-import ChainStep from './ChainStep'
-import BridgeStep from './BridgeStep'
+import { CollectionStep } from '@/app/components/widget/checkout/CollectionStep'
+import { ChainStep } from '@/app/components/widget/checkout/ChainStep'
+import { BridgeStep } from '@/app/components/widget/checkout/BridgeStep'
+import { Modal } from '@/app/components/widget/checkout/Modal'
+import { useToggle } from 'usehooks-ts'
 
 export type CheckoutFormData = {
   tokenIds: string[]
@@ -21,6 +23,7 @@ export type CheckoutFormData = {
 }
 
 export type CheckoutProps = {
+  onRefetchList: () => void
   list: NFTPortfolioResponse[]
   collectionAddress: string
   bridgeAddress: string
@@ -42,6 +45,7 @@ export const DEFAULT_FIELD_VALUES = {
 }
 
 export const Checkout = ({
+  onRefetchList,
   list,
   collectionAddress,
   bridgeAddress,
@@ -52,6 +56,7 @@ export const Checkout = ({
   marketplaceURL,
   balance
 }: CheckoutProps) => {
+  const [isOpen, , setIsOpen] = useToggle()
   const [internalError, setInternalError] = useState<string>()
 
   const methods = useForm<CheckoutFormData>({
@@ -101,8 +106,6 @@ export const Checkout = ({
     senderAddress: senderAddress
   })
 
-  console.log(status)
-
   const notEnoughBalance = balance < fees
 
   const { isApproving, isApprovedForAll, approveAll } = useERC721ApproveAll(
@@ -125,6 +128,7 @@ export const Checkout = ({
     await methods.trigger([fieldId], {
       shouldFocus: true
     })
+
     /// check if there's any error by field id
     if (methods.getFieldState(fieldId).error) return
 
@@ -138,18 +142,27 @@ export const Checkout = ({
     resetSteps()
   }, [methods, resetSteps])
 
+  const onCloseModal = () => {
+    resetCheckoutState()
+    onRefetchList()
+    setIsOpen(false)
+  }
+
   const onSubmit = async () => {
+    setIsOpen(true)
     setInternalError(undefined)
 
     if (!isApprovedForAll) {
-      /// approve tokens
+      /// approve tokens if theres required approval
       try {
         await approveAll()
       } catch (error) {
         setInternalError(
           'An error occurred while approving your tokens, contact our support.'
         )
+
         console.log(error)
+        setIsOpen(false)
 
         return
       }
@@ -162,18 +175,18 @@ export const Checkout = ({
       setInternalError(
         'An error occurred while bridging your tokens, contact our support.'
       )
-      console.log(error)
-    }
 
-    resetCheckoutState()
+      console.log(error)
+      setIsOpen(false)
+    }
   }
 
   useEffect(() => {
     /// reset checkout state if user changes chain
-    if (chain.id) {
+    if (!chain.unsupported && chain.id) {
       resetCheckoutState()
     }
-  }, [resetCheckoutState, chain.id])
+  }, [resetCheckoutState, chain])
 
   return (
     <FormProvider {...methods}>
@@ -234,6 +247,47 @@ export const Checkout = ({
           }
         </Step>
       </form>
+      <Modal
+        isOpen={isOpen}
+        onClose={onCloseModal}
+        status={status}
+        senderAddress={senderAddress}
+        destinationChainConfig={destinationChainConfig}
+        isBridging={isBridging}
+      />
+      {/* <div className='flex flex-col space-y-8 text-center'>
+          <Heading as='h2'>
+            Bridging your
+            <br /> {appConfig.name} tokens
+          </Heading>
+          <div className='flex items-center justify-center space-x-4'>
+            <Spinner />
+            <Text>
+              {isBridging ? (
+                'Sending tokens'
+              ) : (
+                <>
+                  {status === MessageStatus.DELIVERED ? (
+                    <span className='flex space-x-1'>
+                      <span>Your tokens has been bridged successfully to</span>
+                      <Link
+                        href={`${destinationChainConfig.blockExplorers?.default.url}/${senderAddress}`}
+                        target='_blank'
+                        className='flex space-x-px'
+                      >
+                        <ArrowTopRightOnSquareIcon width={16} height={16} />
+                        <span>{destinationChainConfig.name}</span>
+                      </Link>
+                    </span>
+                  ) : (
+                    'Almost there'
+                  )}
+                </>
+              )}
+            </Text>
+          </div>
+        </div>
+      </Modal> */}
     </FormProvider>
   )
 }
