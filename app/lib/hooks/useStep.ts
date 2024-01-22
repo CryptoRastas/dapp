@@ -1,11 +1,11 @@
 import { useStep as useStepLib } from 'usehooks-ts'
 
 export type UseStepProps = {
-  step?: number
+  steps?: number
 }
 
-export const useStep = ({ step = 1 }: UseStepProps) => {
-  const [currentStep, { goToNextStep, goToPrevStep, reset }] = useStepLib(step)
+export const useStep = ({ steps = 1 }: UseStepProps) => {
+  const [currentStep, { goToNextStep, goToPrevStep, reset }] = useStepLib(steps)
 
   return {
     currentStep,

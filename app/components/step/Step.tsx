@@ -20,6 +20,7 @@ export const Step = ({
   steps = 1,
   ...props
 }: StepProps) => {
+  /// create new step array filled by integers from 1 not zero
   const stepsBar = Array.from({ length: steps }, (_, i) => i + 1)
 
   return (

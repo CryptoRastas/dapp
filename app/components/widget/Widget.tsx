@@ -16,6 +16,7 @@ export const Widget = () => {
 
   const collectionContract = useChainContract('token')
   const bridgeContract = useChainContract('bridge')
+
   const { balance } = useBalance()
 
   const { list, refetch } = useNFTPortfolio({

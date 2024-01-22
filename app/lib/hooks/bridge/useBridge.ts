@@ -20,10 +20,10 @@ export type BridgePayload = {
   config?: BridgeConfig
 }
 
-const VERSION = 1n
-const USE_ZRO = false
-const ZRO_PAYMENT_ADDRESS = ethers.ZeroAddress
-const PACKET_TYPE_SEND_AND_CALL = 1n
+export const VERSION = 1n
+export const USE_ZRO = false
+export const ZRO_PAYMENT_ADDRESS = ethers.ZeroAddress
+export const PACKET_TYPE_SEND_AND_CALL = 1n
 
 export const useBridge = ({
   enabled,

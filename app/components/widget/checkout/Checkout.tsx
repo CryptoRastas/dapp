@@ -119,10 +119,11 @@ export const Checkout = ({
     nextStep,
     prevStep,
     reset: resetSteps
-  } = useStep({ step: 3 })
+  } = useStep({ steps: 3 })
 
   const handleStepByStep = async (
     fieldId: keyof typeof DEFAULT_FIELD_VALUES,
+    /// function to handle nextstep
     next: () => void
   ) => {
     /// trigger effect to handle validation
@@ -133,8 +134,10 @@ export const Checkout = ({
     /// check if there's any error by field id
     if (methods.getFieldState(fieldId).error) return
 
+    /// move forward
     next()
 
+    /// clear internal errors
     setInternalError(undefined)
   }
 
@@ -168,6 +171,7 @@ export const Checkout = ({
       }
     }
 
+    /// opening modal bridge
     setIsOpen(true)
 
     /// bridge tokens
