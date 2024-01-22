@@ -5,12 +5,15 @@ import { AccountConnect, Account } from './account'
 import { Network } from './network'
 import classNames from 'classnames'
 
+import { useModal } from 'connectkit'
+
 export const Wallet = () => {
   const { chain, switchNetwork, remainingChains } = useNetwork()
+  const { setOpen } = useModal()
 
   const {
-    connectors: [connector],
-    connect,
+    // connectors: [connector],
+    // connect,
     isConnecting,
     isConnected,
     address,
@@ -18,7 +21,8 @@ export const Wallet = () => {
   } = useWallet()
 
   const handleConnect = () => {
-    connect({ connector })
+    // connect({ connector })
+    setOpen(true)
   }
 
   return (

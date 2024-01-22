@@ -5,6 +5,7 @@ import { WagmiConfig } from 'wagmi'
 import config from '@/app/lib/wallet/config'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 const queryClient = new QueryClient()
+import { ConnectKitProvider } from 'connectkit'
 
 type WalletProviderProps = {
   children: ReactNode
@@ -13,7 +14,15 @@ type WalletProviderProps = {
 export const WalletProvider = ({ children }: WalletProviderProps) => {
   return (
     <WagmiConfig config={config}>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      <ConnectKitProvider
+        options={{
+          enforceSupportedChains: false
+        }}
+      >
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
+      </ConnectKitProvider>
     </WagmiConfig>
   )
 }
