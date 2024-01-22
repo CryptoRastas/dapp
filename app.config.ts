@@ -1,7 +1,7 @@
 export const routes = []
 
 const appConfig = {
-  name: 'Crypto Rastas',
+  name: 'CryptoRastas',
   meta: {
     description: 'One love inna decentralized style!'
   },
@@ -30,6 +30,12 @@ const appConfig = {
         label: 'Discord',
         visibility: true,
         icon: '/assets/icons/social/discord.svg'
+      },
+      instagram: {
+        url: 'https://www.instagram.com/cryptorastas/',
+        label: 'Instagram',
+        visibility: true,
+        icon: '/assets/icons/social/instagram.svg'
       }
     }
   },

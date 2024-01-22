@@ -45,7 +45,7 @@ export const Greatings = () => {
         src={asset4}
         width={85}
         height={100}
-        className='absolute bottom-4 left-32 z-[4] rotate-[15deg] rounded-2xl border-4 border-yellow-400 shadow-lg blur-[0.2rem] transition-all duration-700 hover:scale-105'
+        className='absolute bottom-4 left-32 z-[4] rotate-[15deg] rounded-2xl border-4 border-yellow-400 shadow-lg transition-all duration-700 hover:scale-105'
       />
     </Link>
   )

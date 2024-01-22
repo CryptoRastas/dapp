@@ -29,8 +29,6 @@ export const PortfolioField = ({
 
   const handleSelectOption = useCallback(
     (tokenId: string) => {
-      if (fieldValue.length >= appConfig.bridge.transferNFTLimit) return
-
       clearErrors(tokenId)
 
       let _selectedTokenIds: string[] = [...fieldValue]
@@ -41,6 +39,8 @@ export const PortfolioField = ({
           (_tokenId) => _tokenId !== tokenId
         )
       } else {
+        if (fieldValue.length >= appConfig.bridge.transferNFTLimit) return
+
         _selectedTokenIds = concat(fieldValue, [tokenId])
       }
 

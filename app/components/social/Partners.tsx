@@ -3,7 +3,7 @@ import { Text } from '@/app/components/typography'
 import Link from 'next/link'
 
 export const Partners = () => {
-  const sizeRatio = 1.4
+  const sizeRatio = 2
 
   return (
     <ul className='flex items-center space-x-4 max-lg:flex-col max-lg:justify-center max-lg:space-y-8'>
@@ -19,16 +19,6 @@ export const Partners = () => {
             alt='LayerZero'
             width={102 * sizeRatio}
             height={27 * sizeRatio}
-          />
-        </Link>
-      </li>
-      <li>
-        <Link target='_blank' href='https://polygon.technology/'>
-          <Image
-            src='/assets/icons/partners/polygon.svg'
-            alt='Polygon'
-            width={79 * sizeRatio}
-            height={17 * sizeRatio}
           />
         </Link>
       </li>

@@ -5,6 +5,7 @@ import { Chain } from '@/app/config/chains'
 import { WalletButton } from '@/app/components/wallet/button'
 import { Alert } from '@/app/components/Alert'
 import { ArrowLongLeftIcon } from '@heroicons/react/24/solid'
+import { Button } from '../../button'
 
 export type ChainStepProps = {
   error?: string
@@ -37,9 +38,15 @@ export const ChainStep = ({
           </Alert>
         )}
         <div className='flex items-center space-x-2'>
-          <button type='button' onClick={onPrevStep} title='back'>
+          <Button
+            type='button'
+            onClick={onPrevStep}
+            title='back'
+            fullWidth={false}
+            variant='outlined'
+          >
             <ArrowLongLeftIcon width={20} height={20} />
-          </button>
+          </Button>
           <WalletButton fullWidth={false} type='button' onClick={onNextStep}>
             Continue
           </WalletButton>

@@ -139,6 +139,7 @@ export const Checkout = ({
 
     /// clear internal errors
     setInternalError(undefined)
+    resetBridgeState()
   }
 
   const resetCheckoutState = useCallback(() => {
@@ -258,7 +259,7 @@ export const Checkout = ({
         isOpen={isOpen}
         onClose={onCloseModal}
         status={status}
-        senderAddress={senderAddress}
+        collectionAddress={collectionAddress}
         destinationChainConfig={destinationChainConfig}
         isBridging={isBridging}
       />

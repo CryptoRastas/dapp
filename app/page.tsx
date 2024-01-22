@@ -7,6 +7,7 @@ import Footer from '@/app/components/Footer'
 import classNames from 'classnames'
 import dynamic from 'next/dynamic'
 import { WidgetLoading } from '@/app/components/widget/loadings'
+import Image from 'next/image'
 
 const Widget = dynamic(() => import('@/app/components/widget/Widget'), {
   ssr: false,
@@ -21,12 +22,24 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const Homepage = () => {
+  const sizeRatio = 1.8
+
   return (
     <>
       <Header />
-      <main className='flex flex-1 flex-col space-y-8 py-16 container lg:py-32'>
+      <main className='flex flex-1 flex-col space-y-8 py-12 container lg:py-8'>
         <div className='flex flex-col space-y-8'>
-          <Heading className='tracking-[-.5rem]'>Bridge</Heading>
+          <Heading className='flex items-end space-x-8 tracking-[-.5rem] '>
+            <span>Bridge</span>
+            <Link target='_blank' href='https://polygon.technology/'>
+              <Image
+                src='/assets/icons/partners/polygon.svg'
+                alt='Polygon'
+                width={79 * sizeRatio}
+                height={17 * sizeRatio}
+              />
+            </Link>
+          </Heading>
           <Heading as='h2' className='tracking-[-.3rem]'>
             About
           </Heading>
@@ -54,11 +67,7 @@ const Homepage = () => {
                 unique moment in time, to bring more justice and equality in our
                 society.
               </Text>
-              <Text>
-                We are very optimistic about the new cycle that arrives in 2024
-                and we have already started to reorganize our house. Stay tuned
-                for the next steps!
-              </Text>
+
               <Text
                 variant='default'
                 size='default'

@@ -10,7 +10,7 @@ import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
 import Image from 'next/image'
 
 export type ModalProps = {
-  senderAddress?: string
+  collectionAddress: string
   destinationChainConfig: ChainConfig
   isOpen?: boolean
   onClose: () => void
@@ -19,7 +19,7 @@ export type ModalProps = {
 }
 
 export const Modal = ({
-  senderAddress,
+  collectionAddress,
   destinationChainConfig,
   isOpen,
   onClose,
@@ -39,7 +39,7 @@ export const Modal = ({
         </Heading>
         {status === MessageStatus.CONFIRMING && (
           <Image
-            src='/assets/gifs/confirming.gif'
+            src='/assets/gifs/bike.gif'
             alt='Bridge Waiting'
             width={120}
             height={120}
@@ -47,7 +47,7 @@ export const Modal = ({
         )}
         {status === MessageStatus.INFLIGHT && (
           <Image
-            src='/assets/gifs/bridging.gif'
+            src='/assets/gifs/rocket.gif'
             alt='Bridge Waiting'
             width={120}
             height={120}
@@ -55,7 +55,7 @@ export const Modal = ({
         )}
         {status === MessageStatus.DELIVERED && (
           <Image
-            src='/assets/gifs/bridge-done.gif'
+            src='/assets/gifs/hands.gif'
             alt='Bridge Done'
             width={120}
             height={120}
@@ -73,7 +73,7 @@ export const Modal = ({
                     Your tokens has been bridged <br />
                     successfully to {` `}
                     <Link
-                      href={`${destinationChainConfig.blockExplorers?.default.url}/address/${senderAddress}`}
+                      href={`${destinationChainConfig.marketplaceURL}/assets/mumbai/${collectionAddress}/activity`}
                       target='_blank'
                       className='inline-flex items-center space-x-px'
                     >
