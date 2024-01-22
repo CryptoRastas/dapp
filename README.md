@@ -1,5 +1,7 @@
 # Crypto Rastas Dapp
 
+[Layout Prototype](https://www.figma.com/file/Nq6ZSc5CD4fUrZL6IChEtJ/Bridge?type=design&node-id=0-1&mode=design)
+
 ## Getting Started
 
 Install dependencies
