@@ -9,7 +9,7 @@ export const Variant = {
     classes: 'text-red-900 border border-red-900 bg-red-900/10'
   },
   warning: {
-    classes: 'text-yellow-600 bg-yellow-400'
+    classes: 'text-yellow-900 bg-yellow-400'
   }
 } as const
 
