@@ -96,7 +96,8 @@ export const Checkout = ({
     fees,
     bridge,
     isLoading: isBridging,
-    status
+    status,
+    reset: resetBridgeState
   } = useBridge({
     bridgeAddress,
     collectionAddress,
@@ -143,8 +144,9 @@ export const Checkout = ({
   }, [methods, resetSteps])
 
   const onCloseModal = () => {
-    resetCheckoutState()
     onRefetchList()
+    resetCheckoutState()
+    resetBridgeState()
     setIsOpen(false)
   }
 

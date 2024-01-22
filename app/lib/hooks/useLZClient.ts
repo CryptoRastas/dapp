@@ -66,5 +66,5 @@ export const useLZClient = (txHash?: string) => {
     setPlaying(true)
   }, [config.abstractId, txHash])
 
-  return message
+  return { message, setMessage }
 }

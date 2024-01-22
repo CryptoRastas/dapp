@@ -34,13 +34,13 @@ export const Modal = ({
           'max-lg:m-8 max-lg:w-full'
         )}
       >
-        <div className='flex justify-end'>
-          {isClosable && (
+        {isClosable && (
+          <div className='flex justify-end'>
             <button type='button' onClick={onClose} title='close'>
               <XMarkIcon width={32} height={32} />
             </button>
-          )}
-        </div>
+          </div>
+        )}
         <div>{children}</div>
       </div>
     </div>

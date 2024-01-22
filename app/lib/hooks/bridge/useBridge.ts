@@ -109,13 +109,18 @@ export const useBridge = ({
     enabled: !!sendBatchFromData?.hash
   })
 
-  const messages = useLZClient(sendBatchFromData?.hash)
+  const { message, setMessage } = useLZClient(sendBatchFromData?.hash)
+
+  const handleResetState = () => {
+    setMessage(undefined)
+  }
 
   return {
     fees: estimateData?.[0] || 0n,
     bridge: handleSendBatchFrom,
     isLoading: isPending || isWriting,
-    status: messages?.status
+    status: message?.status,
+    reset: handleResetState
   }
 }
 

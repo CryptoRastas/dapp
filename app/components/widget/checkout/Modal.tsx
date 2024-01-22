@@ -32,11 +32,19 @@ export const Modal = ({
       onClose={onClose}
       isClosable={status === MessageStatus.DELIVERED}
     >
-      <div className='flex flex-col items-center justify-center space-y-8 text-center'>
+      <div className='flex w-full flex-col items-center justify-center space-y-8 text-center lg:w-[20rem]'>
         <Heading as='h2'>
-          Bridging your
-          <br /> {appConfig.name} tokens
+          {status === MessageStatus.DELIVERED ? 'Bridged' : 'Bridging'}{' '}
+          {appConfig.name} tokens
         </Heading>
+        {status === MessageStatus.INFLIGHT && (
+          <Image
+            src='/assets/gifs/bridging.gif'
+            alt='Bridge Waiting'
+            width={120}
+            height={120}
+          />
+        )}
         {status === MessageStatus.DELIVERED && (
           <Image
             src='/assets/gifs/bridge-done.gif'
@@ -57,7 +65,7 @@ export const Modal = ({
                     Your tokens has been bridged <br />
                     successfully to {` `}
                     <Link
-                      href={`${destinationChainConfig.blockExplorers?.default.url}/${senderAddress}`}
+                      href={`${destinationChainConfig.blockExplorers?.default.url}/address/${senderAddress}`}
                       target='_blank'
                       className='inline-flex items-center space-x-px'
                     >
