@@ -37,6 +37,14 @@ export const Modal = ({
           {status === MessageStatus.DELIVERED ? 'Bridged' : 'Bridging'}{' '}
           {appConfig.name} tokens
         </Heading>
+        {status === MessageStatus.CONFIRMING && (
+          <Image
+            src='/assets/gifs/confirming.gif'
+            alt='Bridge Waiting'
+            width={120}
+            height={120}
+          />
+        )}
         {status === MessageStatus.INFLIGHT && (
           <Image
             src='/assets/gifs/bridging.gif'
