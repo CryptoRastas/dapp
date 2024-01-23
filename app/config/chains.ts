@@ -39,7 +39,7 @@ export const polygonMumbai: Chain = merge(polygonMumbaiChain, {
       blockNumber: 0
     }
   }),
-  marketplaceURL: 'https://testnets.opensea.io/assets/mumbai',
+  marketplaceURL: 'https://testnets.opensea.io/collection/cryptorastas-13',
   scanClient: 'https://testnet.layerzeroscan.com/address'
 })
 
@@ -56,7 +56,8 @@ export const polygon: Chain = merge(polygonChain, {
       blockNumber: 0
     }
   }),
-  marketplaceURL: 'https://opensea.io/assets/matic',
+  marketplaceURL:
+    'https://opensea.io/collection/cryptorastas-collection-polygon',
   scanClient: 'https://layerzeroscan.com/address'
 })
 
@@ -73,7 +74,7 @@ export const sepolia: Chain = merge(sepoliaChain, {
       blockNumber: 0
     }
   }),
-  marketplaceURL: 'https://testnets.opensea.io/assets/sepolia',
+  marketplaceURL: 'https://testnets.opensea.io/collection/cryptorastas-222',
   scanClient: 'https://testnet.layerzeroscan.com/address'
 })
 
@@ -90,6 +91,6 @@ export const mainnet: Chain = merge(mainnetChain, {
       blockNumber: 0
     }
   }),
-  marketplaceURL: 'https://opensea.io/assets/ethereum',
+  marketplaceURL: 'https://opensea.io/collection/cryptorastas-collection',
   scanClient: 'https://layerzeroscan.com/address'
 })

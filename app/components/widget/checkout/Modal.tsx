@@ -10,7 +10,6 @@ import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
 import Image from 'next/image'
 
 export type ModalProps = {
-  collectionAddress: string
   destinationChainConfig: ChainConfig
   isOpen?: boolean
   onClose: () => void
@@ -19,7 +18,6 @@ export type ModalProps = {
 }
 
 export const Modal = ({
-  collectionAddress,
   destinationChainConfig,
   isOpen,
   onClose,
@@ -73,7 +71,7 @@ export const Modal = ({
                     Your tokens has been bridged <br />
                     successfully to {` `}
                     <Link
-                      href={`${destinationChainConfig.marketplaceURL}/assets/mumbai/${collectionAddress}/activity`}
+                      href={`${destinationChainConfig.marketplaceURL}/activity`}
                       target='_blank'
                       className='inline-flex items-center space-x-px'
                     >

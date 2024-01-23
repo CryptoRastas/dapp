@@ -259,7 +259,6 @@ export const Checkout = ({
         isOpen={isOpen}
         onClose={onCloseModal}
         status={status}
-        collectionAddress={collectionAddress}
         destinationChainConfig={destinationChainConfig}
         isBridging={isBridging}
       />
