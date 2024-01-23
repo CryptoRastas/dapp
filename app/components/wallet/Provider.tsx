@@ -15,8 +15,16 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
   return (
     <WagmiConfig config={config}>
       <ConnectKitProvider
+        customTheme={{
+          '--ck-overlay-background': 'rgb(250 204 21 / 0.8)',
+          '--ck-overlay-backdrop-filter': 'blur(8px)',
+          '--ck-body-background': 'black'
+        }}
+        mode='dark'
         options={{
-          enforceSupportedChains: false
+          enforceSupportedChains: false,
+          embedGoogleFonts: true,
+          avoidLayoutShift: true
         }}
       >
         <QueryClientProvider client={queryClient}>

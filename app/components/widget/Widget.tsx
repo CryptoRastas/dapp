@@ -6,7 +6,6 @@ import {
   useNetwork,
   useWallet
 } from '@/app/lib/wallet/hooks'
-import { Greatings } from './Greatings'
 import { Checkout } from './checkout/Checkout'
 import useNFTPortfolio from '@/app/lib/wallet/hooks/useNFTPortfolio'
 
@@ -24,16 +23,13 @@ export const Widget = () => {
     owner: String(address),
     skip: !address || !collectionContract?.address
   })
-
-  return isConnecting || !isConnected ? (
-    <Greatings />
-  ) : (
+  return (
     <Checkout
       list={list}
       collectionAddress={collectionContract.address}
       bridgeAddress={bridgeContract.address}
       senderAddress={address}
-      enabled={isConnected && !!address && !chain?.unsupported}
+      enabled={isConnected && !isConnecting && !!address && !chain?.unsupported}
       chain={config}
       destinationChains={remainingChains}
       marketplaceURL={config.marketplaceURL}
