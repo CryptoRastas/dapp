@@ -28,7 +28,7 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
       <style jsx>
         {`
           .network-selector {
-            --list-width: ${!isOpen ? 0 : chains.length * width + 4}px;
+            --list-width: ${!isOpen ? 0 : chains.length * width + 8}px;
           }
         `}
       </style>
@@ -80,6 +80,7 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
               isOpen ? 'opacity-100 ease-in-out' : 'opacity-0 ease-in'
             ])}
           >
+            <li>|</li>
             {Children.toArray(
               chains.map((availableChain) => (
                 <li
