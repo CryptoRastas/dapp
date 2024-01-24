@@ -32,7 +32,6 @@ export const Widget = () => {
       enabled={isConnected && !isConnecting && !!address && !chain?.unsupported}
       chain={config}
       destinationChains={remainingChains}
-      marketplaceURL={config.marketplaceURL}
       balance={balance?.value || 0n}
       onRefetchList={refetch}
     />

@@ -7,7 +7,8 @@ import appConfig from '@/app.config'
 
 export type CollectionStepProps = {
   list: NFTPortfolioResponse[]
-  marketplaceURL: string
+  collectionAddress: string
+  marketplaceURLTokenId: string
   error?: string
   fieldId: string
   onNextStep: () => void
@@ -16,10 +17,11 @@ export type CollectionStepProps = {
 
 export const CollectionStep = ({
   list,
-  marketplaceURL,
+  marketplaceURLTokenId,
   error,
   isLimitReached,
   fieldId,
+  collectionAddress,
   onNextStep
 }: CollectionStepProps) => {
   return (
@@ -34,7 +36,8 @@ export const CollectionStep = ({
       <PortfolioField
         fieldId={fieldId}
         list={list}
-        marketplaceURL={marketplaceURL}
+        collectionAddress={collectionAddress}
+        marketplaceURLTokenId={marketplaceURLTokenId}
       />
 
       <div className='flex flex-col space-y-8'>

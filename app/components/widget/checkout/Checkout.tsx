@@ -31,7 +31,6 @@ export type CheckoutProps = {
   enabled?: boolean
   chain: ChainConfig
   destinationChains: Chain[]
-  marketplaceURL: string
   balance: bigint
 }
 
@@ -53,7 +52,6 @@ export const Checkout = ({
   enabled,
   destinationChains,
   chain,
-  marketplaceURL,
   balance
 }: CheckoutProps) => {
   const [isOpen, , setIsOpen] = useToggle()
@@ -209,8 +207,9 @@ export const Checkout = ({
                 <CollectionStep
                   key={1}
                   fieldId={TOKEN_IDS_FIELD_ID}
+                  collectionAddress={collectionAddress}
                   list={list}
-                  marketplaceURL={marketplaceURL}
+                  marketplaceURLTokenId={chain.marketplaceURLTokenId}
                   error={methods.formState.errors[TOKEN_IDS_FIELD_ID]?.message}
                   isLimitReached={tokensReachedLimit}
                   onNextStep={() =>

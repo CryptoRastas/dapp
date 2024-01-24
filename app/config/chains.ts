@@ -22,6 +22,7 @@ export interface Chain extends WagmiChain {
     }
   }
   marketplaceURL: string
+  marketplaceURLTokenId: string
   scanClient: string
 }
 
@@ -40,6 +41,7 @@ export const polygonMumbai: Chain = merge(polygonMumbaiChain, {
     }
   }),
   marketplaceURL: 'https://testnets.opensea.io/collection/cryptorastas-13',
+  marketplaceURLTokenId: 'https://testnets.opensea.io/assets/mumbai',
   scanClient: 'https://testnet.layerzeroscan.com/address'
 })
 
@@ -58,6 +60,7 @@ export const polygon: Chain = merge(polygonChain, {
   }),
   marketplaceURL:
     'https://opensea.io/collection/cryptorastas-collection-polygon',
+  marketplaceURLTokenId: 'https://opensea.io/assets/polygon',
   scanClient: 'https://layerzeroscan.com/address'
 })
 
@@ -75,6 +78,7 @@ export const sepolia: Chain = merge(sepoliaChain, {
     }
   }),
   marketplaceURL: 'https://testnets.opensea.io/collection/cryptorastas-222',
+  marketplaceURLTokenId: 'https://testnets.opensea.io/assets/sepolia',
   scanClient: 'https://testnet.layerzeroscan.com/address'
 })
 
@@ -92,5 +96,6 @@ export const mainnet: Chain = merge(mainnetChain, {
     }
   }),
   marketplaceURL: 'https://opensea.io/collection/cryptorastas-collection',
+  marketplaceURLTokenId: 'https://opensea.io/assets/ethereum',
   scanClient: 'https://layerzeroscan.com/address'
 })
