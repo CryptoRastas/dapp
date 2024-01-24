@@ -1,6 +1,6 @@
 import { Children, type HTMLProps } from 'react'
 import { ChainConfig } from '@/app/lib/wallet/hooks/useNetwork'
-import { ExclamationTriangleIcon } from '@heroicons/react/24/solid'
+import { ExclamationTriangleIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import { NetworkThumbnail } from './Thumbnail'
 import { Text } from '@/app/components/typography'
 import { useToggle } from 'usehooks-ts'
@@ -28,11 +28,15 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
       <style jsx>
         {`
           .network-selector {
-            --list-width: ${!isOpen ? 0 : chains.length * width + 8}px;
+            --list-width: ${!isOpen ? 0 : (chains.length + 1) * width}px;
           }
         `}
       </style>
-      <div className='flex items-center lg:space-x-2'>
+      <div
+        className={classNames('flex items-center', {
+          'lg:space-x-2': isOpen
+        })}
+      >
         <button
           type='button'
           className='flex items-center space-x-1'
@@ -72,6 +76,11 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
             isOpen ? 'visible opacity-100' : 'invisible opacity-0'
           )}
         >
+          <div className='flex justify-end lg:hidden'>
+            <button type='button' title='close' onClick={toggleIsOpen}>
+              <XMarkIcon width={32} height={32} />
+            </button>
+          </div>
           <ul
             className={classNames([
               'flex items-center space-x-1',
@@ -80,13 +89,16 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
               isOpen ? 'opacity-100 ease-in-out' : 'opacity-0 ease-in'
             ])}
           >
-            <li>|</li>
+            <li className='max-lg:hidden'>|</li>
             {Children.toArray(
-              chains.map((availableChain) => (
+              chains.map((availableChain, index) => (
                 <li
                   className={classNames([
                     'flex lg:justify-center',
-                    'max-lg:w-full'
+                    'max-lg:w-full',
+                    {
+                      'max-lg:!mt-0': index === 0 && isOpen
+                    }
                   ])}
                 >
                   <button

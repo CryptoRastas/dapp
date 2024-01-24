@@ -43,7 +43,11 @@ export const Wallet = () => {
               onSwitchNetwork={switchNetwork}
             />
           </div>
-          <Account address={address} disconnect={disconnect} />
+          <Account
+            address={address}
+            disconnect={disconnect}
+            className='border border-amber-200 shadow'
+          />
         </div>
       )}
     </>
