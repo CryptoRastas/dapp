@@ -14,14 +14,12 @@ export type PortfolioFieldProps = {
   list: NFTPortfolioResponse[]
   fieldId: string
   marketplaceURL: string
-  collectionAddress: string
 }
 
 export const PortfolioField = ({
   list,
   fieldId,
-  marketplaceURL,
-  collectionAddress
+  marketplaceURL
 }: PortfolioFieldProps) => {
   const { setValue, register, clearErrors, watch } = useFormContext()
 
@@ -98,7 +96,7 @@ export const PortfolioField = ({
                 <div className='absolute bottom-2 left-2 z-[2]'>
                   <Link
                     title={`${NFT.tokenId}`}
-                    href={`${marketplaceURL}/${collectionAddress}/${NFT.tokenId}`}
+                    href={`${marketplaceURL}/${NFT.tokenId}`}
                     target='_blank'
                   >
                     <Text size='sm' className='text-white'>

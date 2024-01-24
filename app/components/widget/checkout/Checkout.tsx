@@ -211,7 +211,6 @@ export const Checkout = ({
                   fieldId={TOKEN_IDS_FIELD_ID}
                   list={list}
                   marketplaceURL={marketplaceURL}
-                  collectionAddress={collectionAddress}
                   error={methods.formState.errors[TOKEN_IDS_FIELD_ID]?.message}
                   isLimitReached={tokensReachedLimit}
                   onNextStep={() =>
