@@ -9,20 +9,11 @@ import { useModal } from 'connectkit'
 
 export const Wallet = () => {
   const { chain, switchNetwork, remainingChains } = useNetwork()
-  const { setOpen } = useModal()
-
-  const {
-    // connectors: [connector],
-    // connect,
-    isConnecting,
-    isConnected,
-    address,
-    disconnect
-  } = useWallet()
+  const { setOpen: setModalWalletsOpen } = useModal()
+  const { isConnecting, isConnected, address, disconnect } = useWallet()
 
   const handleConnect = () => {
-    // connect({ connector })
-    setOpen(true)
+    setModalWalletsOpen(true)
   }
 
   return (
