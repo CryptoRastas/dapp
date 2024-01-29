@@ -153,6 +153,8 @@ export const Checkout = ({
   }
 
   const onSubmit = async () => {
+    // reset state before transfer
+    resetBridgeState()
     setInternalError(undefined)
 
     if (!isApprovedForAll) {

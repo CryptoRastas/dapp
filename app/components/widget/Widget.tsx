@@ -23,6 +23,7 @@ export const Widget = () => {
     owner: String(address),
     skip: !address || !collectionContract?.address
   })
+
   return (
     <Checkout
       list={list}

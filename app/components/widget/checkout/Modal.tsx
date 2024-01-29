@@ -71,7 +71,7 @@ export const Modal = ({
                     Your tokens has been bridged <br />
                     successfully to {` `}
                     <Link
-                      href={`${destinationChainConfig.marketplaceURL}/activity`}
+                      href={`${destinationChainConfig.marketplaceURL}/activity?search[eventTypes][0]=ASSET_TRANSFER`}
                       target='_blank'
                       className='inline-flex items-center space-x-px'
                     >
