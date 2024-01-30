@@ -50,11 +50,11 @@ export const polygon: Chain = merge(polygonChain, {
   isSourceChain: false,
   contracts: merge(polygonChain.contracts, {
     token: {
-      address: '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889',
+      address: '0xfD691DCf0Cd713986F9218F3dc7aEb5f2b9e7480',
       blockNumber: 0
     },
     bridge: {
-      address: '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889',
+      address: '0xfD691DCf0Cd713986F9218F3dc7aEb5f2b9e7480',
       blockNumber: 0
     }
   }),
@@ -87,11 +87,11 @@ export const mainnet: Chain = merge(mainnetChain, {
   isSourceChain: true,
   contracts: merge(mainnetChain.contracts, {
     token: {
-      address: '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889',
+      address: '0x07cd221b2fe54094277a2f4e1c1bc6df14e63678',
       blockNumber: 0
     },
     bridge: {
-      address: '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889',
+      address: '0xfD691DCf0Cd713986F9218F3dc7aEb5f2b9e7480',
       blockNumber: 0
     }
   }),
