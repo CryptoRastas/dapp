@@ -59,7 +59,7 @@ export const polygon: Chain = merge(polygonChain, {
     }
   }),
   marketplaceURL: 'https://opensea.io/collection/cryptorastas-polygon',
-  marketplaceURLTokenId: 'https://opensea.io/assets/polygon',
+  marketplaceURLTokenId: 'https://opensea.io/assets/matic',
   scanClient: 'https://layerzeroscan.com/address'
 })
 
