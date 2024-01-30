@@ -6,7 +6,6 @@ import { Text } from '@/app/components/typography'
 import { NetworkThumbnail } from '@/app/components/wallet/network/Thumbnail'
 import classNames from 'classnames'
 import { isEqual } from 'lodash'
-import appConfig from '@/app.config'
 
 export type DestinationChainFieldProps = {
   list: Chain[]
@@ -42,7 +41,7 @@ export const DestinationChainField = ({
 
   useEffectOnce(() => {
     if (list.length === 1) {
-      setValue(fieldId, +appConfig.networks.defaultChainId)
+      setValue(fieldId, list[0].id)
     }
   })
 
