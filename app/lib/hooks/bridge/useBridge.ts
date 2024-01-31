@@ -2,6 +2,7 @@ import ABI from './abi.json'
 import { useContractRead, useContractWrite, useWaitForTransaction } from 'wagmi'
 import { ethers } from 'ethers'
 import { useLZClient } from '../useLZClient'
+import { useCallback } from 'react'
 
 export type BridgeConfig = {
   version: bigint
@@ -111,9 +112,9 @@ export const useBridge = ({
 
   const { message, setMessage } = useLZClient(sendBatchFromData?.hash)
 
-  const handleResetState = () => {
+  const handleResetState = useCallback(() => {
     setMessage(undefined)
-  }
+  }, [setMessage])
 
   return {
     fees: estimateData?.[0] || 0n,

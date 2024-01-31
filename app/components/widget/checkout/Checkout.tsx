@@ -190,10 +190,11 @@ export const Checkout = ({
 
   useEffect(() => {
     /// reset checkout state if user changes chain
-    if (!chain.unsupported && chain.id) {
+    if ((!chain.unsupported && chain.id) || senderAddress) {
       resetCheckoutState()
+      resetBridgeState()
     }
-  }, [resetCheckoutState, chain])
+  }, [resetBridgeState, resetCheckoutState, chain, senderAddress])
 
   return (
     <FormProvider {...methods}>
