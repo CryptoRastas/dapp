@@ -6,6 +6,7 @@ const appConfig = {
     description: 'One love inna decentralized style!'
   },
   siteURL: 'https://cryptorastas.com',
+  bridgeURL: 'https://bridge.cryptorastas.com',
   routes,
   collection: {
     defaultThumbnail:

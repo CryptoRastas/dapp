@@ -8,8 +8,9 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: `${appConfig.name} - Bridge`,
     description: appConfig.meta.description,
+    metadataBase: new URL(appConfig.bridgeURL),
     openGraph: {
-      images: '/assets/thumb.jpeg'
+      images: appConfig.bridgeURL + '/assets/thumb.jpeg'
     }
   }
 }
