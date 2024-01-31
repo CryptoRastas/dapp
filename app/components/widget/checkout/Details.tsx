@@ -49,6 +49,8 @@ export const Details = ({
 
   const selectedChain = find(chainList, { id: destinationChainFieldValue })
 
+  console.log(fees.toString())
+
   return (
     <div className='flex flex-col space-y-8'>
       <div className='flex flex-col space-y-2'>
@@ -92,7 +94,7 @@ export const Details = ({
           </div>
         </div>
       )}
-      <div className='hidden flex-col space-y-2'>
+      <div className='flex flex-col space-y-2'>
         <Heading as='h4'>Required fees in {feeToken.symbol}</Heading>
         <Text>
           {assetsUtils.formatBalance(

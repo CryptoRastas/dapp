@@ -1,7 +1,16 @@
 import ABI from './abi.json'
-import { useContractRead, useContractWrite, useWaitForTransaction } from 'wagmi'
+import {
+  useContractRead,
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+  usePublicClient,
+  useFeeData
+} from 'wagmi'
+
 import { ethers } from 'ethers'
 import { useLZClient } from '../useLZClient'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 export type BridgeConfig = {
   version: bigint
@@ -41,15 +50,7 @@ export const useBridge = ({
 }: BridgePayload) => {
   const { version, useZro, zroPaymentAddress, packetTypeSendAndCall } = config
 
-  const {
-    data: sendBatchFromData,
-    writeAsync,
-    isLoading: isWriting
-  } = useContractWrite({
-    functionName: 'sendBatchFrom',
-    address: bridgeAddress as `0x${string}`,
-    abi: ABI
-  })
+  const [networkFees, setNetworkFees] = useState(0n)
 
   const { data: requiredMinDstGas } = useContractRead({
     functionName: 'minDstGasLookup',
@@ -66,7 +67,11 @@ export const useBridge = ({
     [version, requiredMinDstGas || 0n]
   )
 
-  const { data: estimateData } = useContractRead<any, any, bigint[]>({
+  const { data: estimatedFeeToBridgeTokens } = useContractRead<
+    any,
+    any,
+    bigint[]
+  >({
     functionName: 'estimateSendBatchFee',
     enabled: enabled && !!destinationChainId && tokenIds.length > 0,
     address: bridgeAddress as `0x${string}`,
@@ -83,21 +88,45 @@ export const useBridge = ({
     cacheTime: 2_000
   })
 
+  const { data: feeData } = useFeeData({
+    watch: true
+  })
+
+  const { config: bridgeTransactionConfig } = usePrepareContractWrite({
+    maxFeePerGas: feeData?.maxFeePerGas
+      ? feeData.maxFeePerGas + 260_000n
+      : undefined,
+    maxPriorityFeePerGas: feeData?.maxPriorityFeePerGas
+      ? feeData.maxPriorityFeePerGas + 260_000n
+      : undefined,
+    enabled: enabled && !!destinationChainId && tokenIds.length > 0,
+    functionName: 'sendBatchFrom',
+    address: bridgeAddress as `0x${string}`,
+    abi: ABI,
+    args: [
+      senderAddress,
+      destinationChainId,
+      senderAddress,
+      collectionAddress,
+      tokenIds,
+      senderAddress,
+      zroPaymentAddress,
+      adapterParams
+    ],
+    value: estimatedFeeToBridgeTokens?.[0] || 0n
+  })
+
+  const client = usePublicClient()
+
+  const {
+    data: sendBatchFromData,
+    writeAsync,
+    isLoading: isWriting
+  } = useContractWrite(bridgeTransactionConfig)
+
   const handleSendBatchFrom = async () => {
     try {
-      await writeAsync({
-        args: [
-          senderAddress,
-          destinationChainId,
-          senderAddress,
-          collectionAddress,
-          tokenIds,
-          senderAddress,
-          zroPaymentAddress,
-          adapterParams
-        ],
-        value: estimateData?.[0] || 0n
-      })
+      await writeAsync?.()
     } catch (error) {
       console.log(error)
       throw new Error(`sendBatchFrom contract address ${bridgeAddress} failed`)
@@ -111,12 +140,28 @@ export const useBridge = ({
 
   const { message, setMessage } = useLZClient(sendBatchFromData?.hash)
 
-  const handleResetState = () => {
+  const handleResetState = useCallback(() => {
     setMessage(undefined)
-  }
+  }, [setMessage])
+
+  useEffect(() => {
+    if (!bridgeTransactionConfig?.request?.account) return
+
+    client
+      .estimateContractGas(bridgeTransactionConfig.request)
+      .then(setNetworkFees)
+      .catch(() => {
+        // bypass
+      })
+  }, [client, bridgeTransactionConfig])
+
+  const fees = useMemo(
+    () => (estimatedFeeToBridgeTokens?.[0] || 0n) + networkFees,
+    [networkFees, estimatedFeeToBridgeTokens]
+  )
 
   return {
-    fees: estimateData?.[0] || 0n,
+    fees,
     bridge: handleSendBatchFrom,
     isLoading: isPending || isWriting,
     status: message?.status,
