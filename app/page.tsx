@@ -7,7 +7,10 @@ import { PageContainer } from './components/PageContainer'
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: `${appConfig.name} - Bridge`,
-    description: appConfig.meta.description
+    description: appConfig.meta.description,
+    openGraph: {
+      images: '/assets/thumb.jpeg'
+    }
   }
 }
 

@@ -26,9 +26,6 @@ export const ChainStep = ({
     <section key={2} className='flex flex-col justify-start space-y-8'>
       <div className='flex flex-col space-y-2'>
         <Heading as='h3'>Select destination chain</Heading>
-        <Text size='sm'>
-          Almost there, select a chain to bridge your selected tokens
-        </Text>
       </div>
       <DestinationChainField fieldId={fieldId} list={destinationChains} />
       <div className='flex flex-col space-y-8'>

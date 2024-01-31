@@ -28,10 +28,6 @@ export const CollectionStep = ({
     <section className='flex flex-col justify-start space-y-8'>
       <div className='flex flex-col space-y-2'>
         <Heading as='h3'>Select your tokens</Heading>
-        <Text size='sm'>
-          Before start, select your token IDs that’s going to be used to bridge
-          to destination chain.
-        </Text>
       </div>
       <PortfolioField
         fieldId={fieldId}

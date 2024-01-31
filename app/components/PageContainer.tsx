@@ -41,24 +41,45 @@ export const PageContainer = () => {
       <div className='grid grid-cols-2 items-start gap-8'>
         <section className='col-span-2 flex flex-col space-y-4 max-lg:order-2 lg:col-span-1'>
           <article className='flex flex-col space-y-4 text-justify'>
-            <Text>
-              CryptoRastas is a global club/community platform that uses
-              blockchain technology and digital art to engage and empower Reggae
-              culture and the Rasta message around the world.
+            <Text className='font-bold' variant='default'>
+              CryptoRastas is a global community/club that uses blockchain
+              technology and digital art to engage and empower Reggae culture
+              and Rasta vibes around the world.
             </Text>
             <Text>
-              The project began in March 2021 and continues to be fully
-              developed in several areas: art, music, events, fashion, retail
-              products, media content, creative economy, education, etc.
+              The project started in March 2021 and by the end of August we had
+              minted
+              {` `}
+              <a href='https://opensea.io/collection/cryptorastas-collection'>
+                10420 NFTs
+              </a>
+              {` `}
+              on the Ethereum blockchain. With a solid community and
+              distinguished collectors, CryptoRastas continues in full
+              development in several areas like art, music, events, fashion,
+              education, and of course, technology.
             </Text>
             <Text>
-              The colorful 8-bit pixel art, vibrant music, and rich narrative
-              capture attention and bring an instant smile to our faces. The
-              positive vibes in the community are something that makes
-              CryptoRastas stand out in the web3 space. But we have a much
-              deeper objective: using tools such as art, culture and technology,
-              combined with the great opportunity we have in this unique moment
-              in time, to bring more justice and equality in our society.
+              <Text as='span' variant='default' className='font-bold'>
+                We are now offering all CR holders the option to connect their
+                original NFTs to the Polygon network.
+              </Text>{' '}
+              We believe the future is{' '}
+              <Text as='span' variant='default' className='font-bold'>
+                #omnichain
+              </Text>{' '}
+              and we want to give the community freedom to choose where they
+              want their NFTs. Additionally, we want to build more applications
+              to use our NFTs with less or no gas fees.{' '}
+              <Text as='span' variant='default' className='font-bold'>
+                Powered by <a href='https://layerzero.network/'>LayerZero</a>
+              </Text>{' '}
+              protocol, this is a 2-way bridge, so you can go back to the
+              original chain whenever you want.
+            </Text>
+
+            <Text variant='default' className='font-bold'>
+              CONNECT YOUR WALLET NOW TO BRIDGE YOUR RASTAS TO POLYGON
             </Text>
 
             <Text
