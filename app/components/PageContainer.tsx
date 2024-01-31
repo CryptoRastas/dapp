@@ -1,5 +1,4 @@
 'use client'
-import appConfig from '@/app.config'
 import { Heading, Text } from '@/app/components/typography'
 import Link from 'next/link'
 import classNames from 'classnames'
@@ -50,7 +49,11 @@ export const PageContainer = () => {
               The project started in March 2021 and by the end of August we had
               minted
               {` `}
-              <a href='https://opensea.io/collection/cryptorastas-collection'>
+              <a
+                rel='noopener'
+                target='_blank'
+                href='https://opensea.io/collection/cryptorastas-collection'
+              >
                 10420 NFTs
               </a>
               {` `}
@@ -72,7 +75,14 @@ export const PageContainer = () => {
               want their NFTs. Additionally, we want to build more applications
               to use our NFTs with less or no gas fees.{' '}
               <Text as='span' variant='default' className='font-bold'>
-                Powered by <a href='https://layerzero.network/'>LayerZero</a>
+                Powered by{' '}
+                <a
+                  rel='noopener'
+                  target='_blank'
+                  href='https://layerzero.network/'
+                >
+                  LayerZero
+                </a>
               </Text>{' '}
               protocol, this is a 2-way bridge, so you can go back to the
               original chain whenever you want.
@@ -80,16 +90,6 @@ export const PageContainer = () => {
 
             <Text variant='default' className='font-bold'>
               CONNECT YOUR WALLET NOW TO BRIDGE YOUR RASTAS TO POLYGON
-            </Text>
-
-            <Text
-              variant='default'
-              size='default'
-              className='text-base font-bold'
-            >
-              <Link href={appConfig.siteURL} target='_blank'>
-                more details...
-              </Link>
             </Text>
           </article>
         </section>
