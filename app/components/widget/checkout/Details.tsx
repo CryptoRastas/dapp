@@ -92,7 +92,7 @@ export const Details = ({
           </div>
         </div>
       )}
-      <div className='flex flex-col space-y-2'>
+      <div className='hidden flex-col space-y-2'>
         <Heading as='h4'>Required fees in {feeToken.symbol}</Heading>
         <Text>
           {assetsUtils.formatBalance(
