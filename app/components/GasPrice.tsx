@@ -10,7 +10,7 @@ export const GasPrice = () => {
   })
 
   return (
-    <div className='flex items-center space-x-2 opacity-60'>
+    <div className='hidden items-center space-x-2 opacity-60 lg:flex'>
       <Text size='xs'>
         {isError || isLoading || !data?.formatted?.gasPrice
           ? 0
