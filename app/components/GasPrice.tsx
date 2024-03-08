@@ -10,14 +10,20 @@ export const GasPrice = () => {
   })
 
   return (
-    <div className='hidden items-center space-x-2 opacity-60 lg:flex'>
-      <Text size='xs'>
-        {isError || isLoading || !data?.formatted?.gasPrice
-          ? 0
-          : assetsUtils.formatBalance(data.formatted.gasPrice, 2, 2)}{' '}
-        gwei
-      </Text>
-      <FireIcon width={16} height={16} />
+    <div className='hidden items-center space-x-2 lg:flex'>
+      <div className='flex space-x-px'>
+        <Text size='xs' as='span'>
+          {isError || isLoading || !data?.formatted?.gasPrice
+            ? 0
+            : assetsUtils.formatBalance(data.formatted.gasPrice, 2, 2)}
+        </Text>
+        <Text size='xs' as='span'>
+          gwei
+        </Text>
+      </div>
+      <div>
+        <FireIcon width={18} height={18} />
+      </div>
     </div>
   )
 }

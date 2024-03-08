@@ -9,7 +9,7 @@ import LoadingSkeleton from '@/app/components/loading/Skeleton'
 
 const GasPrice = dynamic(() => import('@/app/components/GasPrice'), {
   ssr: false,
-  loading: () => <LoadingSkeleton className='h-9 w-full rounded-3xl' />
+  loading: () => <LoadingSkeleton className='h-9  w-24 rounded-3xl' />
 })
 
 const Wallet = dynamic(() => import('@/app/components/wallet/Wallet'), {
@@ -31,7 +31,6 @@ export const Header = ({ className, ...props }: HTMLProps<HTMLElement>) => {
       )}
     >
       <Logo />
-
       <div className='flex items-center justify-end space-x-2'>
         <GasPrice />
         <Wallet />
