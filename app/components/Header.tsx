@@ -5,7 +5,12 @@ import classNames from 'classnames'
 import { Logo } from '@/app/components/logo'
 
 import dynamic from 'next/dynamic'
-import LoadingSkeleton from './loading/Skeleton'
+import LoadingSkeleton from '@/app/components/loading/Skeleton'
+
+const GasPrice = dynamic(() => import('@/app/components/GasPrice'), {
+  ssr: false,
+  loading: () => <LoadingSkeleton className='h-9 w-full rounded-3xl' />
+})
 
 const Wallet = dynamic(() => import('@/app/components/wallet/Wallet'), {
   ssr: false,
@@ -27,7 +32,8 @@ export const Header = ({ className, ...props }: HTMLProps<HTMLElement>) => {
     >
       <Logo />
 
-      <div>
+      <div className='flex items-center justify-end space-x-2'>
+        <GasPrice />
         <Wallet />
       </div>
     </header>

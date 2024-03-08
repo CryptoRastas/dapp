@@ -78,7 +78,7 @@ export const Checkout = ({
 
   const destinationChainFieldValue = methods.watch(
     DESTINATION_CHAIN_ID_FIELD_ID,
-    undefined
+    +appConfig.networks.defaultChainId
   )
 
   const tokenIdsFieldValue = methods.watch(TOKEN_IDS_FIELD_ID, [])
