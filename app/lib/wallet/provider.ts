@@ -30,6 +30,14 @@ export const chainsSDK: ChainSDK = {
   80001: new Alchemy({
     ...providerConfig,
     network: Network.MATIC_MUMBAI
+  }),
+  8453: new Alchemy({
+    ...providerConfig,
+    network: Network.BASE_MAINNET
+  }),
+  84532: new Alchemy({
+    ...providerConfig,
+    network: Network.BASE_SEPOLIA
   })
 }
 

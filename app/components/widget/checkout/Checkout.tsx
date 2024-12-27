@@ -5,8 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import useBridge from '@/app/lib/hooks/bridge/useBridge'
 import useChainConfig from '@/app/lib/wallet/hooks/useChainConfig'
-import { Chain } from '@/app/config/chains'
-import { ChainConfig } from '@/app/lib/wallet/hooks/useNetwork'
+import useNetwork, { ChainConfig } from '@/app/lib/wallet/hooks/useNetwork'
 import useERC721ApproveAll from '@/app/lib/wallet/hooks/useERC721ApproveAll'
 import { useCallback, useEffect, useState } from 'react'
 import { useStep } from '@/app/lib/hooks/useStep'
@@ -16,6 +15,7 @@ import { ChainStep } from '@/app/components/widget/checkout/ChainStep'
 import { BridgeStep } from '@/app/components/widget/checkout/BridgeStep'
 import { Modal } from '@/app/components/widget/checkout/Modal'
 import { useToggle } from 'usehooks-ts'
+import { bridgeConfig } from '@/app/config/bridge'
 
 export type CheckoutFormData = {
   tokenIds: string[]
@@ -29,8 +29,7 @@ export type CheckoutProps = {
   bridgeAddress: string
   senderAddress?: string
   enabled?: boolean
-  chain: ChainConfig
-  destinationChains: Chain[]
+  currentChain: ChainConfig
   balance: bigint
 }
 
@@ -50,12 +49,12 @@ export const Checkout = ({
   bridgeAddress,
   senderAddress,
   enabled,
-  destinationChains,
-  chain,
+  currentChain,
   balance
 }: CheckoutProps) => {
   const [isOpen, , setIsOpen] = useToggle()
   const [internalError, setInternalError] = useState<string>()
+  const { config } = useNetwork()
 
   const methods = useForm<CheckoutFormData>({
     mode: 'all',
@@ -75,6 +74,8 @@ export const Checkout = ({
       })
     )
   })
+
+  const destinationChains = bridgeConfig[config.id]
 
   const destinationChainFieldValue = methods.watch(
     DESTINATION_CHAIN_ID_FIELD_ID,
@@ -101,7 +102,7 @@ export const Checkout = ({
     collectionAddress,
     tokenIds: tokenIdsFieldValue,
     destinationChainId: destinationChainConfig.abstractId,
-    enabled: !chain?.unsupported && enabled,
+    enabled: !currentChain?.unsupported && enabled,
     senderAddress: senderAddress
   })
 
@@ -190,11 +191,11 @@ export const Checkout = ({
 
   useEffect(() => {
     /// reset checkout state if user changes chain
-    if ((!chain.unsupported && chain.id) || senderAddress) {
+    if ((!currentChain.unsupported && currentChain.id) || senderAddress) {
       resetCheckoutState()
       resetBridgeState()
     }
-  }, [resetBridgeState, resetCheckoutState, chain, senderAddress])
+  }, [resetBridgeState, resetCheckoutState, currentChain, senderAddress])
 
   return (
     <FormProvider {...methods}>
@@ -212,7 +213,7 @@ export const Checkout = ({
                   fieldId={TOKEN_IDS_FIELD_ID}
                   collectionAddress={collectionAddress}
                   list={list}
-                  marketplaceURLTokenId={chain.marketplaceURLTokenId}
+                  marketplaceURLTokenId={currentChain.marketplaceURLTokenId}
                   error={methods.formState.errors[TOKEN_IDS_FIELD_ID]?.message}
                   isLimitReached={tokensReachedLimit}
                   onNextStep={() =>
@@ -241,7 +242,7 @@ export const Checkout = ({
                   list={list}
                   tokenIdsFieldId={TOKEN_IDS_FIELD_ID}
                   destinationChainFieldId={DESTINATION_CHAIN_ID_FIELD_ID}
-                  nativeCurrency={chain.nativeCurrency}
+                  nativeCurrency={currentChain.nativeCurrency}
                   destinationChains={destinationChains}
                   fees={fees}
                   needApproval={!isApprovedForAll}

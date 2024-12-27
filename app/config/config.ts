@@ -1,8 +1,16 @@
 import { reduce, merge } from 'lodash'
-import { polygonMumbai, polygon, mainnet, sepolia, Chain } from './chains'
+import {
+  polygonMumbai,
+  polygon,
+  mainnet,
+  sepolia,
+  base,
+  baseSepolia,
+  Chain
+} from './chains'
 
-export const mainnets = [mainnet, polygon]
-export const testnets = [sepolia, polygonMumbai]
+export const mainnets = [mainnet, polygon, base]
+export const testnets = [sepolia, polygonMumbai, baseSepolia]
 
 export const allowedChains = (
   process.env.NEXT_PUBLIC_TESTNET_MODE === '1' ? testnets : mainnets
