@@ -14,7 +14,7 @@ export const testnets = [sepolia, polygonMumbai, baseSepolia]
 
 export const allowedChains = (
   process.env.NEXT_PUBLIC_TESTNET_MODE === '1' ? testnets : mainnets
-) as Chain[]
+) as [Chain, ...Chain[]]
 
 export const allowedChainsConfig = reduce(
   allowedChains,

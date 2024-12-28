@@ -1,7 +1,4 @@
-import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { Network, Alchemy } from 'alchemy-sdk'
-import { ChainProviderFn } from 'wagmi'
-import { Chain } from '@/app/config/chains'
 import { allowedChains } from '@/app/config/config'
 
 export type Provider = Alchemy
@@ -46,7 +43,3 @@ Object.values(allowedChains).forEach((chain) => {
     throw new Error(`No SDK for chain ${chain.id}`)
   }
 })
-
-export default alchemyProvider({
-  ...providerConfig
-}) as ChainProviderFn<Chain>

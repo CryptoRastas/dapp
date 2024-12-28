@@ -8,7 +8,7 @@ import {
   baseSepolia as baseSepoliaChain,
   base as baseChain,
   Chain as WagmiChain
-} from 'wagmi/chains'
+} from 'viem/chains'
 
 export interface Chain extends WagmiChain {
   abstractId: number
