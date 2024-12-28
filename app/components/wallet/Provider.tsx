@@ -1,7 +1,7 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import { WagmiConfig } from 'wagmi'
+import { WagmiProvider } from 'wagmi'
 import config from '@/app/lib/wallet/config'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ConnectKitProvider } from 'connectkit'
@@ -14,7 +14,7 @@ const queryClient = new QueryClient()
 
 export const WalletProvider = ({ children }: WalletProviderProps) => {
   return (
-    <WagmiConfig config={config}>
+    <WagmiProvider config={config}>
       <ConnectKitProvider
         customTheme={{
           '--ck-overlay-background': 'rgb(250 204 21 / 0.8)',
@@ -32,7 +32,7 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
           {children}
         </QueryClientProvider>
       </ConnectKitProvider>
-    </WagmiConfig>
+    </WagmiProvider>
   )
 }
 
