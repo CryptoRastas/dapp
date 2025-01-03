@@ -1,6 +1,14 @@
 import { Network, Alchemy } from 'alchemy-sdk'
 import { allowedChains } from '@/app/config/config'
-
+import {
+  polygonAmoy,
+  polygon,
+  mainnet,
+  sepolia,
+  base,
+  baseSepolia,
+  abstractTestnet
+} from '@/app/config/chains'
 export type Provider = Alchemy
 
 export const providerConfig = {
@@ -12,33 +20,32 @@ export type ChainSDK = {
 }
 
 export const chainsSDK: ChainSDK = {
-  1: new Alchemy({
+  [mainnet.id]: new Alchemy({
     ...providerConfig,
     network: Network.ETH_MAINNET
   }),
-  11155111: new Alchemy({
+  [sepolia.id]: new Alchemy({
     ...providerConfig,
     network: Network.ETH_SEPOLIA
   }),
-  137: new Alchemy({
+  [polygon.id]: new Alchemy({
     ...providerConfig,
     network: Network.MATIC_MAINNET
   }),
-  80002: new Alchemy({
+  [polygonAmoy.id]: new Alchemy({
     ...providerConfig,
     network: Network.MATIC_AMOY
   }),
-  8453: new Alchemy({
+  [base.id]: new Alchemy({
     ...providerConfig,
     network: Network.BASE_MAINNET
   }),
-  84532: new Alchemy({
+  [baseSepolia.id]: new Alchemy({
     ...providerConfig,
     network: Network.BASE_SEPOLIA
   }),
-  11124: new Alchemy({
-    ...providerConfig,
-    network: Network.BASE_SEPOLIA
+  [abstractTestnet.id]: new Alchemy({
+    ...providerConfig
   })
 }
 
