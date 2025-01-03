@@ -30,7 +30,7 @@ export function useChainConfig({ chainId }: UseChainConfigProps) {
   const remainingChains = useMemo(
     () => filter(allowedChains, (chain) => checkChainId(chain, chainId)),
     [chainId]
-  )
+  ) as [Chain, ...Chain[]]
 
   return {
     config: defaultConfig,

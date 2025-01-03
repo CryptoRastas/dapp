@@ -16,7 +16,6 @@ import { Address } from 'viem'
 export type { Chain }
 
 export const polygonAmoy: Chain = merge(polygonAmoyChain, {
-  name: 'Amoy',
   abstractId: 10267,
   contracts: merge(polygonAmoyChain.contracts, {
     token: {

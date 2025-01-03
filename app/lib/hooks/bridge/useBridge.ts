@@ -1,5 +1,9 @@
 import ABI from './abi.json'
-import { useContractRead, useContractWrite, useWaitForTransaction } from 'wagmi'
+import {
+  useReadContract,
+  useWriteContract,
+  useWaitForTransactionReceipt
+} from 'wagmi'
 import { ethers } from 'ethers'
 import { useLZClient } from '../useLZClient'
 import { useCallback } from 'react'
@@ -15,7 +19,7 @@ export type BridgePayload = {
   senderAddress?: string
   bridgeAddress: string
   tokenIds: string[]
-  destinationChainId: number
+  destinationChainId?: number
   collectionAddress: string
   enabled?: boolean
   config?: BridgeConfig
@@ -44,22 +48,19 @@ export const useBridge = ({
 
   const {
     data: sendBatchFromData,
-    writeAsync,
-    isLoading: isWriting
-  } = useContractWrite({
-    functionName: 'sendBatchFrom',
-    address: bridgeAddress as `0x${string}`,
-    abi: ABI
-  })
+    writeContractAsync,
+    isPending: isWriting
+  } = useWriteContract()
 
-  const { data: requiredMinDstGas } = useContractRead({
+  const { data: requiredMinDstGas } = useReadContract({
     functionName: 'minDstGasLookup',
-    enabled: enabled && !!destinationChainId,
     address: bridgeAddress as `0x${string}`,
     abi: ABI,
     args: [destinationChainId, packetTypeSendAndCall],
-    watch: true,
-    cacheTime: 2_000
+    query: {
+      enabled: enabled && !!destinationChainId,
+      refetchInterval: 2_000
+    }
   })
 
   const adapterParams = ethers.solidityPacked(
@@ -67,9 +68,8 @@ export const useBridge = ({
     [version, requiredMinDstGas || 0n]
   )
 
-  const { data: estimateData } = useContractRead<any, any, bigint[]>({
+  const { data: estimateData } = useReadContract({
     functionName: 'estimateSendBatchFee',
-    enabled: enabled && !!destinationChainId && tokenIds.length > 0,
     address: bridgeAddress as `0x${string}`,
     abi: ABI,
     args: [
@@ -80,13 +80,18 @@ export const useBridge = ({
       useZro,
       adapterParams
     ],
-    watch: true,
-    cacheTime: 2_000
+    query: {
+      enabled: enabled && !!destinationChainId && tokenIds.length > 0,
+      refetchInterval: 2_000
+    }
   })
 
   const handleSendBatchFrom = async () => {
     try {
-      await writeAsync({
+      await writeContractAsync({
+        functionName: 'sendBatchFrom',
+        address: bridgeAddress as `0x${string}`,
+        abi: ABI,
         args: [
           senderAddress,
           destinationChainId,
@@ -97,7 +102,7 @@ export const useBridge = ({
           zroPaymentAddress,
           adapterParams
         ],
-        value: estimateData?.[0] || 0n
+        value: (estimateData as any)?.[0] || 0n
       })
     } catch (error) {
       console.log(error)
@@ -105,19 +110,21 @@ export const useBridge = ({
     }
   }
 
-  const { isLoading: isPending } = useWaitForTransaction({
-    hash: sendBatchFromData?.hash,
-    enabled: !!sendBatchFromData?.hash
+  const { isLoading: isPending } = useWaitForTransactionReceipt({
+    hash: sendBatchFromData,
+    query: {
+      enabled: !!sendBatchFromData
+    }
   })
 
-  const { message, setMessage } = useLZClient(sendBatchFromData?.hash)
+  const { message, setMessage } = useLZClient(sendBatchFromData)
 
   const handleResetState = useCallback(() => {
     setMessage(undefined)
   }, [setMessage])
 
   return {
-    fees: estimateData?.[0] || 0n,
+    fees: (estimateData as any)?.[0] || 0n,
     bridge: handleSendBatchFrom,
     isLoading: isPending || isWriting,
     status: message?.status,
