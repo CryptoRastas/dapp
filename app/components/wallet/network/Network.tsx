@@ -1,26 +1,25 @@
-import { Children, type HTMLProps } from 'react'
-import { ChainConfig } from '@/app/lib/wallet/hooks/useNetwork'
+import { Children } from 'react'
+import { useNetwork } from '@/app/lib/wallet/hooks/useNetwork'
 import { ExclamationTriangleIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import { NetworkThumbnail } from './Thumbnail'
 import { Text } from '@/app/components/typography'
 import { useToggle } from 'usehooks-ts'
 import classNames from 'classnames'
+import { useWallet } from '@/app/lib/wallet/hooks/useWallet'
 
-type NetworkProps = HTMLProps<HTMLDivElement> & {
-  chain?: ChainConfig
-  chains: ChainConfig[]
-  onSwitchNetwork?: (chainId: number) => void
-}
-
-export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
+export const Network = () => {
   const [isOpen, toggleIsOpen] = useToggle()
 
   /// Thumbsize
   const [width, height] = [16, 16]
 
-  const handleSwitchNetwork = (chainId: number) => {
-    toggleIsOpen()
-    onSwitchNetwork?.(chainId)
+  const { chain, switchChain, chains } = useNetwork()
+  const { connector } = useWallet()
+
+  const handleSwitchChain = () => {
+    if (chain && !chain?.unsupported) return
+
+    switchChain({ chainId: chains[0].id, connector })
   }
 
   return (
@@ -108,7 +107,7 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
                       'max-lg:flex max-lg:space-x-2',
                       'max-lg:items-center max-lg:text-black'
                     ])}
-                    onClick={() => handleSwitchNetwork(availableChain.id)}
+                    onClick={() => handleSwitchChain()}
                   >
                     <NetworkThumbnail
                       className='grayscale'

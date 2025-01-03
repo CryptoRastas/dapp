@@ -1,11 +1,6 @@
-import { createConfig, fallback, http, Transport, webSocket } from 'wagmi'
+import { createConfig, fallback, http, Transport } from 'wagmi'
 import { getDefaultConfig } from 'connectkit'
-
-import {
-  allowedChains as chains,
-  allowedChainsConfig
-} from '@/app/config/config'
-
+import { allowedChains as chains } from '@/app/config/config'
 import { chainsSDK, Provider } from './provider'
 import appConfig from '@/app.config'
 import { merge, reduce } from 'lodash'
@@ -19,29 +14,7 @@ export const transports = reduce(
         ...acc
       },
       {
-        [chain.id]: fallback([
-          webSocket(
-            allowedChainsConfig[chain.id].rpcUrls.protocol?.webSocket?.[0],
-            {
-              key: 'protocol-websocket',
-              name: 'protocol-websocket',
-              retryCount: 9,
-              retryDelay: 100,
-              reconnect: {
-                attempts: 9,
-                delay: 100
-              }
-            }
-          ),
-          http(allowedChainsConfig[chain.id].rpcUrls.protocol.http[0], {
-            key: 'protocol-http',
-            name: 'protocol-http',
-            retryCount: 9,
-            retryDelay: 100
-          }),
-          http(allowedChainsConfig[chain.id].rpcUrls.default.http[0]),
-          http()
-        ])
+        [chain.id]: fallback([http()])
       }
     ),
   {} as Record<keyof typeof chains, Transport>

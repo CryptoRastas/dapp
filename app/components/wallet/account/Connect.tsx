@@ -1,16 +1,19 @@
 import { Button } from '@/app/components/button'
 
-type AccountConnectProps = {
-  isConnecting?: boolean
-  onConnect: () => void
-}
+import { useWallet } from '@/app/lib/wallet/hooks'
 
-export const AccountConnect = ({
-  onConnect,
-  isConnecting
-}: AccountConnectProps) => {
+import { useModal } from 'connectkit'
+
+export const AccountConnect = () => {
+  const { setOpen: setModalWalletsOpen } = useModal()
+  const { isConnecting } = useWallet()
+
+  const handleConnect = () => {
+    setModalWalletsOpen(true)
+  }
+
   return (
-    <Button onClick={onConnect} type='button'>
+    <Button onClick={handleConnect} type='button'>
       {isConnecting ? 'Connecting' : 'Connect'}
     </Button>
   )

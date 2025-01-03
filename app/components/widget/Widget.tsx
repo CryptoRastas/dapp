@@ -16,7 +16,7 @@ export const Widget = () => {
   const collectionContract = useChainContract('token')
   const bridgeContract = useChainContract('bridge')
 
-  const { balance } = useBalance()
+  const { value: balanceValue } = useBalance()
 
   const { list, refetch } = useNFTPortfolio({
     contractAddress: collectionContract?.address,
@@ -32,7 +32,7 @@ export const Widget = () => {
       senderAddress={address}
       enabled={isConnected && !isConnecting && !!address && !chain?.unsupported}
       currentChain={config}
-      balance={balance?.value || 0n}
+      balance={balanceValue || 0n}
       onRefetchList={refetch}
     />
   )

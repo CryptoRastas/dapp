@@ -1,21 +1,17 @@
-import { useBalance as useBalanceHook } from 'wagmi'
-import { useWallet } from './useWallet'
-import { useNetwork } from './useNetwork'
+import { useAccount, useBalance } from 'wagmi'
 
-function useBalance() {
-  const { address } = useWallet()
-  const { chain } = useNetwork()
+export function useBalace() {
+  const { address } = useAccount()
 
-  const { data, isLoading } = useBalanceHook({
+  const { data, isLoading } = useBalance({
     address,
-    chainId: chain?.id,
-    formatUnits: 'ether'
+    unit: 'ether'
   })
 
   return {
-    balance: data,
+    ...data,
     isLoading
   }
 }
 
-export default useBalance
+export default useBalace

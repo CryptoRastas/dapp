@@ -1,10 +1,11 @@
 import {
-  polygonMumbai,
+  polygonAmoy,
   polygon,
   mainnet,
   sepolia,
   base,
   baseSepolia,
+  abstractTestnet,
   Chain
 } from './chains'
 
@@ -13,10 +14,15 @@ type BridgeConfig = {
 }
 
 export const bridgeConfig: BridgeConfig = {
-  [polygonMumbai.id]: [sepolia, baseSepolia],
-  [sepolia.id]: [polygonMumbai, baseSepolia],
-  [baseSepolia.id]: [sepolia, polygonMumbai],
-  [polygon.id]: [mainnet, base],
-  [mainnet.id]: [polygon, base],
-  [base.id]: [mainnet, polygon]
+  /// testnets
+  [polygonAmoy.id]: [sepolia, baseSepolia, abstractTestnet],
+  [sepolia.id]: [polygonAmoy, baseSepolia, abstractTestnet],
+  [baseSepolia.id]: [sepolia, polygonAmoy, abstractTestnet],
+  [abstractTestnet.id]: [sepolia, polygonAmoy, baseSepolia],
+
+  /// mainnet
+  [polygon.id]: [mainnet, base /** abstractMainnet */],
+  [mainnet.id]: [polygon, base /** abstractMainnet */],
+  [base.id]: [mainnet]
+  /** [abstractMainnet.id]: [mainnet]*/
 }
