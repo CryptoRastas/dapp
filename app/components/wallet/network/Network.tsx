@@ -16,10 +16,8 @@ export const Network = () => {
   const { chain, switchChain, chains } = useNetwork()
   const { connector } = useWallet()
 
-  const handleSwitchChain = () => {
-    if (chain && !chain?.unsupported) return
-
-    switchChain({ chainId: chains[0].id, connector })
+  const handleSwitchChain = (chainId: number) => {
+    switchChain({ chainId: chainId, connector })
   }
 
   return (
@@ -27,7 +25,7 @@ export const Network = () => {
       <style jsx>
         {`
           .network-selector {
-            --list-width: ${!isOpen ? 0 : (chains.length + 1) * width}px;
+            --list-width: ${!isOpen ? 0 : (chains.length + 1) * width + 32}px;
           }
         `}
       </style>
@@ -56,7 +54,7 @@ export const Network = () => {
               />
               {isOpen && (
                 <Text
-                  className='hidden text-center text-xs lg:inline-block'
+                  className='hidden text-center text-xs leading-none lg:inline-block'
                   size='default'
                 >
                   {chain?.name}
@@ -107,13 +105,14 @@ export const Network = () => {
                       'max-lg:flex max-lg:space-x-2',
                       'max-lg:items-center max-lg:text-black'
                     ])}
-                    onClick={() => handleSwitchChain()}
+                    onClick={() => handleSwitchChain(availableChain.id)}
                   >
                     <NetworkThumbnail
                       className='grayscale'
                       width={width}
                       height={height}
                       src={`/assets/chains/${availableChain.id}.svg`}
+                      alt={availableChain.name}
                     />
                     <Text
                       className='inline-block text-center text-lg  lg:hidden'

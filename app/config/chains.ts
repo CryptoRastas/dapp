@@ -17,6 +17,7 @@ export type { Chain }
 
 export const polygonAmoy: Chain = merge(polygonAmoyChain, {
   abstractId: 10267,
+  name: 'Amoy',
   contracts: merge(polygonAmoyChain.contracts, {
     token: {
       address: '0x357F0dc00AdE231db59aE38aCd8A0E73ed0125Ff' as Address,

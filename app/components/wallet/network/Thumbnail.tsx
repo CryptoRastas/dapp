@@ -13,6 +13,7 @@ export const NetworkThumbnail = ({
   className,
   width = 16,
   height = 16,
+  alt = 'network',
   ...props
 }: NetworkThumbnailProps) => {
   return (
@@ -35,7 +36,7 @@ export const NetworkThumbnail = ({
         {src ? (
           <Image
             src={src}
-            alt='network'
+            alt={alt}
             width={width}
             height={height}
             className={className}

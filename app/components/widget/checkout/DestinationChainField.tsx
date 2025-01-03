@@ -52,7 +52,7 @@ export const DestinationChainField = ({
           <li className='col-span-2 sm:col-span-1'>
             <div
               className={classNames(
-                'lg:h-30 lg:w-30 relative h-28 w-28 overflow-hidden',
+                'lg:h-30 lg:w-30 relative flex h-28 w-28 flex-col items-center justify-center gap-2 overflow-hidden',
                 'group cursor-pointer rounded-3xl ',
                 'flex flex-col items-center justify-center space-y-2',
                 {
@@ -74,7 +74,9 @@ export const DestinationChainField = ({
                   'group-hover:scale-125': !isEqual(fieldValue, chain.id)
                 })}
               />
-              <Text className='text-black'>{chain.name}</Text>
+              <Text size='xs' className='text-black'>
+                {chain.name}
+              </Text>
             </div>
           </li>
         ))

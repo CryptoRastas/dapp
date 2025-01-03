@@ -6,11 +6,12 @@ import {
   sepolia,
   base,
   baseSepolia,
-  Chain
+  Chain,
+  abstractTestnet
 } from './chains'
 
 export const mainnets = [mainnet, polygon, base]
-export const testnets = [sepolia, polygonAmoy, baseSepolia]
+export const testnets = [sepolia, polygonAmoy, baseSepolia, abstractTestnet]
 
 export const allowedChains = (
   process.env.NEXT_PUBLIC_TESTNET_MODE === '1' ? testnets : mainnets
