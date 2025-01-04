@@ -13,7 +13,7 @@ export const Network = () => {
   /// Thumbsize
   const [width, height] = [16, 16]
 
-  const { chain, switchChain, chains } = useNetwork()
+  const { chain, switchChain, remainingChains } = useNetwork()
   const { connector } = useWallet()
 
   const handleSwitchChain = (chainId: number) => {
@@ -25,7 +25,9 @@ export const Network = () => {
       <style jsx>
         {`
           .network-selector {
-            --list-width: ${!isOpen ? 0 : (chains.length + 1) * width + 32}px;
+            --list-width: ${!isOpen
+              ? 0
+              : (remainingChains.length + 1) * width + 32}px;
           }
         `}
       </style>
@@ -88,7 +90,7 @@ export const Network = () => {
           >
             <li className='max-lg:hidden'>|</li>
             {Children.toArray(
-              chains.map((availableChain, index) => (
+              remainingChains.map((availableChain, index) => (
                 <li
                   className={classNames([
                     'flex lg:justify-center',

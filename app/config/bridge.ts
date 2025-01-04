@@ -17,8 +17,8 @@ export const bridgeConfig: BridgeConfig = {
   /// testnets
   [polygonAmoy.id]: [sepolia, baseSepolia, abstractTestnet],
   [sepolia.id]: [polygonAmoy, baseSepolia, abstractTestnet],
-  [baseSepolia.id]: [sepolia, polygonAmoy, abstractTestnet],
-  [abstractTestnet.id]: [sepolia, polygonAmoy, baseSepolia],
+  [baseSepolia.id]: [sepolia],
+  [abstractTestnet.id]: [sepolia],
 
   /// mainnet
   [polygon.id]: [mainnet, base /** abstractMainnet */],
