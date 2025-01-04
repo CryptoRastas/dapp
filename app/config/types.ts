@@ -1,5 +1,5 @@
-import { Chain as IChain } from 'wagmi/chains'
-import { ChainContract } from 'viem'
+// import { Chain as IChain } from 'wagmi/chains'
+import { ChainContract, Chain as IChain } from 'viem'
 
 export type AvailableChainContracts = 'token' | 'bridge'
 
