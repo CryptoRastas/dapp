@@ -53,12 +53,16 @@ export const polygon: Chain = merge(polygonChain, {
 export const sepolia: Chain = merge(sepoliaChain, {
   abstractId: 10161,
   contracts: merge(sepoliaChain.contracts, {
+    /// @dev: collection NFT
+    /// @toDo: change to a proper name
     token: {
-      address: '0xEa1bE678525726C050aE363D6561110567c6A005' as Address,
+      address: '0x9B4d191e71138e100b3e0345cF4365060e3bBD01' as Address,
       blockNumber: 0
     },
+    /// @dev: ProxyONFT721
+    /// @toDo: change to a proper name
     bridge: {
-      address: '0x08d6474eb92E8c4Df03E4223e0ec8d50f743c75f' as Address,
+      address: '0x65d8EDec76C83AC87d0E852Fd170B22A76dee3cF' as Address,
       blockNumber: 0
     }
   }),
@@ -105,11 +109,11 @@ export const baseSepolia: Chain = merge(baseSepoliaChain, {
   abstractId: 10245,
   contracts: merge(baseSepoliaChain.contracts, {
     token: {
-      address: '0x07cd221b2fe54094277a2f4e1c1bc6df14e63678' as Address,
+      address: '0x26711d5868f0f2e233b0e226D961E2172e3106Fc' as Address,
       blockNumber: 0
     },
     bridge: {
-      address: '0xfD691DCf0Cd713986F9218F3dc7aEb5f2b9e7480' as Address,
+      address: '0x26711d5868f0f2e233b0e226D961E2172e3106Fc' as Address,
       blockNumber: 0
     }
   }),
