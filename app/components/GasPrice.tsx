@@ -1,21 +1,24 @@
-import { useFeeData } from 'wagmi'
-import assetsUtils from '../lib/utils/assets'
+import { assetsUtils } from '../lib/utils/assets'
 import { Text } from './typography'
 import { FireIcon } from '@heroicons/react/24/solid'
+import { useGasPrice } from 'wagmi'
+import { formatGwei } from 'viem'
 
 export const GasPrice = () => {
-  const { data, isError, isLoading } = useFeeData({
-    watch: true,
-    formatUnits: 'gwei'
+  const { data, isError, isLoading } = useGasPrice({
+    query: {
+      enabled: true,
+      refetchInterval: 60_000
+    }
   })
 
   return (
     <div className='hidden items-center space-x-2 lg:flex'>
       <div className='flex space-x-px'>
         <Text size='xs' as='span'>
-          {isError || isLoading || !data?.formatted?.gasPrice
+          {isError || isLoading || !data
             ? 0
-            : assetsUtils.formatBalance(data.formatted.gasPrice, 2, 2)}
+            : assetsUtils.formatBalance(formatGwei(data), 2, 2)}
         </Text>
         <Text size='xs' as='span'>
           gwei

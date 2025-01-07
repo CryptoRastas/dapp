@@ -1,26 +1,23 @@
-import { Children, type HTMLProps } from 'react'
-import { ChainConfig } from '@/app/lib/wallet/hooks/useNetwork'
+import { Children } from 'react'
+import { useNetwork } from '@/app/lib/wallet/hooks/useNetwork'
 import { ExclamationTriangleIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import { NetworkThumbnail } from './Thumbnail'
 import { Text } from '@/app/components/typography'
 import { useToggle } from 'usehooks-ts'
 import classNames from 'classnames'
+import { useWallet } from '@/app/lib/wallet/hooks/useWallet'
 
-type NetworkProps = HTMLProps<HTMLDivElement> & {
-  chain?: ChainConfig
-  chains: ChainConfig[]
-  onSwitchNetwork?: (chainId: number) => void
-}
-
-export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
+export const Network = () => {
   const [isOpen, toggleIsOpen] = useToggle()
 
   /// Thumbsize
   const [width, height] = [16, 16]
 
-  const handleSwitchNetwork = (chainId: number) => {
-    toggleIsOpen()
-    onSwitchNetwork?.(chainId)
+  const { chain, switchChain, remainingChains } = useNetwork()
+  const { connector } = useWallet()
+
+  const handleSwitchChain = (chainId: number) => {
+    switchChain({ chainId: chainId, connector })
   }
 
   return (
@@ -28,7 +25,9 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
       <style jsx>
         {`
           .network-selector {
-            --list-width: ${!isOpen ? 0 : (chains.length + 1) * width}px;
+            --list-width: ${!isOpen
+              ? 0
+              : (remainingChains.length + 1) * width + 32}px;
           }
         `}
       </style>
@@ -57,7 +56,7 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
               />
               {isOpen && (
                 <Text
-                  className='hidden text-center text-xs lg:inline-block'
+                  className='hidden text-center text-xs leading-none lg:inline-block'
                   size='default'
                 >
                   {chain?.name}
@@ -91,7 +90,7 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
           >
             <li className='max-lg:hidden'>|</li>
             {Children.toArray(
-              chains.map((availableChain, index) => (
+              remainingChains.map((availableChain, index) => (
                 <li
                   className={classNames([
                     'flex lg:justify-center',
@@ -108,13 +107,14 @@ export const Network = ({ chain, chains, onSwitchNetwork }: NetworkProps) => {
                       'max-lg:flex max-lg:space-x-2',
                       'max-lg:items-center max-lg:text-black'
                     ])}
-                    onClick={() => handleSwitchNetwork(availableChain.id)}
+                    onClick={() => handleSwitchChain(availableChain.id)}
                   >
                     <NetworkThumbnail
                       className='grayscale'
                       width={width}
                       height={height}
                       src={`/assets/chains/${availableChain.id}.svg`}
+                      alt={availableChain.name}
                     />
                     <Text
                       className='inline-block text-center text-lg  lg:hidden'

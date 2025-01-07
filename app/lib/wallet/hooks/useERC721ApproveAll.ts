@@ -1,12 +1,12 @@
 import {
-  erc721ABI,
-  useContractRead,
-  useContractWrite,
-  useWaitForTransaction
+  useReadContract,
+  useWriteContract,
+  useWaitForTransactionReceipt
 } from 'wagmi'
 
 import { useWallet } from './useWallet'
 import { useNetwork } from './useNetwork'
+import { erc721Abi } from 'viem'
 
 export const useERC721ApproveAll = (
   contractAddress: string,
@@ -17,27 +17,27 @@ export const useERC721ApproveAll = (
 
   const {
     data: setApprovedForAllData,
-    writeAsync,
-    isLoading: isWriting
-  } = useContractWrite({
-    functionName: 'setApprovalForAll',
-    address: contractAddress as `0x${string}`,
-    abi: erc721ABI
-  })
+    writeContractAsync,
+    isPending: isWriting
+  } = useWriteContract()
 
-  const { data, isLoading: isReading } = useContractRead({
+  const { data, isLoading: isReading } = useReadContract({
     functionName: 'isApprovedForAll',
-    enabled: isConnected && !chain?.unsupported,
     address: contractAddress as `0x${string}`,
-    abi: erc721ABI,
+    abi: erc721Abi,
     args: [address as `0x${string}`, operatorAddress as `0x${string}`],
-    watch: true,
-    cacheTime: 2_000
+    query: {
+      enabled: isConnected && !chain?.unsupported,
+      refetchInterval: 2_000
+    }
   })
 
   const handleApproveAll = async () => {
     try {
-      await writeAsync({
+      await writeContractAsync({
+        functionName: 'setApprovalForAll',
+        address: contractAddress as `0x${string}`,
+        abi: erc721Abi,
         args: [operatorAddress as `0x${string}`, true]
       })
     } catch (error) {
@@ -48,9 +48,11 @@ export const useERC721ApproveAll = (
     }
   }
 
-  const { isLoading: isPending } = useWaitForTransaction({
-    hash: setApprovedForAllData?.hash,
-    enabled: !!setApprovedForAllData?.hash
+  const { isLoading: isPending } = useWaitForTransactionReceipt({
+    hash: setApprovedForAllData,
+    query: {
+      enabled: !!setApprovedForAllData
+    }
   })
 
   return {

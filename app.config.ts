@@ -1,13 +1,13 @@
-export const routes = []
+import { AppConfig } from '@/types/config'
 
-const appConfig = {
+const appConfig: AppConfig = {
   name: 'CryptoRastas',
   meta: {
-    description: 'One love inna decentralized style!'
+    description: 'One love inna decentralized style!',
+    baseURL: 'https://bridge.cryptorastas.com/'
   },
   siteURL: 'https://cryptorastas.com',
   bridgeURL: 'https://bridge.cryptorastas.com',
-  routes,
   collection: {
     defaultThumbnail:
       'https://ipfs.io/ipfs/Qmd4qtubXuZY8F8iwwBxdTsySZ4Z58eMnuHP1ecuifHcPZ'
@@ -41,7 +41,7 @@ const appConfig = {
     }
   },
   networks: {
-    defaultChainId: process.env.NEXT_PUBLIC_NETWORK_DEFAULT_ID!
+    defaultChainId: Number(process.env.NEXT_PUBLIC_NETWORK_DEFAULT_ID!)
   },
   bridge: {
     transferNFTLimit: 3

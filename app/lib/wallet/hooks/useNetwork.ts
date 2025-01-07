@@ -1,4 +1,4 @@
-import { useNetwork as useNetworkHook, useSwitchNetwork } from 'wagmi'
+import { useAccount, useSwitchChain } from 'wagmi'
 import useChainConfig from './useChainConfig'
 import { Chain } from '@/app/config/chains'
 
@@ -7,10 +7,9 @@ export type ChainConfig = Chain & {
 }
 
 export function useNetwork() {
-  const { chain } = useNetworkHook()
+  const { chain } = useAccount()
 
-  const { chains, error, isLoading, pendingChainId, switchNetwork } =
-    useSwitchNetwork()
+  const { chains, error, switchChain, status } = useSwitchChain()
 
   const { config, remainingChains } = useChainConfig({
     chainId: chain?.id
@@ -18,11 +17,10 @@ export function useNetwork() {
 
   return {
     error,
-    isLoading,
-    pendingChainId,
-    chains: chains as ChainConfig[],
+    isLoading: status === 'pending',
+    chains,
     chain: chain as ChainConfig,
-    switchNetwork,
+    switchChain,
     config,
     remainingChains
   }
