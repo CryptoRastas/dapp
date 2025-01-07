@@ -68,6 +68,7 @@ export const base: Chain = merge(baseChain, {
 })
 
 /// @dev: testnets
+/// @dev: todo deploy
 export const polygonAmoy: Chain = merge(polygonAmoyChain, {
   abstractId: 10267,
   name: 'Amoy',
@@ -102,7 +103,7 @@ export const sepolia: Chain = merge(sepoliaChain, {
       blockNumber: 0
     }
   }),
-  marketplaceURL: 'https://testnets.opensea.io/collection/cryptorastas-222',
+  marketplaceURL: 'https://testnets.opensea.io/collection/cryptorastas2025',
   marketplaceURLTokenId: 'https://testnets.opensea.io/assets/sepolia',
   scanClient: 'https://testnet.layerzeroscan.com/address'
 })
@@ -119,11 +120,12 @@ export const baseSepolia: Chain = merge(baseSepoliaChain, {
       blockNumber: 0
     }
   }),
-  marketplaceURL: 'https://opensea.io/collection/cryptorastas-collection',
-  marketplaceURLTokenId: 'https://opensea.io/assets/base',
+  marketplaceURL: 'https://testnets.opensea.io/collection/cryptorastas2025-1',
+  marketplaceURLTokenId: 'https://opensea.io/assets/base_sepolia',
   scanClient: 'https://layerzeroscan.com/address'
 })
 
+//@dev: todo deploy
 export const abstractTestnet: Chain = merge(abstractTestnetChain, {
   abstractId: 10313,
   contracts: merge(abstractTestnetChain.contracts, {
