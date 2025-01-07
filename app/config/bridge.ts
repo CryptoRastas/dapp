@@ -23,6 +23,6 @@ export const bridgeConfig: BridgeConfig = {
   /// mainnet
   [polygon.id]: [mainnet, base /** abstractMainnet */],
   [mainnet.id]: [polygon, base /** abstractMainnet */],
-  [base.id]: [mainnet, polygon, mainnet]
+  [base.id]: [mainnet, polygon]
   /** [abstractMainnet.id]: [mainnet]*/
 }
