@@ -23,27 +23,29 @@ export const PageContainer = () => {
   return (
     <main className='flex flex-1 flex-col justify-start space-y-12 py-12 container lg:py-8'>
       <div className='flex flex-col space-y-12'>
-        <div className='flex items-center gap-8 divide-x divide-yellow-700'>
+        <div className='flex items-center gap-8 divide-x divide-blue-700'>
           <Heading className='flex items-end space-x-8 tracking-[-.5rem] '>
             <span>Bridge</span>
           </Heading>
-          <div className='flex flex-col gap-1 pl-4'>
+          <div className='flex flex-col gap-2 pl-4'>
             {Children.toArray(
-              chains.map((chain) => (
-                <Link
-                  target='_blank'
-                  href={chain.blockExplorers?.default.url!}
-                  className='flex items-center gap-1'
-                >
-                  <Image
-                    src={`/assets/chains/${chain?.id}.svg`}
-                    alt='Polygon'
-                    width={14}
-                    height={14}
-                  />
-                  <Text size='xs'>{chain.name}</Text>
-                </Link>
-              ))
+              chains
+                .filter((chain) => ![1].includes(chain.id))
+                .map((chain) => (
+                  <Link
+                    target='_blank'
+                    href={chain.blockExplorers?.default.url!}
+                    className='flex items-center gap-1'
+                  >
+                    <Image
+                      src={`/assets/chains/${chain?.id}.svg`}
+                      alt='Polygon'
+                      width={24}
+                      height={24}
+                    />
+                    <Text>{chain.name}</Text>
+                  </Link>
+                ))
             )}
           </div>
         </div>

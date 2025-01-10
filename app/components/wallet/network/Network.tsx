@@ -69,7 +69,7 @@ export const Network = () => {
           className={classNames(
             'network-selector w-[var(--list-width)] overflow-hidden',
             [
-              'max-lg:fixed max-lg:h-full max-lg:w-full max-lg:bg-yellow-400/80 max-lg:backdrop-blur',
+              'max-lg:fixed max-lg:h-full max-lg:w-full max-lg:bg-blue-400/80 max-lg:backdrop-blur',
               'max-lg:bottom-0 max-lg:left-0 max-lg:right-0 max-lg:top-0 max-lg:z-[10] max-lg:p-6'
             ],
             isOpen ? 'visible opacity-100' : 'invisible opacity-0'

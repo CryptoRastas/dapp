@@ -65,10 +65,10 @@ export const PortfolioField = ({
             <li className='col-span-2 sm:col-span-1'>
               <div
                 className={classNames(
-                  'lg:h-30 lg:w-30 relative h-28 w-28 overflow-hidden bg-yellow-200',
+                  'lg:h-30 lg:w-30 relative h-28 w-28 overflow-hidden bg-blue-200',
                   'group cursor-pointer rounded-3xl',
                   {
-                    'border-4 border-yellow-200 shadow-lg': includes(
+                    'border-4 border-blue-200 shadow-lg': includes(
                       fieldValue,
                       NFT.tokenId
                     )

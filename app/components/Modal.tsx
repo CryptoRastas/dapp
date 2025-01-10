@@ -26,10 +26,10 @@ export const Modal = ({
           : ['hidden h-0 w-0 overflow-hidden']
       )}
     >
-      <div className='absolute z-[10] h-full w-full bg-yellow-400/70 backdrop-blur' />
+      <div className='absolute z-[10] h-full w-full bg-blue-400/70 backdrop-blur' />
       <div
         className={classNames(
-          'rounded-xl bg-yellow-400',
+          'rounded-xl bg-blue-400',
           'relative z-[11] flex flex-col space-y-4 p-8',
           'max-lg:m-8 max-lg:w-full'
         )}

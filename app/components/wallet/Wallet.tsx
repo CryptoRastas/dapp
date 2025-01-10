@@ -16,13 +16,13 @@ export const Wallet = () => {
         <div
           className={classNames([
             'flex items-center',
-            'rounded-3xl bg-amber-200'
+            'rounded-3xl bg-blue-200'
           ])}
         >
           <div className='pl-4 max-lg:pr-2 lg:pr-2'>
             <Network />
           </div>
-          <Account className='border border-amber-200 shadow' />
+          <Account className='border border-blue-200 shadow' />
         </div>
       )}
     </>
