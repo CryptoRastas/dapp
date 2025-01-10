@@ -7,7 +7,8 @@ import { WidgetLoading } from '@/app/components/widget/loadings'
 import Image from 'next/image'
 import Greatings from './Greatings'
 import { useIsClient } from 'usehooks-ts'
-import { useWallet } from '@/app/lib/wallet/hooks'
+import { useNetwork, useWallet } from '@/app/lib/wallet/hooks'
+import { Children } from 'react'
 
 const Widget = dynamic(() => import('@/app/components/widget/Widget'), {
   ssr: false,
@@ -16,80 +17,73 @@ const Widget = dynamic(() => import('@/app/components/widget/Widget'), {
 
 export const PageContainer = () => {
   const isClient = useIsClient()
+  const { chains } = useNetwork()
   const { isConnected, isConnecting, address } = useWallet()
-  const sizeRatio = 1.8
 
   return (
-    <main className='flex flex-1 flex-col space-y-8 py-12 container lg:py-8'>
-      <div className='flex flex-col space-y-8'>
-        <Heading className='flex items-end space-x-8 tracking-[-.5rem] '>
-          <span>Bridge</span>
-          <Link target='_blank' href='https://polygon.technology/'>
-            <Image
-              src='/assets/icons/partners/polygon.svg'
-              alt='Polygon'
-              width={79 * sizeRatio}
-              height={17 * sizeRatio}
-            />
-          </Link>
-        </Heading>
-        <Heading as='h2' className='tracking-[-.3rem]'>
-          About
-        </Heading>
+    <main className='flex flex-1 flex-col justify-start space-y-12 py-12 container lg:py-8'>
+      <div className='flex flex-col space-y-12'>
+        <div className='flex items-center gap-8 divide-x divide-yellow-700'>
+          <Heading className='flex items-end space-x-8 tracking-[-.5rem] '>
+            <span>Bridge</span>
+          </Heading>
+          <div className='flex flex-col gap-1 pl-4'>
+            {Children.toArray(
+              chains.map((chain) => (
+                <Link
+                  target='_blank'
+                  href={chain.blockExplorers?.default.url!}
+                  className='flex items-center gap-1'
+                >
+                  <Image
+                    src={`/assets/chains/${chain?.id}.svg`}
+                    alt='Polygon'
+                    width={14}
+                    height={14}
+                  />
+                  <Text size='xs'>{chain.name}</Text>
+                </Link>
+              ))
+            )}
+          </div>
+        </div>
       </div>
       <div className='grid grid-cols-2 items-start gap-8'>
         <section className='col-span-2 flex flex-col space-y-4 max-lg:order-2 lg:col-span-1'>
           <article className='flex flex-col space-y-4 text-justify'>
             <Text className='font-bold' variant='default'>
-              CryptoRastas is a global community/club that uses blockchain
-              technology and digital art to engage and empower Reggae culture
-              and Rasta vibes around the world.
+              CryptoRastas is a global community using blockchain technology and
+              digital art to engage and empower Reggae culture and Rasta vibes
+              around the world.
             </Text>
             <Text>
-              The project started in March 2021 and by the end of August we had
-              minted
-              {` `}
+              The project started in March 2021, and by the end of August, we
+              had minted 10,420 NFTs on the {` `}
               <a
                 rel='noopener'
                 target='_blank'
-                href='https://opensea.io/collection/cryptorastas-collection'
+                href='https://ethereum.org/en/'
+                className='font-bold'
               >
-                10420 NFTs
+                Ethereum blockchain
               </a>
-              {` `}
-              on the Ethereum blockchain. With a solid community and
-              distinguished collectors, CryptoRastas continues in full
-              development in several areas like art, music, events, fashion,
-              education, and of course, technology.
+              {` `}. With a solid community and illustrious collectors,
+              CryptoRastas continues to develop in several areas such as art,
+              music, events, fashion, education, and technology.
             </Text>
             <Text>
-              <Text as='span' variant='default' className='font-bold'>
-                We are now offering all CR holders the option to connect their
-                original NFTs to the Polygon network.
-              </Text>{' '}
-              We believe the future is{' '}
-              <Text as='span' variant='default' className='font-bold'>
-                #omnichain
-              </Text>{' '}
-              and we want to give the community freedom to choose where they
-              want their NFTs. Additionally, we want to build more applications
-              to use our NFTs with less or no gas fees.{' '}
-              <Text as='span' variant='default' className='font-bold'>
-                Powered by{' '}
-                <a
-                  rel='noopener'
-                  target='_blank'
-                  href='https://layerzero.network/'
-                >
-                  LayerZero
-                </a>
-              </Text>{' '}
-              protocol, this is a 2-way bridge, so you can go back to the
-              original chain whenever you want.
-            </Text>
-
-            <Text variant='default' className='font-bold'>
-              CONNECT YOUR WALLET NOW TO BRIDGE YOUR RASTAS TO POLYGON
+              We believe the future is #omnichain and we want the community to
+              have the freedom to choose where their NFTs are. Therefore, we are
+              offering all CR holders the option to transfer their original NFTs
+              from <span className='font-bold'>Ethereum</span> to{' '}
+              <span className='font-bold'>Base</span>,{' '}
+              <span className='font-bold'>Polygon</span>, and soon the{' '}
+              <span className='font-bold'>Abstract chain</span>. Powered by the
+              LayerZero protocol, this is a two-way bridge, so you can go back
+              to the original chain whenever you want. Using L2s like Base and
+              Abstract will make it easier to build more applications to use our
+              NFTs with little to no gas fees and will bring less friction to
+              onboarding new people into the community.
             </Text>
           </article>
         </section>
