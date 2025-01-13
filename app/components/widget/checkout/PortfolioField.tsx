@@ -54,7 +54,9 @@ export const PortfolioField = ({
 
   useEffectOnce(() => {
     // register react hook form field
-    register(fieldId)
+    register(fieldId, {
+      required: true
+    })
   })
 
   return (

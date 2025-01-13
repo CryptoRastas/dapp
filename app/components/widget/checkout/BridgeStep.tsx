@@ -8,11 +8,12 @@ import { ArrowLongLeftIcon } from '@heroicons/react/24/solid'
 import { Button } from '../../button'
 
 export type BridgeStepProps = {
-  list: NFTPortfolioResponse[]
+  tokens: NFTPortfolioResponse[]
   tokenIdsFieldId: string
   destinationChainFieldId: string
+  sourceChainFieldId: string
   nativeCurrency: Chain['nativeCurrency']
-  destinationChains: Chain[]
+  chains: Chain[]
   fees: bigint
   isApproving?: boolean
   needApproval?: boolean
@@ -23,12 +24,13 @@ export type BridgeStepProps = {
 }
 
 export const BridgeStep = ({
-  list,
+  tokens,
   isApproving,
-  destinationChains,
+  chains,
   nativeCurrency,
   tokenIdsFieldId,
   destinationChainFieldId,
+  sourceChainFieldId,
   fees,
   needApproval,
   error,
@@ -39,13 +41,14 @@ export const BridgeStep = ({
   return (
     <section key={3} className='flex flex-col justify-start space-y-8'>
       <div className='flex flex-col space-y-2'>
-        <Heading as='h3'>Check your bridge details</Heading>
+        <Heading as='h3'>Bridge!</Heading>
       </div>
       <Details
         tokenIdsFieldId={tokenIdsFieldId}
         destinationChainFieldId={destinationChainFieldId}
-        chainList={destinationChains}
-        tokenList={list}
+        sourceChainFieldId={sourceChainFieldId}
+        chains={chains}
+        tokens={tokens}
         fees={fees}
         feeToken={nativeCurrency}
       />

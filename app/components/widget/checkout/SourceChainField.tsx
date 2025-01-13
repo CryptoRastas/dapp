@@ -1,4 +1,5 @@
-import { Children, useCallback, useEffect } from 'react'
+import { Children, useCallback } from 'react'
+import { useEffectOnce } from 'usehooks-ts'
 import { useFormContext } from 'react-hook-form'
 import { Chain } from '@/app/config/chains'
 import { Text } from '@/app/components/typography'
@@ -6,18 +7,15 @@ import { NetworkThumbnail } from '@/app/components/wallet/network/Thumbnail'
 import classNames from 'classnames'
 import { isEqual } from 'lodash'
 
-export type DestinationChainFieldProps = {
+export type SourceChainFieldProps = {
   list: Chain[]
   fieldId: string
 }
 
-export const DestinationChainField = ({
-  list,
-  fieldId
-}: DestinationChainFieldProps) => {
+export const SourceChainField = ({ list, fieldId }: SourceChainFieldProps) => {
   const { setValue, register, watch, clearErrors } = useFormContext()
 
-  const fieldValue: number = watch(fieldId)
+  const fieldValue = watch(fieldId)
 
   const handleSelectOption = useCallback(
     (chainId: number) => {
@@ -31,12 +29,11 @@ export const DestinationChainField = ({
     [clearErrors, setValue, fieldId]
   )
 
-  useEffect(() => {
-    // register react hook form field
+  useEffectOnce(() => {
     register(fieldId, {
       required: true
     })
-  }, [fieldId, register])
+  })
 
   return (
     <ul className='grid grid-flow-row grid-cols-4 gap-4'>
@@ -78,4 +75,4 @@ export const DestinationChainField = ({
   )
 }
 
-export default DestinationChainField
+export default SourceChainField

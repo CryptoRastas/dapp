@@ -7,7 +7,7 @@ import { Alert } from '@/app/components/Alert'
 import { ArrowLongLeftIcon } from '@heroicons/react/24/solid'
 import { Button } from '../../button'
 
-export type ChainStepProps = {
+export type DestinationChainStepProps = {
   error?: string
   fieldId: string
   onNextStep: () => void
@@ -15,13 +15,13 @@ export type ChainStepProps = {
   destinationChains: Chain[]
 }
 
-export const ChainStep = ({
+export const DestinationChainStep = ({
   fieldId,
   destinationChains,
   error,
   onNextStep,
   onPrevStep
-}: ChainStepProps) => {
+}: DestinationChainStepProps) => {
   return (
     <section key={2} className='flex flex-col justify-start space-y-8'>
       <div className='flex flex-col space-y-2'>
@@ -53,4 +53,4 @@ export const ChainStep = ({
   )
 }
 
-export default ChainStep
+export default DestinationChainStep

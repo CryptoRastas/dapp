@@ -4,6 +4,8 @@ import { NFTPortfolioResponse } from '@/app/lib/wallet/hooks/useSDK'
 import { WalletButton } from '@/app/components/wallet/button'
 import { Alert } from '@/app/components/Alert'
 import appConfig from '@/app.config'
+import { ArrowLongLeftIcon } from '@heroicons/react/24/solid'
+import { Button } from '../../button'
 
 export type CollectionStepProps = {
   list: NFTPortfolioResponse[]
@@ -12,6 +14,7 @@ export type CollectionStepProps = {
   error?: string
   fieldId: string
   onNextStep: () => void
+  onPrevStep: () => void
   isLimitReached?: boolean
 }
 
@@ -22,12 +25,13 @@ export const CollectionStep = ({
   isLimitReached,
   fieldId,
   collectionAddress,
-  onNextStep
+  onNextStep,
+  onPrevStep
 }: CollectionStepProps) => {
   return (
     <section className='flex flex-col justify-start space-y-8'>
       <div className='flex flex-col space-y-2'>
-        <Heading as='h3'>Select your tokens</Heading>
+        <Heading as='h3'>select your NFTs</Heading>
       </div>
       <PortfolioField
         fieldId={fieldId}
@@ -50,7 +54,17 @@ export const CollectionStep = ({
             <Text size='sm'>{error}</Text>
           </Alert>
         )}
-        <div>
+
+        <div className='flex items-center space-x-2'>
+          <Button
+            type='button'
+            onClick={onPrevStep}
+            title='back'
+            fullWidth={false}
+            variant='outlined'
+          >
+            <ArrowLongLeftIcon width={20} height={20} />
+          </Button>
           <WalletButton fullWidth={false} type='button' onClick={onNextStep}>
             Continue
           </WalletButton>

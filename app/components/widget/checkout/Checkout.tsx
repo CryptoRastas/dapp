@@ -11,15 +11,18 @@ import { useCallback, useEffect, useState } from 'react'
 import { useStep } from '@/app/lib/hooks/useStep'
 import appConfig from '@/app.config'
 import { CollectionStep } from '@/app/components/widget/checkout/CollectionStep'
-import { ChainStep } from '@/app/components/widget/checkout/ChainStep'
+import { SourceChainStep } from '@/app/components/widget/checkout/SourceChainStep'
+import { DestinationChainStep } from '@/app/components/widget/checkout/DestinationChainStep'
 import { BridgeStep } from '@/app/components/widget/checkout/BridgeStep'
 import { Modal } from '@/app/components/widget/checkout/Modal'
 import { useToggle } from 'usehooks-ts'
 import { bridgeConfig } from '@/app/config/bridge'
+import { allowedChains } from '@/app/config/config'
 
 export type CheckoutFormData = {
   tokenIds: string[]
   destinationChainId: number
+  sourceChainId: number
 }
 
 export type CheckoutProps = {
@@ -34,12 +37,13 @@ export type CheckoutProps = {
 }
 
 export const TOKEN_IDS_FIELD_ID = 'tokenIds'
-
 export const DESTINATION_CHAIN_ID_FIELD_ID = 'destinationChainId'
+export const SOURCE_CHAIN_ID_FIELD_ID = 'sourceChainId'
 
 export const DEFAULT_FIELD_VALUES = {
   [TOKEN_IDS_FIELD_ID]: [],
-  [DESTINATION_CHAIN_ID_FIELD_ID]: undefined
+  [DESTINATION_CHAIN_ID_FIELD_ID]: undefined,
+  [SOURCE_CHAIN_ID_FIELD_ID]: undefined
 }
 
 export const Checkout = ({
@@ -70,6 +74,9 @@ export const Checkout = ({
           ),
         [DESTINATION_CHAIN_ID_FIELD_ID]: z.number({
           required_error: 'Destination chain is required'
+        }),
+        [SOURCE_CHAIN_ID_FIELD_ID]: z.number({
+          required_error: 'Source chain is required'
         })
       })
     )
@@ -118,7 +125,7 @@ export const Checkout = ({
     nextStep,
     prevStep,
     reset: resetSteps
-  } = useStep({ steps: 3 })
+  } = useStep({ steps: 4 })
 
   const handleStepByStep = async (
     fieldId: keyof typeof DEFAULT_FIELD_VALUES,
@@ -142,7 +149,9 @@ export const Checkout = ({
   }
 
   const resetCheckoutState = useCallback(() => {
-    methods.reset(DEFAULT_FIELD_VALUES)
+    methods.resetField('tokenIds')
+    methods.resetField('destinationChainId')
+
     resetSteps()
   }, [methods, resetSteps])
 
@@ -204,10 +213,23 @@ export const Checkout = ({
         noValidate
         className='h-full w-full'
       >
-        <Step steps={3} currentStep={currentStep}>
+        <Step steps={4} currentStep={currentStep}>
           {
             {
               1: (
+                <SourceChainStep
+                  key={0}
+                  fieldId={SOURCE_CHAIN_ID_FIELD_ID}
+                  error={
+                    methods.formState.errors[SOURCE_CHAIN_ID_FIELD_ID]?.message
+                  }
+                  sourceChains={allowedChains}
+                  onNextStep={() =>
+                    handleStepByStep(SOURCE_CHAIN_ID_FIELD_ID, nextStep)
+                  }
+                />
+              ),
+              2: (
                 <CollectionStep
                   key={1}
                   fieldId={TOKEN_IDS_FIELD_ID}
@@ -219,10 +241,11 @@ export const Checkout = ({
                   onNextStep={() =>
                     handleStepByStep(TOKEN_IDS_FIELD_ID, nextStep)
                   }
+                  onPrevStep={prevStep}
                 />
               ),
-              2: (
-                <ChainStep
+              3: (
+                <DestinationChainStep
                   key={2}
                   fieldId={DESTINATION_CHAIN_ID_FIELD_ID}
                   error={
@@ -236,14 +259,15 @@ export const Checkout = ({
                   }
                 />
               ),
-              3: (
+              4: (
                 <BridgeStep
                   key={3}
-                  list={list}
+                  tokens={list}
                   tokenIdsFieldId={TOKEN_IDS_FIELD_ID}
                   destinationChainFieldId={DESTINATION_CHAIN_ID_FIELD_ID}
+                  sourceChainFieldId={SOURCE_CHAIN_ID_FIELD_ID}
                   nativeCurrency={currentChain.nativeCurrency}
-                  destinationChains={destinationChains}
+                  chains={allowedChains}
                   fees={fees}
                   needApproval={!isApprovedForAll}
                   error={internalError}

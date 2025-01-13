@@ -14,16 +14,18 @@ export type DetailsProps = {
   fees: bigint
   tokenIdsFieldId: string
   destinationChainFieldId: string
-  tokenList: NFTPortfolioResponse[]
-  chainList: Chain[]
+  sourceChainFieldId: string
+  tokens: NFTPortfolioResponse[]
+  chains: Chain[]
   feeToken: Chain['nativeCurrency']
 }
 
 export const Details = ({
   tokenIdsFieldId,
   destinationChainFieldId,
-  tokenList,
-  chainList,
+  sourceChainFieldId,
+  tokens,
+  chains,
   feeToken,
   fees
 }: DetailsProps) => {
@@ -35,24 +37,43 @@ export const Details = ({
     destinationChainFieldId
   )
 
+  const sourceChainFieldValue: number | undefined = watch(sourceChainFieldId)
+
   const tokenIdsList = filter(tokenIdsFieldValue, Boolean)
 
   const selectedTokenIds = filter(
     reduce<string, NFTPortfolioResponse[]>(
       tokenIdsList,
       (acc, tokenId) =>
-        concat(acc, [find(tokenList, { tokenId })]) as NFTPortfolioResponse[],
+        concat(acc, [find(tokens, { tokenId })]) as NFTPortfolioResponse[],
       []
     ),
     Boolean
   )
 
-  const selectedChain = find(chainList, { id: destinationChainFieldValue })
+  const selectedDestinationChain = find(chains, {
+    id: destinationChainFieldValue
+  })
+  const selectedSourceChain = find(chains, { id: sourceChainFieldValue })
 
   return (
     <div className='flex flex-col space-y-8'>
+      {selectedSourceChain && (
+        <div className='flex flex-col space-y-2'>
+          <Heading as='h4'>From source chain</Heading>
+          <div className='flex items-center space-x-2'>
+            <NetworkThumbnail
+              width={20}
+              height={20}
+              src={`/assets/chains/${selectedSourceChain?.id}.svg`}
+            />
+            <Text>{selectedSourceChain?.name}</Text>
+          </div>
+        </div>
+      )}
       <div className='flex flex-col space-y-2'>
         <Heading as='h4'>Transferring tokens</Heading>
+
         <ul className='grid grid-flow-row grid-cols-4 gap-4'>
           {Children.toArray(
             selectedTokenIds.map((NFT) => (
@@ -79,16 +100,16 @@ export const Details = ({
           )}
         </ul>
       </div>
-      {selectedChain && (
+      {selectedDestinationChain && (
         <div className='flex flex-col space-y-2'>
           <Heading as='h4'>To destination chain</Heading>
           <div className='flex items-center space-x-2'>
             <NetworkThumbnail
               width={20}
               height={20}
-              src={`/assets/chains/${selectedChain?.id}.svg`}
+              src={`/assets/chains/${selectedDestinationChain?.id}.svg`}
             />
-            <Text>{selectedChain?.name}</Text>
+            <Text>{selectedDestinationChain?.name}</Text>
           </div>
         </div>
       )}
