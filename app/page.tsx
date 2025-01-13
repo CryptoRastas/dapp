@@ -10,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: appConfig.meta.description,
     metadataBase: new URL(appConfig.bridgeURL),
     openGraph: {
-      images: appConfig.bridgeURL + '/assets/thumb.jpeg'
+      images: appConfig.bridgeURL + '/assets/thumb-blue.jpeg'
     }
   }
 }

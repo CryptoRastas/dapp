@@ -9,6 +9,7 @@ import Greatings from './Greatings'
 import { useIsClient } from 'usehooks-ts'
 import { useNetwork, useWallet } from '@/app/lib/wallet/hooks'
 import { Children } from 'react'
+import { abstractTestnet } from 'viem/chains'
 
 const Widget = dynamic(() => import('@/app/components/widget/Widget'), {
   ssr: false,
@@ -29,7 +30,14 @@ export const PageContainer = () => {
           </Heading>
           <div className='flex flex-col gap-2 pl-4'>
             {Children.toArray(
-              chains
+              [
+                ...chains,
+                {
+                  /// @todo: remove
+                  ...abstractTestnet,
+                  name: 'Abstract (soon come)'
+                }
+              ]
                 .filter((chain) => ![1].includes(chain.id))
                 .map((chain) => (
                   <Link
