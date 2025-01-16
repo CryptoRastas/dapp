@@ -62,7 +62,7 @@ export const base: Chain = merge(baseChain, {
       blockNumber: 0
     }
   }),
-  marketplaceURL: 'https://opensea.io/collection/cryptorastas-collection',
+  marketplaceURL: 'https://opensea.io/collection/cryptorastas-base',
   marketplaceURLTokenId: 'https://opensea.io/assets/base',
   scanClient: 'https://layerzeroscan.com/address'
 })

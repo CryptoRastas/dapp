@@ -63,7 +63,10 @@ export const Checkout = ({
   const methods = useForm<CheckoutFormData>({
     mode: 'all',
     reValidateMode: 'onBlur',
-    defaultValues: DEFAULT_FIELD_VALUES,
+    defaultValues: {
+      ...DEFAULT_FIELD_VALUES,
+      sourceChainId: config?.id
+    },
     resolver: zodResolver(
       z.object({
         [TOKEN_IDS_FIELD_ID]: z

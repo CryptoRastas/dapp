@@ -25,6 +25,7 @@ export const SourceChainStep = ({
   const { watch } = useFormContext()
 
   const fieldValue = watch(fieldId)
+
   const isWrongNetwork =
     !isUndefined(fieldValue) && Number(fieldValue) !== chain.id
 

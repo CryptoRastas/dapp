@@ -10,6 +10,7 @@ import { useIsClient } from 'usehooks-ts'
 import { useNetwork, useWallet } from '@/app/lib/wallet/hooks'
 import { Children } from 'react'
 import { abstractTestnet } from 'viem/chains'
+import { allowedChainsConfig } from '../config/config'
 
 const Widget = dynamic(() => import('@/app/components/widget/Widget'), {
   ssr: false,
@@ -41,8 +42,16 @@ export const PageContainer = () => {
                 .filter((chain) => ![1].includes(chain.id))
                 .map((chain) => (
                   <Link
-                    target='_blank'
-                    href={chain.blockExplorers?.default.url!}
+                    target={
+                      allowedChainsConfig[chain.id]?.marketplaceURL
+                        ? '_blank'
+                        : '_self'
+                    }
+                    href={
+                      allowedChainsConfig[chain.id]?.marketplaceURL
+                        ? allowedChainsConfig[chain.id]?.marketplaceURL
+                        : '#'
+                    }
                     className='flex items-center gap-1'
                   >
                     <Image
