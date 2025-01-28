@@ -77,11 +77,11 @@ export const abstract: Chain = merge(abstractChain, {
   abstractId: 324,
   contracts: merge(abstractChain.contracts, {
     token: {
-      address: '0xfD691DCf0Cd713986F9218F3dc7aEb5f2b9e7480' as Address,
+      address: '0x23ad1726bd982118fb19cfec24f18fe76da26255' as Address,
       blockNumber: 0
     },
     bridge: {
-      address: '0xfD691DCf0Cd713986F9218F3dc7aEb5f2b9e7480' as Address,
+      address: '0x23ad1726bd982118fb19cfec24f18fe76da26255' as Address,
       blockNumber: 0
     }
   }),
