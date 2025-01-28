@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       <body
         className={classNames(
           font.className,
-          'flex h-full flex-col bg-[#0052ff] text-black'
+          'flex h-full flex-col bg-[#0ee37d] text-black'
         )}
       >
         <Providers>{children}</Providers>

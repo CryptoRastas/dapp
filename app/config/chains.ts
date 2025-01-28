@@ -7,7 +7,8 @@ import {
   mainnet as mainnetChain,
   baseSepolia as baseSepoliaChain,
   base as baseChain,
-  abstractTestnet as abstractTestnetChain
+  abstractTestnet as abstractTestnetChain,
+  abstract as abstractChain
 } from 'viem/chains'
 
 import { Chain } from './types'
@@ -15,23 +16,11 @@ import { Address } from 'viem'
 
 export type { Chain }
 
-/// @dev: mainnets
-export const polygon: Chain = merge(polygonChain, {
-  abstractId: 109,
-  contracts: merge(polygonChain.contracts, {
-    token: {
-      address: '0xfD691DCf0Cd713986F9218F3dc7aEb5f2b9e7480' as Address,
-      blockNumber: 0
-    },
-    bridge: {
-      address: '0xfD691DCf0Cd713986F9218F3dc7aEb5f2b9e7480' as Address,
-      blockNumber: 0
-    }
-  }),
-  marketplaceURL: 'https://opensea.io/collection/cryptorastas-polygon',
-  marketplaceURLTokenId: 'https://opensea.io/assets/matic',
-  scanClient: 'https://layerzeroscan.com/address'
-})
+/**
+ *
+ * @dev: mainnets
+ *
+ **/
 
 export const mainnet: Chain = merge(mainnetChain, {
   abstractId: 101,
@@ -47,6 +36,23 @@ export const mainnet: Chain = merge(mainnetChain, {
   }),
   marketplaceURL: 'https://opensea.io/collection/cryptorastas-collection',
   marketplaceURLTokenId: 'https://opensea.io/assets/ethereum',
+  scanClient: 'https://layerzeroscan.com/address'
+})
+
+export const polygon: Chain = merge(polygonChain, {
+  abstractId: 109,
+  contracts: merge(polygonChain.contracts, {
+    token: {
+      address: '0xfD691DCf0Cd713986F9218F3dc7aEb5f2b9e7480' as Address,
+      blockNumber: 0
+    },
+    bridge: {
+      address: '0xfD691DCf0Cd713986F9218F3dc7aEb5f2b9e7480' as Address,
+      blockNumber: 0
+    }
+  }),
+  marketplaceURL: 'https://opensea.io/collection/cryptorastas-polygon',
+  marketplaceURLTokenId: 'https://opensea.io/assets/matic',
   scanClient: 'https://layerzeroscan.com/address'
 })
 
@@ -67,7 +73,29 @@ export const base: Chain = merge(baseChain, {
   scanClient: 'https://layerzeroscan.com/address'
 })
 
-/// @dev: testnets
+export const abstract: Chain = merge(abstractChain, {
+  abstractId: 324,
+  contracts: merge(abstractChain.contracts, {
+    token: {
+      address: '0xfD691DCf0Cd713986F9218F3dc7aEb5f2b9e7480' as Address,
+      blockNumber: 0
+    },
+    bridge: {
+      address: '0xfD691DCf0Cd713986F9218F3dc7aEb5f2b9e7480' as Address,
+      blockNumber: 0
+    }
+  }),
+  marketplaceURL: 'https://opensea.io/collection/cryptorastas-abstract',
+  marketplaceURLTokenId: 'https://opensea.io/assets/abstract',
+  scanClient: 'https://layerzeroscan.com/address'
+})
+
+/**
+ *
+ * @dev: testnets
+ *
+ **/
+
 /// @dev: todo deploy
 export const polygonAmoy: Chain = merge(polygonAmoyChain, {
   abstractId: 10267,

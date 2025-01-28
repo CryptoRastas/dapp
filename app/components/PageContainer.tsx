@@ -7,9 +7,9 @@ import { WidgetLoading } from '@/app/components/widget/loadings'
 import Image from 'next/image'
 import Greatings from './Greatings'
 import { useIsClient } from 'usehooks-ts'
-import { useNetwork, useWallet } from '@/app/lib/wallet/hooks'
+import { useWallet } from '@/app/lib/wallet/hooks'
 import { Children } from 'react'
-import { abstractTestnet } from 'viem/chains'
+import { abstract, base, polygon } from '../config/chains'
 import { allowedChainsConfig } from '../config/config'
 
 const Widget = dynamic(() => import('@/app/components/widget/Widget'), {
@@ -19,26 +19,18 @@ const Widget = dynamic(() => import('@/app/components/widget/Widget'), {
 
 export const PageContainer = () => {
   const isClient = useIsClient()
-  const { chains } = useNetwork()
   const { isConnected, isConnecting, address } = useWallet()
 
   return (
     <main className='flex flex-1 flex-col justify-start space-y-12 py-12 container lg:py-8'>
       <div className='flex flex-col space-y-12'>
-        <div className='flex items-center gap-8 divide-x divide-blue-700'>
+        <div className='flex items-center gap-8 divide-x divide-green-700'>
           <Heading className='flex items-end space-x-8 tracking-[-.5rem] '>
             <span>Bridge</span>
           </Heading>
           <div className='flex flex-col gap-2 pl-4'>
             {Children.toArray(
-              [
-                ...chains,
-                {
-                  /// @todo: remove
-                  ...abstractTestnet,
-                  name: 'Abstract (soon come)'
-                }
-              ]
+              [abstract, base, polygon]
                 .filter((chain) => ![1].includes(chain.id))
                 .map((chain) => (
                   <Link
@@ -56,7 +48,7 @@ export const PageContainer = () => {
                   >
                     <Image
                       src={`/assets/chains/${chain?.id}.svg`}
-                      alt='Polygon'
+                      alt={allowedChainsConfig[chain.id].name}
                       width={24}
                       height={24}
                     />

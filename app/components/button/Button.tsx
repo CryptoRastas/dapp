@@ -9,15 +9,15 @@ export const Sizes = {
 
 export const Variant = {
   default: {
-    classes: 'bg-black text-blue-500',
-    disabled: 'disabled:text-blue-500/50',
+    classes: 'bg-black text-green-500',
+    disabled: 'disabled:text-green-500/50',
     hover: 'hover:bg-black/80 outline-none'
   },
   outlined: {
     classes: 'bg-transparent border border-black text-black',
     disabled:
       'disabled:bg-transparent disabled:border-black/50 disabled:text-black/50',
-    hover: 'hover:bg-blue-900/20 hover:text-black'
+    hover: 'hover:bg-green-900/20 hover:text-black'
   }
 } as const
 

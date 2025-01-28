@@ -35,7 +35,7 @@ export const Step = ({
                 className={classNames(
                   'flex h-7 w-7 items-center justify-center rounded-full border-4 border-black',
                   {
-                    'bg-black text-blue-400': step <= currentStep
+                    'bg-black text-green-400': step <= currentStep
                   }
                 )}
               >

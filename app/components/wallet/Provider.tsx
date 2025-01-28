@@ -18,7 +18,7 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
       <QueryClientProvider client={queryClient}>
         <ConnectKitProvider
           customTheme={{
-            '--ck-overlay-background': 'rgb(250 204 21 / 0.8)',
+            '--ck-overlay-background': 'rgb(183 183 183 / 37%)',
             '--ck-overlay-backdrop-filter': 'blur(8px)',
             '--ck-body-background': 'black'
           }}

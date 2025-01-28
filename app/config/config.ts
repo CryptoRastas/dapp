@@ -7,10 +7,11 @@ import {
   base,
   baseSepolia,
   Chain,
-  abstractTestnet
+  abstractTestnet,
+  abstract
 } from './chains'
 
-export const mainnets = [base, mainnet, polygon]
+export const mainnets = [base, mainnet, polygon, abstract]
 export const testnets = [sepolia, polygonAmoy, baseSepolia, abstractTestnet]
 
 export const allowedChains = (

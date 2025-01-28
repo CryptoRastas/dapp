@@ -49,11 +49,11 @@ export const DestinationChainField = ({
                 'group cursor-pointer rounded-3xl ',
                 'flex flex-col items-center justify-center space-y-2',
                 {
-                  ' border-4 border-blue-200 bg-white/10 shadow-lg': isEqual(
+                  ' border-4 border-green-200 bg-white/10 shadow-lg': isEqual(
                     fieldValue,
                     chain.id
                   ),
-                  ' bg-blue-400': !isEqual(fieldValue, chain.id)
+                  ' bg-green-400': !isEqual(fieldValue, chain.id)
                 }
               )}
               onClick={() => handleSelectOption(chain.id)}

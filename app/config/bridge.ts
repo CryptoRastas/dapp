@@ -6,6 +6,7 @@ import {
   base,
   baseSepolia,
   abstractTestnet,
+  abstract,
   Chain
 } from './chains'
 
@@ -15,14 +16,14 @@ type BridgeConfig = {
 
 export const bridgeConfig: BridgeConfig = {
   /// testnets
-  [polygonAmoy.id]: [sepolia, baseSepolia, abstractTestnet],
+  [polygonAmoy.id]: [sepolia, baseSepolia],
   [sepolia.id]: [polygonAmoy, baseSepolia, abstractTestnet],
-  [baseSepolia.id]: [sepolia],
-  [abstractTestnet.id]: [sepolia],
+  [baseSepolia.id]: [sepolia, abstractTestnet],
+  [abstractTestnet.id]: [sepolia, baseSepolia],
 
   /// mainnet
-  [polygon.id]: [mainnet, base /** abstractMainnet */],
-  [mainnet.id]: [polygon, base /** abstractMainnet */],
-  [base.id]: [mainnet, polygon]
-  /** [abstractMainnet.id]: [mainnet]*/
+  [polygon.id]: [mainnet, base],
+  [mainnet.id]: [polygon, base, abstract],
+  [base.id]: [mainnet, polygon, abstract],
+  [abstract.id]: [mainnet, base]
 }

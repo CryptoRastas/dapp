@@ -7,7 +7,8 @@ import {
   sepolia,
   base,
   baseSepolia,
-  abstractTestnet
+  abstractTestnet,
+  abstract
 } from '@/app/config/chains'
 export type Provider = Alchemy
 
@@ -45,7 +46,12 @@ export const chainsSDK: ChainSDK = {
     network: Network.BASE_SEPOLIA
   }),
   [abstractTestnet.id]: new Alchemy({
+    ...providerConfig,
+    network: Network.ABSTRACT_TESTNET
+  }),
+  [abstract.id]: new Alchemy({
     ...providerConfig
+    // network: Network.ABSTRACT_MAINNET
   })
 }
 
