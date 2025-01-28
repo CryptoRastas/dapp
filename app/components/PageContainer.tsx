@@ -87,9 +87,9 @@ export const PageContainer = () => {
               have the freedom to choose where their NFTs are. Therefore, we are
               offering all CR holders the option to transfer their original NFTs
               from <span className='font-bold'>Ethereum</span> to{' '}
-              <span className='font-bold'>Base</span>,{' '}
-              <span className='font-bold'>Polygon</span>, and soon the{' '}
-              <span className='font-bold'>Abstract chain</span>. Powered by the
+              <span className='font-bold'>Abstract</span>,{' '}
+              <span className='font-bold'>Base</span>, and,{' '}
+              <span className='font-bold'>Polygon</span>. Powered by the
               LayerZero protocol, this is a two-way bridge, so you can go back
               to the original chain whenever you want. Using L2s like Base and
               Abstract will make it easier to build more applications to use our
