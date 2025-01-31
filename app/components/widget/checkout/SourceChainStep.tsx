@@ -27,7 +27,7 @@ export const SourceChainStep = ({
   const fieldValue = watch(fieldId)
 
   const isWrongNetwork =
-    !isUndefined(fieldValue) && Number(fieldValue) !== chain.id
+    !isUndefined(fieldValue) && Number(fieldValue) !== chain?.id
 
   const handleSwitchChain = () => {
     switchChain({ chainId: Number(fieldValue), connector })

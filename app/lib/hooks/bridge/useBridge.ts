@@ -63,9 +63,12 @@ export const useBridge = ({
     }
   })
 
+  /// todo: check it from dstChainIdToTransferGas read method
+  const extraGas = BigInt(tokenIds.length) * 1n
+
   const adapterParams = ethers.solidityPacked(
     ['uint16', 'uint256'],
-    [version, requiredMinDstGas || 0n]
+    [version, BigInt((requiredMinDstGas as bigint) || 0n) + extraGas]
   )
 
   const { data: estimateData } = useReadContract({
