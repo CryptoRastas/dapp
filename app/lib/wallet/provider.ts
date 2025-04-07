@@ -50,8 +50,8 @@ export const chainsSDK: ChainSDK = {
     network: Network.ABSTRACT_TESTNET
   }),
   [abstract.id]: new Alchemy({
-    ...providerConfig
-    // network: Network.ABSTRACT_MAINNET
+    ...providerConfig,
+    network: Network.ABSTRACT_MAINNET
   })
 }
 
