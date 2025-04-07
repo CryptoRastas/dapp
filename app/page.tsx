@@ -18,7 +18,14 @@ export async function generateMetadata(): Promise<Metadata> {
 const Homepage = () => (
   <>
     <Header />
-    <PageContainer />
+
+    <div className='flex flex-1 items-center justify-center gap-4 container'>
+      {JSON.parse(`${process.env.NEXT_PUBLIC_DISABLED || false}`) ? (
+        'maintenance, try again later'
+      ) : (
+        <PageContainer />
+      )}
+    </div>
     <Footer className='pb-32 container' />
   </>
 )
