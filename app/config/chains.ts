@@ -96,7 +96,6 @@ export const abstract: Chain = merge(abstractChain, {
  *
  **/
 
-/// @dev: todo deploy
 export const polygonAmoy: Chain = merge(polygonAmoyChain, {
   abstractId: 10267,
   name: 'Amoy',
@@ -118,14 +117,10 @@ export const polygonAmoy: Chain = merge(polygonAmoyChain, {
 export const sepolia: Chain = merge(sepoliaChain, {
   abstractId: 10161,
   contracts: merge(sepoliaChain.contracts, {
-    /// @dev: collection NFT
-    /// @toDo: change to a proper name
     token: {
       address: '0x9B4d191e71138e100b3e0345cF4365060e3bBD01' as Address,
       blockNumber: 0
     },
-    /// @dev: ProxyONFT721
-    /// @toDo: change to a proper name
     bridge: {
       address: '0x65d8EDec76C83AC87d0E852Fd170B22A76dee3cF' as Address,
       blockNumber: 0
@@ -153,7 +148,6 @@ export const baseSepolia: Chain = merge(baseSepoliaChain, {
   scanClient: 'https://layerzeroscan.com/address'
 })
 
-//@dev: todo deploy
 export const abstractTestnet: Chain = merge(abstractTestnetChain, {
   abstractId: 10313,
   contracts: merge(abstractTestnetChain.contracts, {
